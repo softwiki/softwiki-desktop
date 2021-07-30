@@ -1,0 +1,45 @@
+{
+  "name": "SoftWiki",
+  "version": "1.4.0-alpha",
+  "description": "A markdown based wiki software",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make --platform linux && electron-forge make --platform win32"
+  },
+  "author": "Vyn",
+  "license": "ISC",
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.57",
+    "@electron-forge/maker-deb": "^6.0.0-beta.57",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.57",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.57",
+    "@electron-forge/maker-zip": "^6.0.0-beta.57",
+    "electron": "^13.1.2"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "platforms": [
+            "win32"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "linux",
+            "win32"
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,3 @@
+[submodule "app/src/SoftWiki-Core"]
+	path = app/src/SoftWiki-Core
+	url = git@github.com:SoftWiki/SoftWiki-Core.git
