@@ -73,8 +73,8 @@ const Notes = styled.div`
 	overflow-y: auto;
 `
 
-export default function NoteList(props: NoteListArguments) {
-
+export default function NoteList(props: NoteListArguments) 
+{
 	const {notes, tags} = useData()
 	const selectedNote = useSelectedNote()
 
@@ -83,8 +83,10 @@ export default function NoteList(props: NoteListArguments) {
 	const [filteredTags, SetFilteredTags] = useState<Tag[]>([])
 	const [sortOrder, SetSortOrder] = useState<number>(SortOrder.Alphabetical)
 
-	const displayedNotes: Note[] = notes.filter((note: Note) => {
-		for (let i = 0; i < filteredTags.length; i++) {
+	const displayedNotes: Note[] = notes.filter((note: Note) => 
+	{
+		for (let i = 0; i < filteredTags.length; i++) 
+		{
 			if (!note.HasTag(filteredTags[i]))
 				return false
 		}
@@ -97,13 +99,16 @@ export default function NoteList(props: NoteListArguments) {
 		return true 
 	})
 
-	if (sortOrder === SortOrder.Alphabetical) {
+	if (sortOrder === SortOrder.Alphabetical) 
+	{
 		displayedNotes.sort((a: Note, b: Note) => a.GetTitle().toLowerCase() > b.GetTitle().toLowerCase() ? 1 : -1)
 	}
-	else if (sortOrder === SortOrder.AlphabeticalReverse) {
+	else if (sortOrder === SortOrder.AlphabeticalReverse) 
+	{
 		displayedNotes.sort((a: Note, b: Note) => a.GetTitle().toLowerCase() < b.GetTitle().toLowerCase() ? 1 : -1)
 	}
-	else if (sortOrder === SortOrder.CreationDateReverse) {
+	else if (sortOrder === SortOrder.CreationDateReverse) 
+	{
 		displayedNotes.reverse()
 	}
 
@@ -112,7 +117,8 @@ export default function NoteList(props: NoteListArguments) {
 			<Filters>
 				<SearchInput
 					onChange={(e: ChangeEvent<HTMLInputElement>) => { SetTpmSearchFilter(e.target.value) }}
-					onKeyPress={(e: React.KeyboardEvent) => {
+					onKeyPress={(e: React.KeyboardEvent) => 
+					{
 						if (e.code === "Enter")
 							SetSearchFilter(tpmSearchFilter)
 					}}
@@ -130,7 +136,8 @@ export default function NoteList(props: NoteListArguments) {
 			
 			<Notes>
 				{
-					displayedNotes.map((note: Note) => {
+					displayedNotes.map((note: Note) => 
+					{
 						return (
 							<NoteCardPreview
 								key={note.Id()}

@@ -46,29 +46,38 @@ export function Data({children}: DataProps)
 	const [dataAvailable, SetDataAvailable] = useState<boolean>(false);
 	const [data, SetData] = useState<FetchDataResult>({notes: [], tags: [], projects: []});
 
-	useEffect(() => {
-		DataApi.Setup().then(() => {
-			FetchData().then((data: FetchDataResult) => {				
+	useEffect(() => 
+	{
+		DataApi.Setup().then(() => 
+		{
+			FetchData().then((data: FetchDataResult) => 
+			{				
 				SetData(data);
 				SetDataAvailable(true);
 			});
 		});
 	}, []);
 
-	Event.Subscribe(DataEvent.NotesUpdated, "Data.NotesUpdated", () => {
-		FetchData().then((data: FetchDataResult) => {				
+	Event.Subscribe(DataEvent.NotesUpdated, "Data.NotesUpdated", () => 
+	{
+		FetchData().then((data: FetchDataResult) => 
+		{				
 			SetData(data);
 		});
 	});
 
-	Event.Subscribe(DataEvent.TagsUpdated, "Data.TagsUpdated", () => {
-		FetchData().then((data: FetchDataResult) => {				
+	Event.Subscribe(DataEvent.TagsUpdated, "Data.TagsUpdated", () => 
+	{
+		FetchData().then((data: FetchDataResult) => 
+		{				
 			SetData(data);
 		});
 	});
 
-	Event.Subscribe(DataEvent.ProjectsUpdated, "Data.ProjectsUpdated", () => {
-		FetchData().then((data: FetchDataResult) => {				
+	Event.Subscribe(DataEvent.ProjectsUpdated, "Data.ProjectsUpdated", () => 
+	{
+		FetchData().then((data: FetchDataResult) => 
+		{				
 			SetData(data);
 		});
 	});

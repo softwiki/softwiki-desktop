@@ -82,7 +82,8 @@ export function Config({children}: ConfigProps)
 	const [theme, _SetTheme] = useState<Theme>(defaultConfigContext.theme)
 	const [font, _SetFont] = useState<Font>(defaultConfigContext.font)
 
-	const SetTheme = (name_: string) => {
+	const SetTheme = (name_: string) => 
+	{
 		const name = name_ as keyof unknown
 		const appearance = JSON.parse(JSON.stringify(themes["Dark"]))
 		Object.assign(appearance, themes[name])
@@ -98,8 +99,10 @@ export function Config({children}: ConfigProps)
 		_SetFont(font)
 	}
 
-	useEffect(() => {
-		appConfig.LoadConfig().then(() => {
+	useEffect(() => 
+	{
+		appConfig.LoadConfig().then(() => 
+		{
 			const themeName = appConfig.Get("theme") as keyof unknown
 			const theme = themes[themeName]
 			_SetTheme({name: themeName, appearance: theme})

@@ -26,7 +26,8 @@ export default function TagEditor({initialName, initialColor, editDefault = fals
 
 	const colorAsCss = `rgba(${tmpColor.r}, ${tmpColor.g}, ${tmpColor.b}, ${tmpColor.a})`
 
-	useEffect(() => {
+	useEffect(() => 
+	{
 		SetTmpColor(initialColor)
 	}, [initialColor])
 
@@ -40,7 +41,8 @@ export default function TagEditor({initialName, initialColor, editDefault = fals
 		SetTmpColor(colorResult.rgb)
 	}
 
-	const OnEnter = () => {
+	const OnEnter = () => 
+	{
 		SetEditMode(false)
 		OnNameChange && OnNameChange(tmpName, tmpColor)
 		OnChange && OnChange(tmpName, tmpColor)
@@ -51,7 +53,8 @@ export default function TagEditor({initialName, initialColor, editDefault = fals
 			<CardField>
 				<ColoredCircle
 					style={{backgroundColor: colorAsCss}}
-					onClick={() => {
+					onClick={() => 
+					{
 						if (!editColorMode)
 							SetEditColorMode(true)
 					}}
@@ -59,8 +62,10 @@ export default function TagEditor({initialName, initialColor, editDefault = fals
 					<Popup
 						show={editColorMode}
 						hideDefaultBackground
-						OnClickOutside={() => {
-							setTimeout(() =>{
+						OnClickOutside={() => 
+						{
+							setTimeout(() =>
+							{
 								if (editColorMode)
 								{
 									OnColorChange && OnColorChange(tmpColor)
@@ -80,7 +85,8 @@ export default function TagEditor({initialName, initialColor, editDefault = fals
 							value={tmpName}
 							style={{marginRight: "8px"}}
 							onChange={OnTmpNameChanged}
-							onKeyPress={(e: React.KeyboardEvent) => {
+							onKeyPress={(e: React.KeyboardEvent) => 
+							{
 								if (e.code === "Enter")
 									OnEnter()
 							}}/>
@@ -89,7 +95,8 @@ export default function TagEditor({initialName, initialColor, editDefault = fals
 				}
 				{
 					OnDelete ? 
-						<DeleteButton onClick={() => {
+						<DeleteButton onClick={() => 
+						{
 							SetEditMode(false)
 							OnDelete && OnDelete()
 						}}>Delete</DeleteButton>

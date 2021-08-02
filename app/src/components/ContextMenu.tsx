@@ -33,12 +33,12 @@ export function ContextMenu({children, trigger, useLeftClick = false, absolutePo
 
 	const contextMenuRef = useRef<HTMLDivElement>(null);
 
-	
-
-	useEffect(() => {
+	useEffect(() => 
+	{
 		if (!trigger)
 			return
-		const HandleMouseEvent = (e: any) => {
+		const HandleMouseEvent = (e: any) => 
+		{
 			if (e.type === "contextmenu" && trigger.current.contains(e.target))
 			{
 				SetPosition({x: e.clientX + 1, y: e.clientY + 1})
@@ -58,7 +58,8 @@ export function ContextMenu({children, trigger, useLeftClick = false, absolutePo
 		}
 		const contextMenuEvent = HandleWindowEvent("contextmenu", HandleMouseEvent)
 		const clickOutsideEvent = HandleWindowEvent("mousedown", HandleMouseEvent)
-		return (() => {
+		return (() => 
+		{
 			contextMenuEvent.Delete()
 			clickOutsideEvent.Delete()
 		})
@@ -105,7 +106,6 @@ export function ContextMenuItem({action, value, textColor}: ContextMenuItemProps
 		</ContextMenuItemLayout>
 	)
 }
-
 
 export const ContextMenuValue = styled.div`
 `

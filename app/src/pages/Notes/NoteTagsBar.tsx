@@ -30,11 +30,11 @@ export default function NoteTagsBar()
 
 	if (!note) return <></>
 
-
 	return (
 		<TagsBarLayout>
 			{
-				note.GetTags().map((tag: Tag) => {
+				note.GetTags().map((tag: Tag) => 
+				{
 					return <TagCard
 						key={tag.Id()}
 						tag={tag}
@@ -47,7 +47,8 @@ export default function NoteTagsBar()
 			<AddTagButtonWrapper>
 				<AddTagButton
 					style={{backgroundColor: "rgba(0, 0, 0, 0)", "border": "1px solid rgb(75, 75, 75)"}}
-					onClick={() => {
+					onClick={() => 
+					{
 						if (!addTagWidget)
 							SetAddTagWidget(true)
 					}
@@ -56,7 +57,8 @@ export default function NoteTagsBar()
 				</AddTagButton>
 				<Popup show={addTagWidget} OnClickOutside={() => { setTimeout(() => {SetAddTagWidget(false)}) }}>
 					<TagChooser
-						OnTagSelected={(tag: Tag) => {
+						OnTagSelected={(tag: Tag) => 
+						{
 							if (note.HasTag(tag))
 								return ;
 							note.AddTag(tag)

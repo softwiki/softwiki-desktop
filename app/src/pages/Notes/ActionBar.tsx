@@ -63,7 +63,8 @@ export default function ActionBar()
 			{
 				selectedNote.editModeEnabled
 					? 
-					<SaveExitButton onClick={() => {
+					<SaveExitButton onClick={() => 
+					{
 						selectedNote.Save()
 						selectedNote.SetEditModeEnabled(false)
 					}}>Save & Exit</SaveExitButton>
@@ -74,17 +75,21 @@ export default function ActionBar()
 					<NoteMenuIcon src={menuIconHorizontale}/>
 				</NoteMenuIconWrapper>
 				<ContextMenu trigger={contextMenuTrigger} absolutePosition={{top: "125%", right: "0"}} useLeftClick>
-					<ContextMenuItem value="Edit" action={() => {
+					<ContextMenuItem value="Edit" action={() => 
+					{
 						if (selectedNote.editModeEnabled)
 							selectedNote.Save()
 						selectedNote.SetEditModeEnabled(!selectedNote.editModeEnabled)
 					}}/>
-					<ContextMenuItem value="Save" action={() => {
+					<ContextMenuItem value="Save" action={() => 
+					{
 						selectedNote.Save()
 					}}/>
 					<ContextMenuSpacer/>
-					<ContextMenuItem value="Delete" textColor="rgb(200, 100, 100)" action={() => {
-						AppUtilsController.PopConfirmationBox(`Do you really want to delete the note "${selectedNote.note?.GetTitle()}" ?`, () => {
+					<ContextMenuItem value="Delete" textColor="rgb(200, 100, 100)" action={() => 
+					{
+						AppUtilsController.PopConfirmationBox(`Do you really want to delete the note "${selectedNote.note?.GetTitle()}" ?`, () => 
+						{
 							selectedNote.Delete()
 						})
 					}}/>

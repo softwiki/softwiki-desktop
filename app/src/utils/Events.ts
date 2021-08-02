@@ -1,4 +1,4 @@
-export function EmitWindowEvent(eventName: string, args?: any): void
+export function EmitWindowEvent(eventName: string, args?: unknown): void
 {
 	const event = new CustomEvent(eventName, {detail: args});
 	window.dispatchEvent(event);

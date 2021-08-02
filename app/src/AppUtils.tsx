@@ -25,7 +25,8 @@ function ConfirmationBox()
 	const [yesFunction, SetYesFunction] = useState<(() => void) | undefined>(undefined)
 	const [noFunction, SetNoFunction] = useState<(() => void) | undefined>(undefined)
 
-	AppUtilsController.PopConfirmationBox = (text: string, yesFunc?: () => void | undefined, noFunc?: () => void | undefined) => {
+	AppUtilsController.PopConfirmationBox = (text: string, yesFunc?: () => void | undefined, noFunc?: () => void | undefined) => 
+	{
 		SetMessageBoxText(text)
 		SetYesFunction(() => yesFunc)
 		SetNoFunction(() => noFunc)
@@ -39,11 +40,13 @@ function ConfirmationBox()
 					<Modal>
 						<MessageBox
 							text={messageBoxText}
-							yesFunction={() => { 
+							yesFunction={() => 
+							{ 
 								yesFunction && yesFunction()
 								SetShowMessageBox(false)
 							}}
-							noFunction={() => { 
+							noFunction={() => 
+							{ 
 								noFunction && noFunction()
 								SetShowMessageBox(false)
 							}}

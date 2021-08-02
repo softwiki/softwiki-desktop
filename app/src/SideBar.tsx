@@ -33,7 +33,7 @@ const Icon = styled.img`
 	}
 `
 
-export default function SideBar(props: any)
+export default function SideBar()
 {
 	const [showSettings, SetShowSettings] = useState<boolean>(false)
 	const [showHelp, SetShowHelp] = useState<boolean>(false)
@@ -41,10 +41,12 @@ export default function SideBar(props: any)
 	return (
 		<SideBarLayout>
 			<Icon src={notesImage} title="Notes" alt="notes"/>
-			<Icon src={helpImage}  title="Help" alt="help" style={{marginTop: "auto"}} onClick={() => {
+			<Icon src={helpImage}  title="Help" alt="help" style={{marginTop: "auto"}} onClick={() => 
+			{
 				SetShowHelp(true)
 			}}/>
-			<Icon src={settingsImage} title="Settings" alt="settings" onClick={() => {
+			<Icon src={settingsImage} title="Settings" alt="settings" onClick={() => 
+			{
 				SetShowSettings(true)
 			}}/>
 			{

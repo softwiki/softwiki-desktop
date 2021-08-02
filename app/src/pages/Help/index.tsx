@@ -1,7 +1,6 @@
 import Markdown from "components/Markdown"
 import styled from "styled-components"
 
-
 const HelpLayout = styled.div`
 	width: 50vw;
 	height: 75vh;
@@ -12,7 +11,7 @@ const HelpLayout = styled.div`
 	font-size: 1rem;
 `
 
-export default function Settings(props: any)
+export default function Settings()
 {
 	return (
 		<HelpLayout>

@@ -34,7 +34,8 @@ export default function TagChooser(props: TagChooserArguments & any)
 	return (
 		<TagChooserLayout {...props}>
 			{
-				tags.map((tag: Tag) => {
+				tags.map((tag: Tag) => 
+				{
 					return (
 						<TagCardWrapper key={tag.Id()}>
 							<TagCard

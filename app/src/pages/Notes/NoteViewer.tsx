@@ -55,11 +55,13 @@ export default function NoteViewer()
 {
 	const selectedNote = useSelectedNote()
 
-	const HandleTitleChanges = (e: ChangeEvent<HTMLInputElement>) => {
+	const HandleTitleChanges = (e: ChangeEvent<HTMLInputElement>) => 
+	{
 		selectedNote.SetUnsavedChanges({title: e.target.value, content: selectedNote.unsavedChanges.content})
 	}
 
-	const HandleContentChanges = (e: ChangeEvent<HTMLTextAreaElement>) =>{
+	const HandleContentChanges = (e: ChangeEvent<HTMLTextAreaElement>) =>
+	{
 		selectedNote.SetUnsavedChanges({title: selectedNote.unsavedChanges.title, content: e.target.value})
 	}
 

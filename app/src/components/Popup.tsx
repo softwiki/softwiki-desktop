@@ -52,8 +52,10 @@ export default function Popup({show, children, hideDefaultBackground = false, On
 	}
 	const modalRef = useRef<HTMLDivElement>(null)
 
-	useEffect(() => {
-		const HandleMouseEvent = (e: any) => {
+	useEffect(() => 
+	{
+		const HandleMouseEvent = (e: any) => 
+		{
 			if (modalRef.current && !modalRef.current.contains(e.target))
 			{
 				OnClickOutside && OnClickOutside()
@@ -61,7 +63,8 @@ export default function Popup({show, children, hideDefaultBackground = false, On
 		}
 
 		const mouseEvent = HandleWindowEvent("mouseup", HandleMouseEvent)
-		return (() => {
+		return (() => 
+		{
 			mouseEvent.Delete()
 		})
 	}, [OnClickOutside])

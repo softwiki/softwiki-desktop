@@ -37,8 +37,10 @@ export default function Modal({OnClickOutside, children}: ModalProps)
 {
 	const modalRef = useRef<HTMLDivElement>(null)
 
-	useEffect(() => {
-		const HandleMouseEvent = (e: any) => {
+	useEffect(() => 
+	{
+		const HandleMouseEvent = (e: any) => 
+		{
 			if (modalRef.current && !modalRef.current.contains(e.target))
 			{
 				OnClickOutside && OnClickOutside()
@@ -46,12 +48,11 @@ export default function Modal({OnClickOutside, children}: ModalProps)
 		}
 
 		const mouseEvent = HandleWindowEvent("mousedown", HandleMouseEvent)
-		return (() => {
+		return (() => 
+		{
 			mouseEvent.Delete()
 		})
 	}, [OnClickOutside])
-
-	
 
 	return (
 		<ModalLayout >

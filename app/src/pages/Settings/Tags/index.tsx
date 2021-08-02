@@ -28,16 +28,20 @@ export default function TagsSettings()
 	return (
 		<TagsSettingsLayout>
 			{
-				tags.map((tag: Tag) => {
+				tags.map((tag: Tag) => 
+				{
 					return <TagEditor
 						key={tag.Id()}
 						initialName={tag.GetName()}
 						initialColor={tag.GetColor()}
-						OnChange={async (name: string, color: Color) => {
+						OnChange={async (name: string, color: Color) => 
+						{
 							tag.SetAll({name, color})
 						}}
-						OnDelete={() => {
-							AppUtilsController.PopConfirmationBox(`Do you really want to delete the tag "${tag.GetName()}" ?`, () => {
+						OnDelete={() => 
+						{
+							AppUtilsController.PopConfirmationBox(`Do you really want to delete the tag "${tag.GetName()}" ?`, () => 
+							{
 								tag.Delete()
 							})
 						}}
@@ -50,7 +54,8 @@ export default function TagsSettings()
 						editDefault
 						initialName={"New Tag"}
 						initialColor={newTagColor}
-						OnNameChange={async (name: string, color: Color) => {
+						OnNameChange={async (name: string, color: Color) => 
+						{
 							DataApi.CreateTag({name, color})
 							SetNewTagColor({...newTagColor})
 							SetShowNewTagField(false)

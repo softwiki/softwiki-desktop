@@ -41,7 +41,8 @@ export function SelectedNote({children}: {children: JSX.Element | JSX.Element[]}
 
 	const { api } = useData()
 
-	const Save = () => {
+	const Save = () => 
+	{
 		if (!note)
 			return
 
@@ -51,7 +52,8 @@ export function SelectedNote({children}: {children: JSX.Element | JSX.Element[]}
 			note.SetContent(unsavedChanges.content)
 	}
 
-	const Delete = () => {
+	const Delete = () => 
+	{
 		SetNote(null)
 
 		if (!note)
@@ -60,13 +62,15 @@ export function SelectedNote({children}: {children: JSX.Element | JSX.Element[]}
 		note.Delete()
 	}
 
-	const AddTag = (tag: Tag) => {
+	const AddTag = (tag: Tag) => 
+	{
 		if (!note)
 			return
 		note.AddTag(tag)
 	}
 
-	const RemoveTag = (tag: Tag) => {
+	const RemoveTag = (tag: Tag) => 
+	{
 		if (!note)
 			return
 		note.RemoveTag(tag)
@@ -80,13 +84,15 @@ export function SelectedNote({children}: {children: JSX.Element | JSX.Element[]}
 		SetUnsavedChanges({title: noteToSelect.GetTitle(), content: noteToSelect.GetContent()})
 	}
 
-	Event.Subscribe(DataEvent.NoteCreated, "NotesPage.NoteCreated", (args: unknown) => {
+	Event.Subscribe(DataEvent.NoteCreated, "NotesPage.NoteCreated", (args: unknown) => 
+	{
 		const {note} = args as {note: Note}
 		SelectNote(note)
 		SetEditModeEnabled(true)
 	})
 
-	Event.Subscribe(DataEvent.NotesUpdated, "NotesPage.NotesUpdated", () => {
+	Event.Subscribe(DataEvent.NotesUpdated, "NotesPage.NotesUpdated", () => 
+	{
 		const noteWithUpdate = api.GetNotes().find((note_: Note) => note?.Id() === note_.Id())
 		if (noteWithUpdate)
 		{

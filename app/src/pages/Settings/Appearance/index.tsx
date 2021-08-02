@@ -49,8 +49,10 @@ export default function Appearance()
 		Event.Run(AppearanceEvent.FontSizeChanged, {fontSize})
 	}
 
-	useEffect(() => {
-		return () => {
+	useEffect(() => 
+	{
+		return () => 
+		{
 			SetFont({family: fontRef.current, size: fontSizeRef.current})
 		}
 	}, [SetFont])
@@ -69,7 +71,8 @@ export default function Appearance()
 				<LineTitle>Theme</LineTitle>
 				<ComboBox onChange={HandleThemeChange}>
 					{
-						themesName.map((themeName: string) => {
+						themesName.map((themeName: string) => 
+						{
 							return (
 								<ComboBoxItem
 									key={themeName}

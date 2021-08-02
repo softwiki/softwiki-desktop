@@ -37,7 +37,8 @@ export default function NoteCardPreview(props: {note: Note, onClick: () => void}
 			<div>{props.note.GetTitle()}</div>
 			<NoteCardPreviewTags>
 				{
-					props.note.GetTags().map((tag: Tag) => {
+					props.note.GetTags().map((tag: Tag) => 
+					{
 						return <TagCard key={tag.Id()} tag={tag} style={{marginRight: "4px"}}/>
 					})
 				}

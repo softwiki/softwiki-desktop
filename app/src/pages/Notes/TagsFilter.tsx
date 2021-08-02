@@ -42,11 +42,13 @@ export default function TagsFilter({tags, OnChange}: TagsFilterArguments)
 	const [showPopup, SetShowPopup] = useState<boolean>(false)
 	const [selectedTags, SetSelectedTags] = useState<Tag[]>([])
 	
-	const IsSelected = (tag: Tag): boolean => {
+	const IsSelected = (tag: Tag): boolean => 
+	{
 		return selectedTags.find((selectedTag: Tag) => tag.Id() === selectedTag.Id()) !== undefined
 	}
 
-	const ToggleTag = (tag: Tag) => {
+	const ToggleTag = (tag: Tag) => 
+	{
 		const tagsSelection = [...selectedTags]
 		if (!IsSelected(tag))
 		{
@@ -69,7 +71,8 @@ export default function TagsFilter({tags, OnChange}: TagsFilterArguments)
 			
 			<Popup show={showPopup} OnClickOutside={() => { setTimeout(() => {SetShowPopup(false)}) }}>
 				{
-					tags.map((tag: Tag) => {
+					tags.map((tag: Tag) => 
+					{
 						return (
 							<TagCardWrapper>
 								<TagCard

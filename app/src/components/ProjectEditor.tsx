@@ -26,7 +26,8 @@ export default function ProjectEditor({project, OnSave}: ProjectEditorProps)
 	return (
 		<ProjectEditorLayout>
 			<Name value={name} onChange={(e: any) => { SetName(e.target.value) }}></Name>
-			<Button onClick={() => {
+			<Button onClick={() => 
+			{
 				if (project)
 				{
 					project.SetName(name)

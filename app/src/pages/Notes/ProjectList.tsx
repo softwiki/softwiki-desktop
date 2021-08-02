@@ -69,25 +69,27 @@ export default function Projects(props: ProjectsProps)
 			</Header>
 			<ProjectsWrapper>
 				<ProjectCard selected={props.selectedProject === undefined} project={undefined} OnClick={() => { props.OnProjectChanged(undefined) }}/>
-				{projects.map((project: Project) => {
-					
+				{projects.map((project: Project) => 
+				{
 					return (
 						<ProjectCard
 							project={project}
 							selected={props.selectedProject?.Id() === project.Id()}
 							OnClick={() => { props.OnProjectChanged(project) }}
-							OnEdit={() => { 
+							OnEdit={() => 
+							{ 
 								SetCurrentProjectEdit(project)
 								SetShowNewProjectModal(true)
 							}}
-							OnDelete={() => {
-								AppUtilsController.PopConfirmationBox(`Do you really want to delete the project "${project.GetName()}" ?`, () => {
+							OnDelete={() => 
+							{
+								AppUtilsController.PopConfirmationBox(`Do you really want to delete the project "${project.GetName()}" ?`, () => 
+								{
 									project.Delete()
 								})
 							}}
 						/>
 					)
-
 				})}
 			</ProjectsWrapper>
 			
@@ -159,7 +161,6 @@ function ProjectCard({project, selected = false, OnClick, OnEdit, OnDelete}: Pro
 
 	const name = project ? project.GetName() : "All"
 	const count = project ? project.NoteCount() : DataApi.GetNotes().length
-
 
 	return (
 		<ProjectCardWrapper>
