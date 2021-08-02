@@ -1,4 +1,4 @@
-**REWORK IN PROGRESS, THE CURRENT STATE OF THIS REPO ISNT STABLE**  
+**REWORK IN PROGRESS, THE CURRENT STATE OF THIS REPO IS NOT STABLE**.  
 **This application in under development, more information at the end.**
 
 SoftWiki is a wiki-like application, available on Linux and Windows.
