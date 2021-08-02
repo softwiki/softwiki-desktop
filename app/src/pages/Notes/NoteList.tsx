@@ -133,7 +133,7 @@ export default function NoteList(props: NoteListArguments) {
 					displayedNotes.map((note: Note) => {
 						return (
 							<NoteCardPreview
-								key={note._GetID()}
+								key={note.Id()}
 								note={note}
 								onClick={() => { selectedNote.SelectNote(note) }}
 							/>

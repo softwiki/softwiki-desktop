@@ -30,7 +30,7 @@ export default function TagsSettings()
 			{
 				tags.map((tag: Tag) => {
 					return <TagEditor
-						key={tag._GetID()}
+						key={tag.Id()}
 						initialName={tag.GetName()}
 						initialColor={tag.GetColor()}
 						OnChange={async (name: string, color: Color) => {

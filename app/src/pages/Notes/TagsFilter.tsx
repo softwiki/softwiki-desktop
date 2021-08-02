@@ -43,7 +43,7 @@ export default function TagsFilter({tags, OnChange}: TagsFilterArguments)
 	const [selectedTags, SetSelectedTags] = useState<Tag[]>([])
 	
 	const IsSelected = (tag: Tag): boolean => {
-		return selectedTags.find((selectedTag: Tag) => tag._GetID() === selectedTag._GetID()) !== undefined
+		return selectedTags.find((selectedTag: Tag) => tag.Id() === selectedTag.Id()) !== undefined
 	}
 
 	const ToggleTag = (tag: Tag) => {
@@ -54,7 +54,7 @@ export default function TagsFilter({tags, OnChange}: TagsFilterArguments)
 		}
 		else
 		{
-			tagsSelection.splice(tagsSelection.findIndex((selectedTag: Tag) => tag._GetID() === selectedTag._GetID()))
+			tagsSelection.splice(tagsSelection.findIndex((selectedTag: Tag) => tag.Id() === selectedTag.Id()))
 		}
 
 		SetSelectedTags(tagsSelection)

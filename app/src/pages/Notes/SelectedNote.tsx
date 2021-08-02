@@ -2,6 +2,7 @@ import { Note, Tag } from "softwiki-core/models";
 import { createContext, useContext, useState } from "react";
 import Event from "softwiki-core/services/EventService"
 import { DataEvent } from "softwiki-core/data/DataApi";
+import { useData } from "Data";
 
 interface SelectedNoteContextProps
 {
@@ -37,6 +38,8 @@ export function SelectedNote({children}: {children: JSX.Element | JSX.Element[]}
 	const [note, SetNote] = useState<Note | null>(null)
 	const [unsavedChanges, SetUnsavedChanges] = useState<{title: string, content: string}>({title: "", content: ""})
 	const [editModeEnabled, SetEditModeEnabled] = useState<boolean>(false)
+
+	const { api } = useData()
 
 	const Save = () => {
 		if (!note)
@@ -81,6 +84,14 @@ export function SelectedNote({children}: {children: JSX.Element | JSX.Element[]}
 		const {note} = args as {note: Note}
 		SelectNote(note)
 		SetEditModeEnabled(true)
+	})
+
+	Event.Subscribe(DataEvent.NotesUpdated, "NotesPage.NotesUpdated", () => {
+		const noteWithUpdate = api.GetNotes().find((note_: Note) => note?.Id() === note_.Id())
+		if (noteWithUpdate)
+		{
+			SetNote(noteWithUpdate);
+		}
 	})
 
 	return (

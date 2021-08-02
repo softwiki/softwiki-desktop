@@ -74,7 +74,7 @@ export default function Projects(props: ProjectsProps)
 					return (
 						<ProjectCard
 							project={project}
-							selected={props.selectedProject?._GetID() === project._GetID()}
+							selected={props.selectedProject?.Id() === project.Id()}
 							OnClick={() => { props.OnProjectChanged(project) }}
 							OnEdit={() => { 
 								SetCurrentProjectEdit(project)

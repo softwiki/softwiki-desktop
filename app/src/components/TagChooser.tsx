@@ -36,7 +36,7 @@ export default function TagChooser(props: TagChooserArguments & any)
 			{
 				tags.map((tag: Tag) => {
 					return (
-						<TagCardWrapper key={tag._GetID()}>
+						<TagCardWrapper key={tag.Id()}>
 							<TagCard
 								tag={tag}
 								style={{flex: 1}}

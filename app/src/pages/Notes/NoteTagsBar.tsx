@@ -36,7 +36,7 @@ export default function NoteTagsBar()
 			{
 				note.GetTags().map((tag: Tag) => {
 					return <TagCard
-						key={tag._GetID()}
+						key={tag.Id()}
 						tag={tag}
 						style={{marginRight: "8px"}}
 						OnCrossClick={() => {note.RemoveTag(tag)}}

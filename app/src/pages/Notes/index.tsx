@@ -55,7 +55,7 @@ function NotePageWrapper()
 		await DataApi.CreateNote({
 			title: "Untitled",
 			content: "Your amazing note content",
-			tags: [], project: selectedProject ? selectedProject._GetID() : undefined
+			tags: [], project: selectedProject ? selectedProject.Id() : undefined
 		})
 	}
 

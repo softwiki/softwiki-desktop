@@ -61,6 +61,12 @@ export function Data({children}: DataProps)
 		});
 	});
 
+	Event.Subscribe(DataEvent.TagsUpdated, "Data.TagsUpdated", () => {
+		FetchData().then((data: FetchDataResult) => {				
+			SetData(data);
+		});
+	});
+
 	Event.Subscribe(DataEvent.ProjectsUpdated, "Data.ProjectsUpdated", () => {
 		FetchData().then((data: FetchDataResult) => {				
 			SetData(data);
