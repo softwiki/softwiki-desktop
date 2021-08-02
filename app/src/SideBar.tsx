@@ -1,14 +1,14 @@
 import styled from "styled-components"
 
-import Modal from "Components/Modal"
+import Modal from "components/Modal"
 
-import notesImage from "Images/notes.png"
-import settingsImage from "Images/settings.png"
-import helpImage from "Images/help.png"
+import notesImage from "images/notes.png"
+import settingsImage from "images/settings.png"
+import helpImage from "images/help.png"
 
 import { useState } from "react"
-import Settings from "Pages/Settings/Settings"
-import Help from "Pages/Help"
+import Settings from "pages/Settings/Settings"
+import Help from "pages/Help"
 
 const SideBarLayout = styled.div`
 	display: flex;
@@ -52,14 +52,14 @@ export default function SideBar(props: any)
 					<Modal>
 						<Settings Close={() => { SetShowSettings(false) }}/>
 					</Modal>
-				: ""
+					: ""
 			}
 			{
 				showHelp ?
 					<Modal OnClickOutside={() => { SetShowHelp(false) }}>
 						<Help/>
 					</Modal>
-				: ""
+					: ""
 			}
 		</SideBarLayout>
 	)

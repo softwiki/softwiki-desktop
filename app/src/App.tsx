@@ -1,13 +1,13 @@
-import { useContext } from 'react';
+import { useContext } from "react";
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components"
 import { Helmet } from "react-helmet"
 
 import SideBar from "./SideBar"
-import NotesModule from "./Pages/Notes"
+import NotesModule from "./pages/Notes"
 
 import { AppUtils } from "AppUtils"
-import { Data } from 'Data';
-import { ConfigContext } from 'Config';
+import { Data } from "Data";
+import { ConfigContext } from "Config";
 
 interface GlobalStyleProps {
 	font: string

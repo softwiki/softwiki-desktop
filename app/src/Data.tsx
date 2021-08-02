@@ -1,8 +1,8 @@
-import DataApi, { DataApiClass, DataEvent } from "SoftWiki-Core/Data/DataApi"
-import { Note, Tag } from "SoftWiki-Core/Models"
-import { Project } from "SoftWiki-Core/Models/Project"
-import React, { useContext, useEffect, useState } from "react"
-import Event from "SoftWiki-Core/Services/EventService"
+import DataApi, { DataApiClass, DataEvent } from "softwiki-core/data/DataApi";
+import { Note, Tag } from "softwiki-core/models";
+import { Project } from "softwiki-core/models/Project";
+import React, { useContext, useEffect, useState } from "react";
+import Event from "softwiki-core/services/EventService";
 
 interface DataContextProps
 {
@@ -19,7 +19,7 @@ export const DataContext = React.createContext<DataContextProps>({
 	tags: [],
 	projects: [],
 	api: DataApi
-})
+});
 
 interface FetchDataResult
 {
@@ -28,12 +28,12 @@ interface FetchDataResult
 	projects: Project[]
 }
 
-async function FetchData() : Promise<FetchDataResult>
+async function FetchData(): Promise<FetchDataResult>
 {
-	let notes = DataApi.GetNotes()
-	let tags = DataApi.GetTags()
-	let projects = DataApi.GetProjects()
-	return {notes, tags, projects}
+	const notes = DataApi.GetNotes();
+	const tags = DataApi.GetTags();
+	const projects = DataApi.GetProjects();
+	return {notes, tags, projects};
 }
 
 interface DataProps
@@ -43,38 +43,38 @@ interface DataProps
 
 export function Data({children}: DataProps)
 {
-	const [dataAvailable, SetDataAvailable] = useState<boolean>(false)
-	const [data, SetData] = useState<FetchDataResult>({notes: [], tags: [], projects: []})
+	const [dataAvailable, SetDataAvailable] = useState<boolean>(false);
+	const [data, SetData] = useState<FetchDataResult>({notes: [], tags: [], projects: []});
 
 	useEffect(() => {
 		DataApi.Setup().then(() => {
 			FetchData().then((data: FetchDataResult) => {				
-				SetData(data)
-				SetDataAvailable(true)
-			})
-		})
-	}, [])
+				SetData(data);
+				SetDataAvailable(true);
+			});
+		});
+	}, []);
 
 	Event.Subscribe(DataEvent.NotesUpdated, "Data.NotesUpdated", () => {
 		FetchData().then((data: FetchDataResult) => {				
-			SetData(data)
-		})
-	})
+			SetData(data);
+		});
+	});
 
 	Event.Subscribe(DataEvent.ProjectsUpdated, "Data.ProjectsUpdated", () => {
 		FetchData().then((data: FetchDataResult) => {				
-			SetData(data)
-		})
-	})
+			SetData(data);
+		});
+	});
 
 	return (
 		<DataContext.Provider value={{...data, available: dataAvailable, api: DataApi}}>
 			{children}
 		</DataContext.Provider>
-	)
+	);
 }
 
 export function useData()
 {
-	return useContext(DataContext)
+	return useContext(DataContext);
 } 

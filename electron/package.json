@@ -1,5 +1,5 @@
 {
-  "name": "SoftWiki",
+  "name": "softwiki",
   "version": "1.4.0-alpha",
   "description": "A markdown based wiki software",
   "main": "main.js",

@@ -12,6 +12,7 @@ function createWindow () {
 	const win = new BrowserWindow({
 		width: 1080,
 		height: 600,
+		icon: "resources/softwiki.png",
 		webPreferences: {
 			nodeIntegration: true,
 			enableRemoteModule: true,
@@ -28,7 +29,7 @@ function createWindow () {
 	}
 	else
 	{
-		win.loadFile('./resources/front/index.html')
+		win.loadFile('./resources/app/index.html')
 		win.removeMenu()
 	}
 
