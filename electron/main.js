@@ -8,11 +8,12 @@ const { app, BrowserWindow, shell } = require('electron')
 const path = require('path')
 
 function createWindow () {
+	const isDev = process.env["NODE_ENV"] === "development"
 	// Create the browser window.
 	const win = new BrowserWindow({
 		width: 1080,
 		height: 600,
-		icon: "resources/softwiki.png",
+		icon: __dirname + "/resources/softwiki.png",
 		webPreferences: {
 			nodeIntegration: true,
 			enableRemoteModule: true,
@@ -23,7 +24,7 @@ function createWindow () {
 
 	// and load the index.html of the app.
 	
-	if (process.env["NODE_ENV"] === "development")
+	if (isDev)
 	{
 		win.loadURL("http://localhost:3000")
 	}
