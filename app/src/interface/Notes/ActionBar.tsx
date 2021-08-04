@@ -7,8 +7,12 @@ import {AppUtilsController} from "AppUtils"
 import menuIconHorizontale from "images/menuButton_horizontale.png"
 import {useSelectedNote} from "./SelectedNote"
 import {ContextMenu, ContextMenuItem, ContextMenuSpacer} from "components/ContextMenu"
+import { useData } from "Data";
+import { Project } from "softwiki-core/models/Project";
 
 const ActionBarLayout = styled.div`
+
+	position: relative;
 
 	display: flex;
 	flex-direction: row;
@@ -49,17 +53,63 @@ const SaveExitButton = styled(Button)`
 
 const ProjectName = styled.div`
 	margin-right: auto;
+	
 	opacity: 0.5;
+	cursor: pointer;
+
+	transition-duration: 0.25s;
+
+	&:hover
+	{
+		opacity: 1;
+	}
+
 `
 
 export default function ActionBar()
 {
 	const selectedNote = useSelectedNote()
 	const contextMenuTrigger = useRef(null)
+	const projectContextMenuTrighger = useRef(null)
+	const { projects } = useData()
 
 	return (
 		<ActionBarLayout>
-			<ProjectName>{selectedNote.note?.getProject()?.getName()}</ProjectName>
+			<ProjectName ref={projectContextMenuTrighger}>
+				{selectedNote.note?.getProject()?.getName() || "Uncategorized"}
+			</ProjectName>
+			<ContextMenu
+				trigger={projectContextMenuTrighger}
+				absolutePosition={{top: "125%", left: "0"}}
+				useLeftClick
+			>
+				<>
+					{
+						projects.map((project: Project) =>
+						{
+							return (
+								<ContextMenuItem
+									key={project.getId()}
+									value={project.getName()}
+									action={() => 
+									{
+										selectedNote.note?.setProject(project);
+									}}
+								/>
+							);
+						})
+					}
+				</>
+				<ContextMenuSpacer/>
+				<ContextMenuItem
+					value="Uncategorized"
+					textColor="rgb(200, 100, 100"
+					action={() => 
+					{
+						selectedNote.note?.setProject(null);
+					}}
+				/>
+			</ContextMenu>
 			{
 				selectedNote.editModeEnabled
 					? 

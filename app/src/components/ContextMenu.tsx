@@ -67,7 +67,10 @@ export function ContextMenu({children, trigger, useLeftClick = false, absolutePo
 
 	return (
 		<ContextMenuLayout ref={contextMenuRef}>
-			<Popup position={absolutePosition ? absolutePosition : {left: `${position.x}px`, top: `${position.y}px`}} show={show} hideDefaultBackground>
+			<Popup position={absolutePosition ? absolutePosition : {left: `${position.x}px`, top: `${position.y}px`}}
+				show={show}
+				hideDefaultBackground
+			>
 				<ContextMenuItems onClick={() => { setShow(false) }}>
 					{children}
 				</ContextMenuItems>

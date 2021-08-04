@@ -3,7 +3,7 @@ import styled, { createGlobalStyle, ThemeProvider } from "styled-components"
 import { Helmet } from "react-helmet"
 
 import SideBar from "./SideBar"
-import NotesModule from "./pages/Notes"
+import NotesModule from "./interface/Notes"
 
 import { AppUtils } from "AppUtils"
 import { Data } from "Data";

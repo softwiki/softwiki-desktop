@@ -7,8 +7,8 @@ import settingsImage from "images/settings.png"
 import helpImage from "images/help.png"
 
 import { useState } from "react"
-import Settings from "pages/Settings/Settings"
-import Help from "pages/Help"
+import Settings from "interface/Settings/Settings"
+import Help from "interface/Help"
 
 const SideBarLayout = styled.div`
 	display: flex;
