@@ -73,6 +73,7 @@ export default function Projects(props: ProjectsProps)
 				{
 					return (
 						<ProjectCard
+							key={project.getId()}
 							project={project}
 							selected={props.selectedProject?.getId() === project.getId()}
 							onClick={() => { props.onProjectChanged(project) }}

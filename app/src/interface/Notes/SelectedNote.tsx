@@ -23,12 +23,12 @@ const defaultValue: SelectedNoteContextProps = {
 	selectNote: () => {},
 	save: () => {},
 	delete: () => {},
-	addTag: (tag: Tag) => {},
-	removeTag: (tag: Tag) => {},
-	setUnsavedChanges: ({title, content}: {title: string, content: string}) => {},
+	addTag: () => {},
+	removeTag: () => {},
+	setUnsavedChanges: () => {},
 	unsavedChanges: {title: "", content: ""},
 	editModeEnabled: false,
-	setEditModeEnabled: (value: boolean) => {}
+	setEditModeEnabled: () => {}
 }
 
 export const SelectedNoteContext = createContext<SelectedNoteContextProps>(defaultValue)

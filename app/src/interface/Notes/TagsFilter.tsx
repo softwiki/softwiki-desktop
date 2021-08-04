@@ -74,7 +74,7 @@ export default function TagsFilter({tags, onChange}: TagsFilterArguments)
 					tags.map((tag: Tag) => 
 					{
 						return (
-							<TagCardWrapper>
+							<TagCardWrapper key={tag.getId()}>
 								<TagCard
 									onClick={() => { toggleTag(tag) }}
 									style={{opacity: isSelected(tag) ? "1" : "0.5", flex: "1"}}

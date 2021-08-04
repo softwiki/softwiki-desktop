@@ -4,6 +4,9 @@ import React, { useEffect } from "react"
 import { useState } from "react"
 import * as themes from "themes"
 
+console.log("Themes")
+console.log(themes)
+
 export enum ConfigEvent {
 	SET = "ConfigEvent.Set"
 }
@@ -64,7 +67,7 @@ interface ConfigContextProps
 }
 
 const defaultConfigContext = {
-	theme: {name: "Dark", appearance: themes["Dark"]},
+	theme: {name: themes.dark.name, appearance: themes.dark},
 	selectTheme: () => {},
 	font: {family: "Arial", size: 16},
 	selectFont: () => {},
@@ -87,8 +90,11 @@ export function Config({children}: ConfigProps)
 		appConfig.loadConfig().then(() => 
 		{
 			const themeName = appConfig.get("theme") as keyof unknown
-			const theme = themes[themeName]
-			setTheme({name: themeName, appearance: theme})
+			let theme: any = themes[themeName]
+			if (!theme) theme = themes.dark
+			let appearance = JSON.parse(JSON.stringify(theme));
+			appearance = fillMissingThemeFields(appearance)
+			setTheme({name: themeName, appearance: appearance})
 			const fontFamily = appConfig.get("font") as string
 			const fontSize = appConfig.get("fontSize") as number
 			setFont({family: fontFamily, size: fontSize})	
@@ -101,8 +107,8 @@ export function Config({children}: ConfigProps)
 			selectTheme: (nameAsString: string) => 
 			{
 				const name = nameAsString as keyof unknown
-				const appearance = JSON.parse(JSON.stringify(themes["Dark"]))
-				Object.assign(appearance, themes[name])
+				let appearance = JSON.parse(JSON.stringify(themes[name]))
+				appearance = fillMissingThemeFields(appearance)
 		
 				appConfig.set("theme", name)
 				setTheme({name, appearance})
@@ -118,4 +124,11 @@ export function Config({children}: ConfigProps)
 			{children}
 		</ConfigContext.Provider>
 	)
+}
+
+function fillMissingThemeFields(theme: any): any
+{
+	const defaultTheme = JSON.parse(JSON.stringify(themes.dark))
+	Object.assign(defaultTheme, theme)
+	return defaultTheme
 }

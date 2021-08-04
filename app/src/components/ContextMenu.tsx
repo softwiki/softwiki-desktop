@@ -14,8 +14,8 @@ const ContextMenuItems = styled.div`
 
 	border-radius: 4px;
 
-	background-color: ${({theme}) => theme.dropdown.backgroundColor};	
-	color: ${({theme}) => theme.comboBox.textColor};
+	background-color: ${({theme}) => theme.contextMenu.backgroundColor};	
+	color: ${({theme}) => theme.contextMenu.textColor};
 `
 
 interface ContextMenuProps
@@ -80,12 +80,12 @@ export function ContextMenu({children, trigger, useLeftClick = false, absolutePo
 }
 
 export const ContextMenuItemLayout = styled.div`
-
 	padding: 4px;
+	transition-duration: 0.10s;
 
 	&:hover
 	{
-		background-color: ${({theme}) => theme.dropdown.backgroundColorHover};	
+		background-color: ${({theme}) => theme.contextMenu.backgroundColorHover};	
 	}
 `
 
