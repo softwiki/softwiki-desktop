@@ -1,4 +1,4 @@
-import { HandleWindowEvent } from "utils"
+import { handleWindowEvent } from "utils"
 import { useEffect, useRef } from "react"
 import styled from "styled-components"
 
@@ -29,30 +29,30 @@ const ModalContent = styled.div`
 
 interface ModalProps
 {
-	OnClickOutside?: () => void
+	onClickOutside?: () => void
 	children?: JSX.Element
 }
 
-export default function Modal({OnClickOutside, children}: ModalProps)
+export default function Modal({onClickOutside, children}: ModalProps)
 {
 	const modalRef = useRef<HTMLDivElement>(null)
 
 	useEffect(() => 
 	{
-		const HandleMouseEvent = (e: any) => 
+		const handleMouseEvent = (e: any) => 
 		{
 			if (modalRef.current && !modalRef.current.contains(e.target))
 			{
-				OnClickOutside && OnClickOutside()
+				onClickOutside && onClickOutside()
 			}
 		}
 
-		const mouseEvent = HandleWindowEvent("mousedown", HandleMouseEvent)
+		const mouseEvent = handleWindowEvent("mousedown", handleMouseEvent)
 		return (() => 
 		{
-			mouseEvent.Delete()
+			mouseEvent.delete()
 		})
-	}, [OnClickOutside])
+	}, [onClickOutside])
 
 	return (
 		<ModalLayout >

@@ -42,19 +42,19 @@ interface TagCardProps
 {
 	tag: Tag
 	style: React.CSSProperties
-	OnClick?: () => void
-	OnCrossClick?: (tag: Tag) => void
+	onClick?: () => void
+	onCrossClick?: (tag: Tag) => void
 }
 
-export default function TagCard({tag, style = {}, OnClick, OnCrossClick}: TagCardProps)
+export default function TagCard({tag, style = {}, onClick, onCrossClick}: TagCardProps)
 {
 	//style = {...style, backgroundColor: tag.GetColorAsCss()}
-	style = {...style, border: "1px solid " + tag.GetColorAsCss()}
+	style = {...style, border: "1px solid " + tag.getColorAsCss()}
 	return (
-		<Layout style={style} onClick={() => { OnClick && OnClick() }}>
-			<ColoredCircle style={{backgroundColor: tag.GetColorAsCss()}}/>
-			<div>{tag.GetName()}</div>
-			{OnCrossClick ? <Cross onClick={() => {OnCrossClick && OnCrossClick(tag)}}>x</Cross> : ""}
+		<Layout style={style} onClick={() => { onClick && onClick() }}>
+			<ColoredCircle style={{backgroundColor: tag.getColorAsCss()}}/>
+			<div>{tag.getName()}</div>
+			{onCrossClick ? <Cross onClick={() => {onCrossClick && onCrossClick(tag)}}>x</Cross> : ""}
 		</Layout>
 	)
 }

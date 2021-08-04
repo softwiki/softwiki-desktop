@@ -20,8 +20,8 @@ const NewTagButton = styled(Button)`
 
 export default function TagsSettings()
 {
-	const [newTagColor, SetNewTagColor] = useState<Color>({r: 0, g: 0, b: 0, a: 1})
-	const [showNewTagField, SetShowNewTagField] = useState<boolean>(false)
+	const [newTagColor, setNewTagColor] = useState<Color>({r: 0, g: 0, b: 0, a: 1})
+	const [showNewTagField, setShowNewTagField] = useState<boolean>(false)
 
 	const { tags } = useContext(DataContext)
 
@@ -31,18 +31,18 @@ export default function TagsSettings()
 				tags.map((tag: Tag) => 
 				{
 					return <TagEditor
-						key={tag.Id()}
-						initialName={tag.GetName()}
-						initialColor={tag.GetColor()}
-						OnChange={async (name: string, color: Color) => 
+						key={tag.getId()}
+						initialName={tag.getName()}
+						initialColor={tag.getColor()}
+						onChange={async (name: string, color: Color) => 
 						{
-							tag.SetAll({name, color})
+							tag.setAll({name, color})
 						}}
-						OnDelete={() => 
+						onDelete={() => 
 						{
-							AppUtilsController.PopConfirmationBox(`Do you really want to delete the tag "${tag.GetName()}" ?`, () => 
+							AppUtilsController.popConfirmationBox(`Do you really want to delete the tag "${tag.getName()}" ?`, () => 
 							{
-								tag.Delete()
+								tag.delete()
 							})
 						}}
 					/>
@@ -54,15 +54,15 @@ export default function TagsSettings()
 						editDefault
 						initialName={"New Tag"}
 						initialColor={newTagColor}
-						OnNameChange={async (name: string, color: Color) => 
+						onNameChange={async (name: string, color: Color) => 
 						{
-							DataApi.CreateTag({name, color})
-							SetNewTagColor({...newTagColor})
-							SetShowNewTagField(false)
+							DataApi.createTag({name, color})
+							setNewTagColor({...newTagColor})
+							setShowNewTagField(false)
 						}}
 					/>
 					:
-					<NewTagButton onClick={() => { SetShowNewTagField(true) }}>
+					<NewTagButton onClick={() => { setShowNewTagField(true) }}>
 						+ Add tag
 					</NewTagButton>
 				}

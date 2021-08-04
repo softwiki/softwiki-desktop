@@ -66,7 +66,7 @@ const SearchInput = styled(Input)`
 
 interface NoteListArguments {
 	project: Project | undefined
-	CreateNote: () => void
+	createNote: () => void
 }
 
 const Notes = styled.div`
@@ -78,22 +78,22 @@ export default function NoteList(props: NoteListArguments)
 	const {notes, tags} = useData()
 	const selectedNote = useSelectedNote()
 
-	const [tpmSearchFilter, SetTpmSearchFilter] = useState<string>("")
-	const [searchFilter, SetSearchFilter] = useState<string>("")
-	const [filteredTags, SetFilteredTags] = useState<Tag[]>([])
-	const [sortOrder, SetSortOrder] = useState<number>(SortOrder.Alphabetical)
+	const [tpmSearchFilter, setTpmSearchFilter] = useState<string>("")
+	const [searchFilter, setSearchFilter] = useState<string>("")
+	const [filteredTags, setFilteredTags] = useState<Tag[]>([])
+	const [sortOrder, setSortOrder] = useState<number>(SortOrder.Alphabetical)
 
 	const displayedNotes: Note[] = notes.filter((note: Note) => 
 	{
 		for (let i = 0; i < filteredTags.length; i++) 
 		{
-			if (!note.HasTag(filteredTags[i]))
+			if (!note.hasTag(filteredTags[i]))
 				return false
 		}
-		if (note.GetTitle().match(new RegExp(searchFilter, "i")) === null)
+		if (note.getTitle().match(new RegExp(searchFilter, "i")) === null)
 			return false
 
-		if (props.project !== undefined && !note.HasProject(props.project))
+		if (props.project !== undefined && !note.hasProject(props.project))
 			return false
 
 		return true 
@@ -101,11 +101,11 @@ export default function NoteList(props: NoteListArguments)
 
 	if (sortOrder === SortOrder.Alphabetical) 
 	{
-		displayedNotes.sort((a: Note, b: Note) => a.GetTitle().toLowerCase() > b.GetTitle().toLowerCase() ? 1 : -1)
+		displayedNotes.sort((a: Note, b: Note) => a.getTitle().toLowerCase() > b.getTitle().toLowerCase() ? 1 : -1)
 	}
 	else if (sortOrder === SortOrder.AlphabeticalReverse) 
 	{
-		displayedNotes.sort((a: Note, b: Note) => a.GetTitle().toLowerCase() < b.GetTitle().toLowerCase() ? 1 : -1)
+		displayedNotes.sort((a: Note, b: Note) => a.getTitle().toLowerCase() < b.getTitle().toLowerCase() ? 1 : -1)
 	}
 	else if (sortOrder === SortOrder.CreationDateReverse) 
 	{
@@ -116,21 +116,21 @@ export default function NoteList(props: NoteListArguments)
 		<NoteListLayout>
 			<Filters>
 				<SearchInput
-					onChange={(e: ChangeEvent<HTMLInputElement>) => { SetTpmSearchFilter(e.target.value) }}
+					onChange={(e: ChangeEvent<HTMLInputElement>) => { setTpmSearchFilter(e.target.value) }}
 					onKeyPress={(e: React.KeyboardEvent) => 
 					{
 						if (e.code === "Enter")
-							SetSearchFilter(tpmSearchFilter)
+							setSearchFilter(tpmSearchFilter)
 					}}
 					placeholder="Search..."
 					value={tpmSearchFilter}
 				/>
-				<TagsFilter tags={tags} OnChange={(newFilters: Tag[]) => { SetFilteredTags(newFilters) }} />
-				<SortOrderWidget sortOrder={sortOrder} OnChange={(newSortOrder: SortOrder) => { SetSortOrder(newSortOrder) }} />
+				<TagsFilter tags={tags} onChange={(newFilters: Tag[]) => { setFilteredTags(newFilters) }} />
+				<SortOrderWidget sortOrder={sortOrder} onChange={(newSortOrder: SortOrder) => { setSortOrder(newSortOrder) }} />
 			</Filters>
 			<ActionBar>
 				<div>Notes</div>
-				<AddButton onClick={() => { props.CreateNote() }}> + </AddButton>
+				<AddButton onClick={() => { props.createNote() }}> + </AddButton>
 			</ActionBar>
 			<HorizontalLineSpacer />
 			
@@ -140,9 +140,9 @@ export default function NoteList(props: NoteListArguments)
 					{
 						return (
 							<NoteCardPreview
-								key={note.Id()}
+								key={note.getId()}
 								note={note}
-								onClick={() => { selectedNote.SelectNote(note) }}
+								onClick={() => { selectedNote.selectNote(note) }}
 							/>
 						)
 					}

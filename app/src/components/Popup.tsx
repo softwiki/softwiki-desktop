@@ -1,4 +1,4 @@
-import { HandleWindowEvent } from "utils";
+import { handleWindowEvent } from "utils";
 import { useEffect, useRef } from "react"
 import styled from "styled-components"
 
@@ -39,12 +39,12 @@ interface PopupProps
 {
 	show: boolean
 	children: JSX.Element | JSX.Element[]
-	OnClickOutside?: () => void
+	onClickOutside?: () => void
 	hideDefaultBackground?: boolean
 	position?: {top?: string, left?: string, bottom?: string, right?: string}
 }
 
-export default function Popup({show, children, hideDefaultBackground = false, OnClickOutside, position}: PopupProps)
+export default function Popup({show, children, hideDefaultBackground = false, onClickOutside, position}: PopupProps)
 {
 	if (position === undefined)
 	{
@@ -54,20 +54,20 @@ export default function Popup({show, children, hideDefaultBackground = false, On
 
 	useEffect(() => 
 	{
-		const HandleMouseEvent = (e: any) => 
+		const handleMouseEvent = (e: any) => 
 		{
 			if (modalRef.current && !modalRef.current.contains(e.target))
 			{
-				OnClickOutside && OnClickOutside()
+				onClickOutside && onClickOutside()
 			}
 		}
 
-		const mouseEvent = HandleWindowEvent("mouseup", HandleMouseEvent)
+		const mouseEvent = handleWindowEvent("mouseup", handleMouseEvent)
 		return (() => 
 		{
-			mouseEvent.Delete()
+			mouseEvent.delete()
 		})
-	}, [OnClickOutside])
+	}, [onClickOutside])
 	
 	if (!show)
 		return <div></div>

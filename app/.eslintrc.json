@@ -36,7 +36,20 @@
         "brace-style": ["error", "allman", {"allowSingleLine": true}],
         "lines-between-class-members": ["error", "always", {"exceptAfterSingleLine": true}],
         "padded-blocks": ["error", "never"],
-        "no-multiple-empty-lines": ["error", {"max": 1}]
+        "no-multiple-empty-lines": ["error", {"max": 1}],
+        "@typescript-eslint/naming-convention": [
+            "error",
+            {
+                "selector": ["property", "parameterProperty", "method", "accessor", "variable", "function", "parameter"],
+                "format": ["camelCase"]
+            },
+            {
+                "selector": ["property", "parameterProperty", "method", "accessor"],
+                "format": ["camelCase"],
+                "modifiers": ["private"],
+                "leadingUnderscore": "require"
+            }
+        ]
     },
     "overrides": [
         {
@@ -52,8 +65,26 @@
           {
             "files": ["*.tsx"],
             "rules": {
-              "@typescript-eslint/explicit-module-boundary-types": "off",
-              "@typescript-eslint/no-empty-function": "off"
+                "@typescript-eslint/explicit-module-boundary-types": "off",
+                "@typescript-eslint/no-empty-function": "off",
+                "@typescript-eslint/naming-convention": [
+                    "error",
+                    {
+                        "selector": ["property", "parameterProperty", "method", "accessor", "variable", "parameter"],
+                        "format": ["camelCase"]
+                    },
+                    {
+                        "selector": ["variable"],
+                        "modifiers": ["global"],
+                        "format": ["PascalCase", "camelCase"]                        
+                    },
+                    {
+                        "selector": ["property", "parameterProperty", "method", "accessor"],
+                        "modifiers": ["private"],
+                        "format": ["camelCase"],
+                        "leadingUnderscore": "require"
+                    }
+                ]
             }
           }
       ]

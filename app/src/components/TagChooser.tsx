@@ -25,7 +25,7 @@ const TagCardWrapper = styled.div`
 
 interface TagChooserArguments
 {
-	OnTagSelected: (tag: Tag) => void
+	onTagSelected: (tag: Tag) => void
 }
 
 export default function TagChooser(props: TagChooserArguments & any)
@@ -37,11 +37,11 @@ export default function TagChooser(props: TagChooserArguments & any)
 				tags.map((tag: Tag) => 
 				{
 					return (
-						<TagCardWrapper key={tag.Id()}>
+						<TagCardWrapper key={tag.getId()}>
 							<TagCard
 								tag={tag}
 								style={{flex: 1}}
-								OnClick={() => {props.OnTagSelected(tag)}}
+								onClick={() => {props.OnTagSelected(tag)}}
 							/>
 						</TagCardWrapper>
 					)

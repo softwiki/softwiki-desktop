@@ -1,10 +1,10 @@
-export function EmitWindowEvent(eventName: string, args?: unknown): void
+export function emitWindowEvent(eventName: string, args?: unknown): void
 {
 	const event = new CustomEvent(eventName, {detail: args});
 	window.dispatchEvent(event);
 }
 
-export function HandleWindowEvent(event: string, func: unknown): WindowEventRef
+export function handleWindowEvent(event: string, func: unknown): WindowEventRef
 {
 	window.addEventListener(event, func as EventListener);
 	const ref = new WindowEventRef(event, func as EventListener);
@@ -21,7 +21,7 @@ export class WindowEventRef
 		this.func = func;
 	}
 
-	Delete(): void
+	delete(): void
 	{
 		window.removeEventListener(this.name, this.func as EventListener);
 	}

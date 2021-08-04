@@ -1,4 +1,4 @@
-import { WriteFile, ReadFile } from "softwiki-core"
+import { writeFile, readFile } from "softwiki-core"
 import Event from "softwiki-core/services/EventService"
 import React, { useEffect } from "react"
 import { useState } from "react"
@@ -10,34 +10,34 @@ export enum ConfigEvent {
 
 class AppConfig
 {
-	private cfg: any = {}
+	private _cfg: any = {}
 
-	public Get<T>(key: string): T
+	public get<T>(key: string): T
 	{
-		return this.cfg[key]
+		return this._cfg[key]
 	}
 
-	public Set(key: string, value: any): void
+	public set(key: string, value: any): void
 	{
-		this.cfg[key] = value
-		this.Save()
-		Event.Run(ConfigEvent.SET, {key, value})
+		this._cfg[key] = value
+		this._save()
+		Event.run(ConfigEvent.SET, {key, value})
 	}
 
-	public async LoadConfig(): Promise<void>
+	public async loadConfig(): Promise<void>
 	{
-		await this.Load()
+		await this._load()
 	}
 
-	private async Save(): Promise<void>
+	private async _save(): Promise<void>
 	{
-		await WriteFile("cfg.json", JSON.stringify(this.cfg, null, 4))
+		await writeFile("cfg.json", JSON.stringify(this._cfg, null, 4))
 	}
 
-	private async Load(): Promise<void>
+	private async _load(): Promise<void>
 	{
-		const data = await ReadFile("cfg.json")
-		this.cfg = JSON.parse(data)
+		const data = await readFile("cfg.json")
+		this._cfg = JSON.parse(data)
 	}
 }
 
@@ -58,16 +58,16 @@ interface Theme
 interface ConfigContextProps
 {
 	theme: Theme
-	SetTheme: (name: string) => void,
+	selectTheme: (name: string) => void,
 	font: Font
-	SetFont: (font: Font) => void
+	selectFont: (font: Font) => void
 }
 
 const defaultConfigContext = {
 	theme: {name: "Dark", appearance: themes["Dark"]},
-	SetTheme: () => {},
+	selectTheme: () => {},
 	font: {family: "Arial", size: 16},
-	SetFont: () => {},
+	selectFont: () => {},
 }
 
 export const ConfigContext = React.createContext<ConfigContextProps>(defaultConfigContext)
@@ -79,45 +79,41 @@ interface ConfigProps
 
 export function Config({children}: ConfigProps)
 {
-	const [theme, _SetTheme] = useState<Theme>(defaultConfigContext.theme)
-	const [font, _SetFont] = useState<Font>(defaultConfigContext.font)
-
-	const SetTheme = (name_: string) => 
-	{
-		const name = name_ as keyof unknown
-		const appearance = JSON.parse(JSON.stringify(themes["Dark"]))
-		Object.assign(appearance, themes[name])
-
-		appConfig.Set("theme", name)
-		_SetTheme({name, appearance})
-	}
-
-	const SetFont = (font: Font) =>
-	{
-		appConfig.Set("font", font.family)
-		appConfig.Set("fontSize", font.size)
-		_SetFont(font)
-	}
+	const [theme, setTheme] = useState<Theme>(defaultConfigContext.theme)
+	const [font, setFont] = useState<Font>(defaultConfigContext.font)
 
 	useEffect(() => 
 	{
-		appConfig.LoadConfig().then(() => 
+		appConfig.loadConfig().then(() => 
 		{
-			const themeName = appConfig.Get("theme") as keyof unknown
+			const themeName = appConfig.get("theme") as keyof unknown
 			const theme = themes[themeName]
-			_SetTheme({name: themeName, appearance: theme})
-			const fontFamily = appConfig.Get("font") as string
-			const fontSize = appConfig.Get("fontSize") as number
-			_SetFont({family: fontFamily, size: fontSize})	
+			setTheme({name: themeName, appearance: theme})
+			const fontFamily = appConfig.get("font") as string
+			const fontSize = appConfig.get("fontSize") as number
+			setFont({family: fontFamily, size: fontSize})	
 		})
 	}, [])
 
 	return (
 		<ConfigContext.Provider value={{
 			theme,
-			SetTheme,
+			selectTheme: (nameAsString: string) => 
+			{
+				const name = nameAsString as keyof unknown
+				const appearance = JSON.parse(JSON.stringify(themes["Dark"]))
+				Object.assign(appearance, themes[name])
+		
+				appConfig.set("theme", name)
+				setTheme({name, appearance})
+			},
 			font,
-			SetFont
+			selectFont: (font: Font) =>
+			{
+				appConfig.set("font", font.family)
+				appConfig.set("fontSize", font.size)
+				setFont(font)
+			}
 		}}>
 			{children}
 		</ConfigContext.Provider>

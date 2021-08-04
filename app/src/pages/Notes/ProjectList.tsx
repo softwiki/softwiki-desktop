@@ -47,45 +47,45 @@ const AddButton = styled.button`
 `
 
 interface ProjectsProps {
-	OnProjectChanged: (project: Project | undefined) => void
+	onProjectChanged: (project: Project | undefined) => void
 	selectedProject?: Project | undefined
 }
 
 export default function Projects(props: ProjectsProps)
 {
 	const {projects} = useContext(DataContext)
-	const [showNewProjectModal, SetShowNewProjectModal] = useState<boolean>(false)
-	const [currentProjectEdit, SetCurrentProjectEdit] = useState<Project | undefined>(undefined)
+	const [showNewProjectModal, setShowNewProjectModal] = useState<boolean>(false)
+	const [currentProjectEdit, setCurrentProjectEdit] = useState<Project | undefined>(undefined)
 
 	return (
 		<ProjectsLayout>
 			{showNewProjectModal ?
-				<Modal OnClickOutside={() => { SetShowNewProjectModal(false) }}>
-					<ProjectEditor project={currentProjectEdit} OnSave={() => { SetShowNewProjectModal(false) }}/>
+				<Modal onClickOutside={() => { setShowNewProjectModal(false) }}>
+					<ProjectEditor project={currentProjectEdit} onSave={() => { setShowNewProjectModal(false) }}/>
 				</Modal> : ""}
 			<Header>
 				Projects
-				<AddButton onClick={() => { SetShowNewProjectModal(true) }}>+</AddButton>
+				<AddButton onClick={() => { setShowNewProjectModal(true) }}>+</AddButton>
 			</Header>
 			<ProjectsWrapper>
-				<ProjectCard selected={props.selectedProject === undefined} project={undefined} OnClick={() => { props.OnProjectChanged(undefined) }}/>
+				<ProjectCard selected={props.selectedProject === undefined} project={undefined} onClick={() => { props.onProjectChanged(undefined) }}/>
 				{projects.map((project: Project) => 
 				{
 					return (
 						<ProjectCard
 							project={project}
-							selected={props.selectedProject?.Id() === project.Id()}
-							OnClick={() => { props.OnProjectChanged(project) }}
-							OnEdit={() => 
+							selected={props.selectedProject?.getId() === project.getId()}
+							onClick={() => { props.onProjectChanged(project) }}
+							onEdit={() => 
 							{ 
-								SetCurrentProjectEdit(project)
-								SetShowNewProjectModal(true)
+								setCurrentProjectEdit(project)
+								setShowNewProjectModal(true)
 							}}
-							OnDelete={() => 
+							onDelete={() => 
 							{
-								AppUtilsController.PopConfirmationBox(`Do you really want to delete the project "${project.GetName()}" ?`, () => 
+								AppUtilsController.popConfirmationBox(`Do you really want to delete the project "${project.getName()}" ?`, () => 
 								{
-									project.Delete()
+									project.delete()
 								})
 							}}
 						/>
@@ -149,30 +149,30 @@ const NoteCount = styled.p`
 interface ProjectCardProps
 {
 	project: Project | undefined
-	OnClick: () => void
+	onClick: () => void
 	selected?: boolean
-	OnEdit?: () => void
-	OnDelete?: () => void
+	onEdit?: () => void
+	onDelete?: () => void
 }
 
-function ProjectCard({project, selected = false, OnClick, OnEdit, OnDelete}: ProjectCardProps)
+function ProjectCard({project, selected = false, onClick, onEdit, onDelete}: ProjectCardProps)
 {
 	const contextMenuTrigger = useRef(null)
 
-	const name = project ? project.GetName() : "All"
-	const count = project ? project.NoteCount() : DataApi.GetNotes().length
+	const name = project ? project.getName() : "All"
+	const count = project ? project.getNoteCount() : DataApi.getNotes().length
 
 	return (
 		<ProjectCardWrapper>
-			<ProjectCardLayout selected={selected} onClick={OnClick} ref={contextMenuTrigger}>
+			<ProjectCardLayout selected={selected} onClick={onClick} ref={contextMenuTrigger}>
 				<ProjectName>{name}</ProjectName>
 				<NoteCount>{count}</NoteCount>
 			</ProjectCardLayout>
 
 			<ContextMenu trigger={project ? contextMenuTrigger : undefined}>
-				<ContextMenuItem value="Edit" action={() => { OnEdit && OnEdit() }}/>
+				<ContextMenuItem value="Edit" action={() => { onEdit && onEdit() }}/>
 				<ContextMenuSpacer/>
-				<ContextMenuItem value="Delete" textColor="rgb(200, 100, 100)" action={() => { OnDelete && OnDelete() }}/>
+				<ContextMenuItem value="Delete" textColor="rgb(200, 100, 100)" action={() => { onDelete && onDelete() }}/>
 			</ContextMenu>
 		</ProjectCardWrapper>
 	)

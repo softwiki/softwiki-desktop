@@ -29,16 +29,16 @@ const Bar = styled.div`
 
 interface SettingsProps
 {
-	Close: () => void
+	close: () => void
 }
 
-export default function Settings({Close}: SettingsProps)
+export default function Settings({close}: SettingsProps)
 {
 	return (
 		<SettingsLayout>
 			<Bar>
 				<Title>Settings</Title>
-				<Button onClick={() => { Close() }}>Close</Button>
+				<Button onClick={() => { close() }}>Close</Button>
 			</Bar>
 			<div>
 				<SettingCategory title="Appearance">

@@ -7,96 +7,96 @@ import { useData } from "Data";
 interface SelectedNoteContextProps
 {
 	note: Note | null
-	SelectNote: (note: Note) => void
-	Save: () => void
-	Delete: () => void
-	AddTag: (tag: Tag) => void
-	RemoveTag: (tag: Tag) => void
-	SetUnsavedChanges: ({title, content}: {title: string, content: string}) => void
+	selectNote: (note: Note) => void
+	save: () => void
+	delete: () => void
+	addTag: (tag: Tag) => void
+	removeTag: (tag: Tag) => void
+	setUnsavedChanges: ({title, content}: {title: string, content: string}) => void
 	unsavedChanges: {title: string, content: string}
 	editModeEnabled: boolean
-	SetEditModeEnabled: (value: boolean) => void
+	setEditModeEnabled: (value: boolean) => void
 }
 
 const defaultValue: SelectedNoteContextProps = {
 	note: null,
-	SelectNote: () => {},
-	Save: () => {},
-	Delete: () => {},
-	AddTag: (tag: Tag) => {},
-	RemoveTag: (tag: Tag) => {},
-	SetUnsavedChanges: ({title, content}: {title: string, content: string}) => {},
+	selectNote: () => {},
+	save: () => {},
+	delete: () => {},
+	addTag: (tag: Tag) => {},
+	removeTag: (tag: Tag) => {},
+	setUnsavedChanges: ({title, content}: {title: string, content: string}) => {},
 	unsavedChanges: {title: "", content: ""},
 	editModeEnabled: false,
-	SetEditModeEnabled: (value: boolean) => {}
+	setEditModeEnabled: (value: boolean) => {}
 }
 
 export const SelectedNoteContext = createContext<SelectedNoteContextProps>(defaultValue)
 
 export function SelectedNote({children}: {children: JSX.Element | JSX.Element[]})
 {
-	const [note, SetNote] = useState<Note | null>(null)
-	const [unsavedChanges, SetUnsavedChanges] = useState<{title: string, content: string}>({title: "", content: ""})
-	const [editModeEnabled, SetEditModeEnabled] = useState<boolean>(false)
+	const [note, setNote] = useState<Note | null>(null)
+	const [unsavedChanges, setUnsavedChanges] = useState<{title: string, content: string}>({title: "", content: ""})
+	const [editModeEnabled, setEditModeEnabled] = useState<boolean>(false)
 
 	const { api } = useData()
 
-	const Save = () => 
+	const save = () => 
 	{
 		if (!note)
 			return
 
 		if (unsavedChanges.title)
-			note.SetTitle(unsavedChanges.title)
+			note.setTitle(unsavedChanges.title)
 		if (unsavedChanges.content)
-			note.SetContent(unsavedChanges.content)
+			note.setContent(unsavedChanges.content)
 	}
 
-	const Delete = () => 
+	const deleteNote = () => 
 	{
-		SetNote(null)
+		setNote(null)
 
 		if (!note)
 			return
 
-		note.Delete()
+		note.delete()
 	}
 
-	const AddTag = (tag: Tag) => 
+	const addTag = (tag: Tag) => 
 	{
 		if (!note)
 			return
-		note.AddTag(tag)
+		note.addTag(tag)
 	}
 
-	const RemoveTag = (tag: Tag) => 
+	const removeTag = (tag: Tag) => 
 	{
 		if (!note)
 			return
-		note.RemoveTag(tag)
+		note.removeTag(tag)
 	}
 
-	const SelectNote = (noteToSelect: Note) =>
+	const selectNote = (noteToSelect: Note) =>
 	{
-		Save()
+		save()
 
-		SetNote(noteToSelect)
-		SetUnsavedChanges({title: noteToSelect.GetTitle(), content: noteToSelect.GetContent()})
+		setNote(noteToSelect)
+		setUnsavedChanges({title: noteToSelect.getTitle(), content: noteToSelect.getContent()})
 	}
 
-	Event.Subscribe(DataEvent.NoteCreated, "NotesPage.NoteCreated", (args: unknown) => 
+	Event.subscribe(DataEvent.NoteCreated, "NotesPage.NoteCreated", (args: unknown) => 
 	{
 		const {note} = args as {note: Note}
-		SelectNote(note)
-		SetEditModeEnabled(true)
+		selectNote(note)
+		setEditModeEnabled(true)
 	})
 
-	Event.Subscribe(DataEvent.NotesUpdated, "NotesPage.NotesUpdated", () => 
+	Event.subscribe(DataEvent.NotesUpdated, "NotesPage.NotesUpdated", () => 
 	{
-		const noteWithUpdate = api.GetNotes().find((note_: Note) => note?.Id() === note_.Id())
+		const noteWithUpdate = api.getNotes().find((noteToCheck: Note) => note?.getId() === noteToCheck.getId())
 		if (noteWithUpdate)
 		{
-			SetNote(noteWithUpdate);
+			setNote(noteWithUpdate);
 		}
 	})
 
@@ -104,15 +104,15 @@ export function SelectedNote({children}: {children: JSX.Element | JSX.Element[]}
 		<SelectedNoteContext.Provider
 			value={{
 				note,
-				SelectNote,
-				Save,
-				Delete,
-				AddTag,
-				RemoveTag,
-				SetUnsavedChanges,
+				selectNote: selectNote,
+				save: save,
+				delete: deleteNote,
+				addTag: addTag,
+				removeTag: removeTag,
+				setUnsavedChanges: setUnsavedChanges,
 				unsavedChanges,
 				editModeEnabled,
-				SetEditModeEnabled
+				setEditModeEnabled: setEditModeEnabled
 			}}
 		>
 			{children}

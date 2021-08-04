@@ -55,14 +55,14 @@ export default function NoteViewer()
 {
 	const selectedNote = useSelectedNote()
 
-	const HandleTitleChanges = (e: ChangeEvent<HTMLInputElement>) => 
+	const handleTitleChanges = (e: ChangeEvent<HTMLInputElement>) => 
 	{
-		selectedNote.SetUnsavedChanges({title: e.target.value, content: selectedNote.unsavedChanges.content})
+		selectedNote.setUnsavedChanges({title: e.target.value, content: selectedNote.unsavedChanges.content})
 	}
 
-	const HandleContentChanges = (e: ChangeEvent<HTMLTextAreaElement>) =>
+	const handleContentChanges = (e: ChangeEvent<HTMLTextAreaElement>) =>
 	{
-		selectedNote.SetUnsavedChanges({title: selectedNote.unsavedChanges.title, content: e.target.value})
+		selectedNote.setUnsavedChanges({title: selectedNote.unsavedChanges.title, content: e.target.value})
 	}
 
 	return (
@@ -72,8 +72,8 @@ export default function NoteViewer()
 				{
 					selectedNote.editModeEnabled ? 
 						<EditZone>
-							<Input type="text" value={selectedNote.unsavedChanges.title} onChange={HandleTitleChanges}/>
-							<TextArea value={selectedNote.unsavedChanges.content} onChange={HandleContentChanges} style={{
+							<Input type="text" value={selectedNote.unsavedChanges.title} onChange={handleTitleChanges}/>
+							<TextArea value={selectedNote.unsavedChanges.content} onChange={handleContentChanges} style={{
 								flex: "1",
 								marginTop: "4px"
 							}}/>

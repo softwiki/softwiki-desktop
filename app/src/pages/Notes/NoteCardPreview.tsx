@@ -34,12 +34,12 @@ export default function NoteCardPreview(props: {note: Note, onClick: () => void}
 	const contextMenuTrigger = useRef(null)
 	return (
 		<NoteCardPreviewLayout onClick={() => {props.onClick()}} ref={contextMenuTrigger}>
-			<div>{props.note.GetTitle()}</div>
+			<div>{props.note.getTitle()}</div>
 			<NoteCardPreviewTags>
 				{
-					props.note.GetTags().map((tag: Tag) => 
+					props.note.getTags().map((tag: Tag) => 
 					{
-						return <TagCard key={tag.Id()} tag={tag} style={{marginRight: "4px"}}/>
+						return <TagCard key={tag.getId()} tag={tag} style={{marginRight: "4px"}}/>
 					})
 				}
 			</NoteCardPreviewTags>

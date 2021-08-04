@@ -59,14 +59,14 @@ export default function ActionBar()
 
 	return (
 		<ActionBarLayout>
-			<ProjectName>{selectedNote.note?.GetProject()?.GetName()}</ProjectName>
+			<ProjectName>{selectedNote.note?.getProject()?.getName()}</ProjectName>
 			{
 				selectedNote.editModeEnabled
 					? 
 					<SaveExitButton onClick={() => 
 					{
-						selectedNote.Save()
-						selectedNote.SetEditModeEnabled(false)
+						selectedNote.save()
+						selectedNote.setEditModeEnabled(false)
 					}}>Save & Exit</SaveExitButton>
 					: ""
 			}
@@ -78,19 +78,19 @@ export default function ActionBar()
 					<ContextMenuItem value="Edit" action={() => 
 					{
 						if (selectedNote.editModeEnabled)
-							selectedNote.Save()
-						selectedNote.SetEditModeEnabled(!selectedNote.editModeEnabled)
+							selectedNote.save()
+						selectedNote.setEditModeEnabled(!selectedNote.editModeEnabled)
 					}}/>
 					<ContextMenuItem value="Save" action={() => 
 					{
-						selectedNote.Save()
+						selectedNote.save()
 					}}/>
 					<ContextMenuSpacer/>
 					<ContextMenuItem value="Delete" textColor="rgb(200, 100, 100)" action={() => 
 					{
-						AppUtilsController.PopConfirmationBox(`Do you really want to delete the note "${selectedNote.note?.GetTitle()}" ?`, () => 
+						AppUtilsController.popConfirmationBox(`Do you really want to delete the note "${selectedNote.note?.getTitle()}" ?`, () => 
 						{
-							selectedNote.Delete()
+							selectedNote.delete()
 						})
 					}}/>
 				</ContextMenu>

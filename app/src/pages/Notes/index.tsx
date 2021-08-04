@@ -49,14 +49,14 @@ function NotePageWrapper()
 {
 	const selectedNote = useSelectedNote()
 
-	const [selectedProject, SetSelectedProject] = useState<Project | undefined>()
+	const [selectedProject, setSelectedProject] = useState<Project | undefined>()
 	
-	const CreateNote = async () => 
+	const createNote = async () => 
 	{
-		await DataApi.CreateNote({
+		await DataApi.createNote({
 			title: "Untitled",
 			content: "Your amazing note content",
-			tags: [], project: selectedProject ? selectedProject.Id() : undefined
+			tags: [], project: selectedProject ? selectedProject.getId() : undefined
 		})
 	}
 
@@ -64,14 +64,14 @@ function NotePageWrapper()
 		<NotesLayout>
 			<Projects
 				selectedProject={selectedProject}
-				OnProjectChanged={(project: Project | undefined) => 
+				onProjectChanged={(project: Project | undefined) => 
 				{
-					SetSelectedProject(project)
+					setSelectedProject(project)
 				}}
 			/> 
 			<NoteList
 				project={selectedProject}
-				CreateNote={CreateNote}
+				createNote={createNote}
 			/>
 			{selectedNote.note ? <NoteViewer/> : <DefaultStarter/>}
 		</NotesLayout>

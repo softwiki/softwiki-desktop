@@ -28,11 +28,11 @@ interface FetchDataResult
 	projects: Project[]
 }
 
-async function FetchData(): Promise<FetchDataResult>
+async function fetchData(): Promise<FetchDataResult>
 {
-	const notes = DataApi.GetNotes();
-	const tags = DataApi.GetTags();
-	const projects = DataApi.GetProjects();
+	const notes = DataApi.getNotes();
+	const tags = DataApi.getTags();
+	const projects = DataApi.getProjects();
 	return {notes, tags, projects};
 }
 
@@ -43,42 +43,42 @@ interface DataProps
 
 export function Data({children}: DataProps)
 {
-	const [dataAvailable, SetDataAvailable] = useState<boolean>(false);
-	const [data, SetData] = useState<FetchDataResult>({notes: [], tags: [], projects: []});
+	const [dataAvailable, setDataAvailable] = useState<boolean>(false);
+	const [data, setData] = useState<FetchDataResult>({notes: [], tags: [], projects: []});
 
 	useEffect(() => 
 	{
-		DataApi.Setup().then(() => 
+		DataApi.setup().then(() => 
 		{
-			FetchData().then((data: FetchDataResult) => 
+			fetchData().then((data: FetchDataResult) => 
 			{				
-				SetData(data);
-				SetDataAvailable(true);
+				setData(data);
+				setDataAvailable(true);
 			});
 		});
 	}, []);
 
-	Event.Subscribe(DataEvent.NotesUpdated, "Data.NotesUpdated", () => 
+	Event.subscribe(DataEvent.NotesUpdated, "Data.NotesUpdated", () => 
 	{
-		FetchData().then((data: FetchDataResult) => 
+		fetchData().then((data: FetchDataResult) => 
 		{				
-			SetData(data);
+			setData(data);
 		});
 	});
 
-	Event.Subscribe(DataEvent.TagsUpdated, "Data.TagsUpdated", () => 
+	Event.subscribe(DataEvent.TagsUpdated, "Data.TagsUpdated", () => 
 	{
-		FetchData().then((data: FetchDataResult) => 
+		fetchData().then((data: FetchDataResult) => 
 		{				
-			SetData(data);
+			setData(data);
 		});
 	});
 
-	Event.Subscribe(DataEvent.ProjectsUpdated, "Data.ProjectsUpdated", () => 
+	Event.subscribe(DataEvent.ProjectsUpdated, "Data.ProjectsUpdated", () => 
 	{
-		FetchData().then((data: FetchDataResult) => 
+		fetchData().then((data: FetchDataResult) => 
 		{				
-			SetData(data);
+			setData(data);
 		});
 	});
 

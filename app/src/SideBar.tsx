@@ -35,30 +35,30 @@ const Icon = styled.img`
 
 export default function SideBar()
 {
-	const [showSettings, SetShowSettings] = useState<boolean>(false)
-	const [showHelp, SetShowHelp] = useState<boolean>(false)
+	const [showSettings, setShowSettings] = useState<boolean>(false)
+	const [showHelp, setShowHelp] = useState<boolean>(false)
 
 	return (
 		<SideBarLayout>
 			<Icon src={notesImage} title="Notes" alt="notes"/>
 			<Icon src={helpImage}  title="Help" alt="help" style={{marginTop: "auto"}} onClick={() => 
 			{
-				SetShowHelp(true)
+				setShowHelp(true)
 			}}/>
 			<Icon src={settingsImage} title="Settings" alt="settings" onClick={() => 
 			{
-				SetShowSettings(true)
+				setShowSettings(true)
 			}}/>
 			{
 				showSettings ?
 					<Modal>
-						<Settings Close={() => { SetShowSettings(false) }}/>
+						<Settings close={() => { setShowSettings(false) }}/>
 					</Modal>
 					: ""
 			}
 			{
 				showHelp ?
-					<Modal OnClickOutside={() => { SetShowHelp(false) }}>
+					<Modal onClickOutside={() => { setShowHelp(false) }}>
 						<Help/>
 					</Modal>
 					: ""

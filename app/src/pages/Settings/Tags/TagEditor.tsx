@@ -11,41 +11,41 @@ interface TagEditorProps
 	initialName: string
 	initialColor: Color
 	editDefault?: boolean
-	OnChange?: (name: string, color: Color) => void
-	OnNameChange?: (name: string, color: Color) => void
-	OnColorChange?: (color: Color) => void
-	OnDelete?: () => void
+	onChange?: (name: string, color: Color) => void
+	onNameChange?: (name: string, color: Color) => void
+	onColorChange?: (color: Color) => void
+	onDelete?: () => void
 }
 
-export default function TagEditor({initialName, initialColor, editDefault = false, OnChange, OnNameChange, OnColorChange, OnDelete}: TagEditorProps)
+export default function TagEditor({initialName, initialColor, editDefault = false, onChange, onNameChange, onColorChange, onDelete}: TagEditorProps)
 {
-	const [tmpName, SetTmpName] = useState(initialName)
-	const [tmpColor, SetTmpColor] = useState<Color>(initialColor)
-	const [editMode, SetEditMode] = useState(editDefault)
-	const [editColorMode, SetEditColorMode] = useState(false)
+	const [tmpName, setTmpName] = useState(initialName)
+	const [tmpColor, setTmpColor] = useState<Color>(initialColor)
+	const [editMode, setEditMode] = useState(editDefault)
+	const [editColorMode, setEditColorMode] = useState(false)
 
 	const colorAsCss = `rgba(${tmpColor.r}, ${tmpColor.g}, ${tmpColor.b}, ${tmpColor.a})`
 
 	useEffect(() => 
 	{
-		SetTmpColor(initialColor)
+		setTmpColor(initialColor)
 	}, [initialColor])
 
-	const OnTmpNameChanged = (e: React.ChangeEvent<HTMLInputElement>) =>
+	const onTmpNameChanged = (e: React.ChangeEvent<HTMLInputElement>) =>
 	{
-		SetTmpName(e.target.value)
+		setTmpName(e.target.value)
 	}
 
-	const OnColorChanged = (colorResult: ColorResult) =>
+	const onColorChanged = (colorResult: ColorResult) =>
 	{
-		SetTmpColor(colorResult.rgb)
+		setTmpColor(colorResult.rgb)
 	}
 
-	const OnEnter = () => 
+	const onEnter = () => 
 	{
-		SetEditMode(false)
-		OnNameChange && OnNameChange(tmpName, tmpColor)
-		OnChange && OnChange(tmpName, tmpColor)
+		setEditMode(false)
+		onNameChange && onNameChange(tmpName, tmpColor)
+		onChange && onChange(tmpName, tmpColor)
 	}
 
 	return (
@@ -56,26 +56,26 @@ export default function TagEditor({initialName, initialColor, editDefault = fals
 					onClick={() => 
 					{
 						if (!editColorMode)
-							SetEditColorMode(true)
+							setEditColorMode(true)
 					}}
 				>
 					<Popup
 						show={editColorMode}
 						hideDefaultBackground
-						OnClickOutside={() => 
+						onClickOutside={() => 
 						{
 							setTimeout(() =>
 							{
 								if (editColorMode)
 								{
-									OnColorChange && OnColorChange(tmpColor)
-									OnChange && OnChange(tmpName, tmpColor)
+									onColorChange && onColorChange(tmpColor)
+									onChange && onChange(tmpName, tmpColor)
 								}
-								SetEditColorMode(false)
+								setEditColorMode(false)
 							})
 						}}
 					>
-						<SketchPicker onChangeComplete={OnColorChanged} color={tmpColor}/>
+						<SketchPicker onChangeComplete={onColorChanged} color={tmpColor}/>
 					</Popup>
 				</ColoredCircle>
 				{
@@ -84,21 +84,21 @@ export default function TagEditor({initialName, initialColor, editDefault = fals
 							type="text"
 							value={tmpName}
 							style={{marginRight: "8px"}}
-							onChange={OnTmpNameChanged}
+							onChange={onTmpNameChanged}
 							onKeyPress={(e: React.KeyboardEvent) => 
 							{
 								if (e.code === "Enter")
-									OnEnter()
+									onEnter()
 							}}/>
 						: 
-						<TagName onClick={() => {SetEditMode(true)}}>{initialName}</TagName>
+						<TagName onClick={() => {setEditMode(true)}}>{initialName}</TagName>
 				}
 				{
-					OnDelete ? 
+					onDelete ? 
 						<DeleteButton onClick={() => 
 						{
-							SetEditMode(false)
-							OnDelete && OnDelete()
+							setEditMode(false)
+							onDelete && onDelete()
 						}}>Delete</DeleteButton>
 						: ""
 				}

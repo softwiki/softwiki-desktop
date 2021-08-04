@@ -39,42 +39,42 @@ const SortIcon = styled.img`
 interface SortOrderWidgetProps
 {
 	sortOrder: SortOrder
-	OnChange: (newSortOrder: SortOrder) => void
+	onChange: (newSortOrder: SortOrder) => void
 }
 
-export default function SortOrderWidget({sortOrder, OnChange}: SortOrderWidgetProps)
+export default function SortOrderWidget({sortOrder, onChange}: SortOrderWidgetProps)
 {
-	const [show, SetShow] = useState<boolean>(false)
+	const [show, setShow] = useState<boolean>(false)
 
 	return (
 		<SortOrderWidgetLayout>
-			<SortIconWrapper onClick={() => { if (!show) SetShow(true) }}>
+			<SortIconWrapper onClick={() => { if (!show) setShow(true) }}>
 				<SortIcon src={sortImage}/>
 			</SortIconWrapper>
 			<Popup
 				show={show}
-				OnClickOutside={() => { setTimeout(() =>{ SetShow(false) }) }}>
+				onClickOutside={() => { setTimeout(() =>{ setShow(false) }) }}>
 				<Line
 					style={{opacity: sortOrder === SortOrder.Alphabetical ? "1" : "0.5"}}
-					onClick={() => { OnChange(SortOrder.Alphabetical) }}
+					onClick={() => { onChange(SortOrder.Alphabetical) }}
 				>
 					Alphabetical
 				</Line>
 				<Line
 					style={{opacity: sortOrder === SortOrder.AlphabeticalReverse ? "1" : "0.5"}}
-					onClick={() => { OnChange(SortOrder.AlphabeticalReverse) }}
+					onClick={() => { onChange(SortOrder.AlphabeticalReverse) }}
 				>
 					(r) Alphabetical
 				</Line>
 				<Line
 					style={{opacity: sortOrder === SortOrder.CreationDate ? "1" : "0.5"}}
-					onClick={() => { OnChange(SortOrder.CreationDate) }}
+					onClick={() => { onChange(SortOrder.CreationDate) }}
 				>
 					Creation Date
 				</Line>
 				<Line
 					style={{opacity: sortOrder === SortOrder.CreationDateReverse ? "1" : "0.5"}}
-					onClick={() => { OnChange(SortOrder.CreationDateReverse) }}
+					onClick={() => { onChange(SortOrder.CreationDateReverse) }}
 				>
 					(r) Creation Date
 				</Line>

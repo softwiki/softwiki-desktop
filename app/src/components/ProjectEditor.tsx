@@ -16,27 +16,27 @@ const Name = styled(Input)`
 interface ProjectEditorProps
 {
 	project: Project | undefined
-	OnSave?: () => void
+	onSave?: () => void
 }
 
-export default function ProjectEditor({project, OnSave}: ProjectEditorProps)
+export default function ProjectEditor({project, onSave: onSave}: ProjectEditorProps)
 {
-	const [name, SetName] = useState(project ? project.GetName() : "Untitled")
+	const [name, setName] = useState(project ? project.getName() : "Untitled")
 
 	return (
 		<ProjectEditorLayout>
-			<Name value={name} onChange={(e: any) => { SetName(e.target.value) }}></Name>
+			<Name value={name} onChange={(e: any) => { setName(e.target.value) }}></Name>
 			<Button onClick={() => 
 			{
 				if (project)
 				{
-					project.SetName(name)
+					project.setName(name)
 				}
 				else
 				{
-					DataApi.CreateProject({name})
+					DataApi.createProject({name})
 				}
-				OnSave && OnSave()
+				onSave && onSave()
 			}}>Save & Close</Button>
 		</ProjectEditorLayout>
 	)

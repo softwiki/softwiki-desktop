@@ -1,4 +1,4 @@
-import { HandleWindowEvent } from "utils";
+import { handleWindowEvent } from "utils";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Popup from "./Popup";
@@ -28,8 +28,8 @@ interface ContextMenuProps
 
 export function ContextMenu({children, trigger, useLeftClick = false, absolutePosition}: ContextMenuProps)
 {
-	const [show, SetShow] = useState(false);
-	const [position, SetPosition] = useState({x: 0, y: 0});
+	const [show, setShow] = useState(false);
+	const [position, setPosition] = useState({x: 0, y: 0});
 
 	const contextMenuRef = useRef<HTMLDivElement>(null);
 
@@ -37,38 +37,38 @@ export function ContextMenu({children, trigger, useLeftClick = false, absolutePo
 	{
 		if (!trigger)
 			return
-		const HandleMouseEvent = (e: any) => 
+		const handleMouseEvent = (e: any) => 
 		{
 			if (e.type === "contextmenu" && trigger.current.contains(e.target))
 			{
-				SetPosition({x: e.clientX + 1, y: e.clientY + 1})
-				SetShow(true)
+				setPosition({x: e.clientX + 1, y: e.clientY + 1})
+				setShow(true)
 			}
 
 			if (useLeftClick && e.type === "mousedown" && !show && trigger.current.contains(e.target))
 			{
-				SetPosition({x: e.clientX + 1, y: e.clientY + 1})
-				SetShow(true)
+				setPosition({x: e.clientX + 1, y: e.clientY + 1})
+				setShow(true)
 			}
 
 			if (e.type === "mousedown" && show && contextMenuRef.current && !contextMenuRef.current.contains(e.target))
 			{
-				SetShow(false)
+				setShow(false)
 			}
 		}
-		const contextMenuEvent = HandleWindowEvent("contextmenu", HandleMouseEvent)
-		const clickOutsideEvent = HandleWindowEvent("mousedown", HandleMouseEvent)
+		const contextMenuEvent = handleWindowEvent("contextmenu", handleMouseEvent)
+		const clickOutsideEvent = handleWindowEvent("mousedown", handleMouseEvent)
 		return (() => 
 		{
-			contextMenuEvent.Delete()
-			clickOutsideEvent.Delete()
+			contextMenuEvent.delete()
+			clickOutsideEvent.delete()
 		})
 	}, [trigger, show, useLeftClick])
 
 	return (
 		<ContextMenuLayout ref={contextMenuRef}>
 			<Popup position={absolutePosition ? absolutePosition : {left: `${position.x}px`, top: `${position.y}px`}} show={show} hideDefaultBackground>
-				<ContextMenuItems onClick={() => { SetShow(false) }}>
+				<ContextMenuItems onClick={() => { setShow(false) }}>
 					{children}
 				</ContextMenuItems>
 			</Popup>

@@ -34,50 +34,50 @@ const FiltersIcon = styled.img`
 interface TagsFilterArguments
 {
 	tags: Tag[]
-	OnChange: (tags: Tag[]) => void
+	onChange: (tags: Tag[]) => void
 }
 
-export default function TagsFilter({tags, OnChange}: TagsFilterArguments)
+export default function TagsFilter({tags, onChange}: TagsFilterArguments)
 {
-	const [showPopup, SetShowPopup] = useState<boolean>(false)
-	const [selectedTags, SetSelectedTags] = useState<Tag[]>([])
+	const [showPopup, setShowPopup] = useState<boolean>(false)
+	const [selectedTags, setSelectedTags] = useState<Tag[]>([])
 	
-	const IsSelected = (tag: Tag): boolean => 
+	const isSelected = (tag: Tag): boolean => 
 	{
-		return selectedTags.find((selectedTag: Tag) => tag.Id() === selectedTag.Id()) !== undefined
+		return selectedTags.find((selectedTag: Tag) => tag.getId() === selectedTag.getId()) !== undefined
 	}
 
-	const ToggleTag = (tag: Tag) => 
+	const toggleTag = (tag: Tag) => 
 	{
 		const tagsSelection = [...selectedTags]
-		if (!IsSelected(tag))
+		if (!isSelected(tag))
 		{
 			tagsSelection.push(tag)
 		}
 		else
 		{
-			tagsSelection.splice(tagsSelection.findIndex((selectedTag: Tag) => tag.Id() === selectedTag.Id()))
+			tagsSelection.splice(tagsSelection.findIndex((selectedTag: Tag) => tag.getId() === selectedTag.getId()))
 		}
 
-		SetSelectedTags(tagsSelection)
-		OnChange(tagsSelection)
+		setSelectedTags(tagsSelection)
+		onChange(tagsSelection)
 	}
 
 	return (
 		<TagsFilterLayout>
-			<FilsterIconnWrapper onClick={() => { SetShowPopup(!showPopup) }}>
+			<FilsterIconnWrapper onClick={() => { setShowPopup(!showPopup) }}>
 				<FiltersIcon src={filtersImage}/>
 			</FilsterIconnWrapper>
 			
-			<Popup show={showPopup} OnClickOutside={() => { setTimeout(() => {SetShowPopup(false)}) }}>
+			<Popup show={showPopup} onClickOutside={() => { setTimeout(() => {setShowPopup(false)}) }}>
 				{
 					tags.map((tag: Tag) => 
 					{
 						return (
 							<TagCardWrapper>
 								<TagCard
-									OnClick={() => { ToggleTag(tag) }}
-									style={{opacity: IsSelected(tag) ? "1" : "0.5", flex: "1"}}
+									onClick={() => { toggleTag(tag) }}
+									style={{opacity: isSelected(tag) ? "1" : "0.5", flex: "1"}}
 									tag={tag}/>
 							</TagCardWrapper>
 						)

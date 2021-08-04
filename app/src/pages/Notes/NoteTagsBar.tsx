@@ -26,20 +26,20 @@ export default function NoteTagsBar()
 {
 	const selectedNote = useSelectedNote()
 	const note = selectedNote.note
-	const [addTagWidget, SetAddTagWidget] = useState<boolean>(false)
+	const [addTagWidget, setAddTagWidget] = useState<boolean>(false)
 
 	if (!note) return <></>
 
 	return (
 		<TagsBarLayout>
 			{
-				note.GetTags().map((tag: Tag) => 
+				note.getTags().map((tag: Tag) => 
 				{
 					return <TagCard
-						key={tag.Id()}
+						key={tag.getId()}
 						tag={tag}
 						style={{marginRight: "8px"}}
-						OnCrossClick={() => {note.RemoveTag(tag)}}
+						onCrossClick={() => {note.removeTag(tag)}}
 					/>
 				})
 			}
@@ -50,18 +50,18 @@ export default function NoteTagsBar()
 					onClick={() => 
 					{
 						if (!addTagWidget)
-							SetAddTagWidget(true)
+							setAddTagWidget(true)
 					}
 					}>
 					+ Add Tag
 				</AddTagButton>
-				<Popup show={addTagWidget} OnClickOutside={() => { setTimeout(() => {SetAddTagWidget(false)}) }}>
+				<Popup show={addTagWidget} onClickOutside={() => { setTimeout(() => {setAddTagWidget(false)}) }}>
 					<TagChooser
 						OnTagSelected={(tag: Tag) => 
 						{
-							if (note.HasTag(tag))
+							if (note.hasTag(tag))
 								return ;
-							note.AddTag(tag)
+							note.addTag(tag)
 						}}
 					/>
 				</Popup>

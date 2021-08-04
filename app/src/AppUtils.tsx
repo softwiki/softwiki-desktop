@@ -4,7 +4,7 @@ import { useState } from "react"
 
 class AppUtilsControllerClass
 {
-	public PopConfirmationBox = (text: string, yesFunc?: () => void | undefined, noFunc?: () => void | undefined) => {}
+	public popConfirmationBox = (text: string, yesFunc?: () => void | undefined, noFunc?: () => void | undefined) => {}
 }
 
 export const AppUtilsController = new AppUtilsControllerClass()
@@ -20,17 +20,17 @@ export function AppUtils()
 
 function ConfirmationBox()
 {
-	const [showMessageBox, SetShowMessageBox] = useState(false)
-	const [messageBoxText, SetMessageBoxText] = useState("")
-	const [yesFunction, SetYesFunction] = useState<(() => void) | undefined>(undefined)
-	const [noFunction, SetNoFunction] = useState<(() => void) | undefined>(undefined)
+	const [showMessageBox, setShowMessageBox] = useState(false)
+	const [messageBoxText, setMessageBoxText] = useState("")
+	const [yesFunction, setYesFunction] = useState<(() => void) | undefined>(undefined)
+	const [noFunction, setNoFunction] = useState<(() => void) | undefined>(undefined)
 
-	AppUtilsController.PopConfirmationBox = (text: string, yesFunc?: () => void | undefined, noFunc?: () => void | undefined) => 
+	AppUtilsController.popConfirmationBox = (text: string, yesFunc?: () => void | undefined, noFunc?: () => void | undefined) => 
 	{
-		SetMessageBoxText(text)
-		SetYesFunction(() => yesFunc)
-		SetNoFunction(() => noFunc)
-		SetShowMessageBox(true)
+		setMessageBoxText(text)
+		setYesFunction(() => yesFunc)
+		setNoFunction(() => noFunc)
+		setShowMessageBox(true)
 	}
 
 	return (
@@ -43,12 +43,12 @@ function ConfirmationBox()
 							yesFunction={() => 
 							{ 
 								yesFunction && yesFunction()
-								SetShowMessageBox(false)
+								setShowMessageBox(false)
 							}}
 							noFunction={() => 
 							{ 
 								noFunction && noFunction()
-								SetShowMessageBox(false)
+								setShowMessageBox(false)
 							}}
 						/>
 					</Modal>

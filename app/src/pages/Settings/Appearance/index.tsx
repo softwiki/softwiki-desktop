@@ -20,56 +20,56 @@ const AppearanceSettingsLayout = styled.div`
 `
 export default function Appearance()
 {
-	const {theme, SetTheme, font, SetFont} = useContext(ConfigContext)
+	const {theme, selectTheme, font, selectFont} = useContext(ConfigContext)
 
-	const [tmpFont, SetTmpFont] = useState(font.family)
-	const [tmpFontSize, SetTmpFontSize] = useState(font.size)
+	const [temporaryFont, setTemporaryFont] = useState(font.family)
+	const [temporaryFontSize, setTemporaryFontSize] = useState(font.size)
 
-	const fontRef = useRef(tmpFont)
-	const fontSizeRef = useRef(tmpFontSize)
+	const fontRef = useRef(temporaryFont)
+	const fontSizeRef = useRef(temporaryFontSize)
 
-	fontRef.current = tmpFont
-	fontSizeRef.current = tmpFontSize
+	fontRef.current = temporaryFont
+	fontSizeRef.current = temporaryFontSize
 	
-	const HandleThemeChange = (e: ChangeEvent<HTMLSelectElement>) =>
+	const handleThemeChange = (e: ChangeEvent<HTMLSelectElement>) =>
 	{
-		SetTheme(e.target.value)
+		selectTheme(e.target.value)
 	}
 
-	const HandleFontChange = (e: ChangeEvent<HTMLInputElement>) =>
+	const handleFontChange = (e: ChangeEvent<HTMLInputElement>) =>
 	{
-		SetTmpFont(e.target.value)
-		Event.Run(AppearanceEvent.FontChanged, {font: e.target.value})
+		setTemporaryFont(e.target.value)
+		Event.run(AppearanceEvent.FontChanged, {font: e.target.value})
 	}
 
-	const HandleFontSizeChange = (e: ChangeEvent<HTMLInputElement>) =>
+	const handleFontSizeChange = (e: ChangeEvent<HTMLInputElement>) =>
 	{
 		const fontSize: number = parseInt(e.target.value)
-		SetTmpFontSize(fontSize)
-		Event.Run(AppearanceEvent.FontSizeChanged, {fontSize})
+		setTemporaryFontSize(fontSize)
+		Event.run(AppearanceEvent.FontSizeChanged, {fontSize})
 	}
 
 	useEffect(() => 
 	{
 		return () => 
 		{
-			SetFont({family: fontRef.current, size: fontSizeRef.current})
+			selectFont({family: fontRef.current, size: fontSizeRef.current})
 		}
-	}, [SetFont])
+	}, [selectFont])
 
 	return (
 		<AppearanceSettingsLayout>
 			<Line>
 				<LineTitle>Font</LineTitle>
-				<Input value={tmpFont} onChange={HandleFontChange}/>
+				<Input value={temporaryFont} onChange={handleFontChange}/>
 			</Line>
 			<Line>
 				<LineTitle>Font Size</LineTitle>
-				<Input type="number" value={tmpFontSize} onChange={HandleFontSizeChange}/>
+				<Input type="number" value={temporaryFontSize} onChange={handleFontSizeChange}/>
 			</Line>
 			<Line>
 				<LineTitle>Theme</LineTitle>
-				<ComboBox onChange={HandleThemeChange}>
+				<ComboBox onChange={handleThemeChange}>
 					{
 						themesName.map((themeName: string) => 
 						{
