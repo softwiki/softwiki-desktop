@@ -7,7 +7,7 @@ export default styled.input`
 	padding-right: 8px;
 
 	border: none;
-	background-color: ${({theme}) => theme.input.backgroundColor};
 	border-radius: 4px;
+	background-color: ${({theme}) => theme.input.backgroundColor};
 	color: ${({theme}) => theme.input.textColor};
 `

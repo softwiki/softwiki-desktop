@@ -39,8 +39,15 @@ class AppConfig
 
 	private async _load(): Promise<void>
 	{
-		const data = await readFile("cfg.json")
-		this._cfg = JSON.parse(data)
+		try
+		{
+			const data = await readFile("cfg.json")
+			this._cfg = JSON.parse(data)
+		}
+		catch (e: any)
+		{
+			console.log(e)
+		}
 	}
 }
 

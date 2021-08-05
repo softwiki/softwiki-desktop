@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { useContext, useRef, useState } from "react"
-import { DataContext } from "Data"
+import { DataContext, useData } from "Data"
 import { Project } from "softwiki-core/models/Project"
 import DataApi from "softwiki-core/data/DataApi"
 import Modal from "components/Modal"
@@ -53,9 +53,14 @@ interface ProjectsProps {
 
 export default function Projects(props: ProjectsProps)
 {
-	const {projects} = useContext(DataContext)
+	const {projects} = useData();
 	const [showNewProjectModal, setShowNewProjectModal] = useState<boolean>(false)
 	const [currentProjectEdit, setCurrentProjectEdit] = useState<Project | undefined>(undefined)
+
+	projects.sort((a: Project, b: Project) =>
+	{
+		return a.getName() > b.getName() ? 1 : -1;
+	});
 
 	return (
 		<ProjectsLayout>

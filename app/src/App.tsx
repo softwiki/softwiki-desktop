@@ -15,36 +15,47 @@ interface GlobalStyleProps {
 }
 
 const GloabalStyle = createGlobalStyle<GlobalStyleProps>`
-  html {
-    font-family: ${(props) => props.font};
-    font-size: ${(props) => props.fontSize}px;
-  }
+	html
+	{
+		font-family: ${(props) => props.font};
+		font-size: ${(props) => props.fontSize}px;
+	}
 
-  body {
-    margin: 0;
-    height: 100vh;
+	textarea
+	{
+		font-size: ${(props) => props.fontSize}px;
+		font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+	}
 
-    background-color: grey;
-    color: white;
-  }
+	body
+	{
+		margin: 0;
+		height: 100vh;
 
-  *:focus {
-    outline: none;
-  }
+		background-color: grey;
+		color: white;
+	}
 
-  *::-webkit-scrollbar {
+	*:focus
+	{
+		outline: none;
+	}
+
+	*::-webkit-scrollbar {
 		width: 6px;
 	}
-	 
-	*::-webkit-scrollbar-thumb {
+		
+	*::-webkit-scrollbar-thumb
+	{
 		border-radius: 10px;
 		background-color: rgba(0,0,0,0.25); 
 	}
 
-  a {
-    color: cyan;
-    text-decoration: none;
-  }
+	a
+	{
+		color: cyan;
+		text-decoration: none;
+	}
 `
 
 const AppLayout = styled.div`

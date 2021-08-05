@@ -7,8 +7,8 @@ const TextAreaLayout = styled.textarea`
 
 	border: none;
 	border-radius: 4px;
-	background-color: rgb(75, 75, 75);
-	color: white;
+	background-color: ${({theme}) => theme.input.backgroundColor};
+	color: ${({theme}) => theme.input.textColor};
 `
 
 export default function Input(props: any)

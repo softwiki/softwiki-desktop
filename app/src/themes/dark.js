@@ -8,7 +8,7 @@ export const dark = {
 		list: {
 			backgroundColor: "rgb(60, 60, 60)",
 			cardColor: "rgb(95, 95, 95)",
-			cardColorHover: "rgb(100, 100, 100)",
+			cardColorHover: "rgb(70, 70, 70)",
 			cardTextColor: "white",
 			colorBorderColor: "rgba(100, 100, 100, 1)"
 		},
@@ -35,7 +35,7 @@ export const dark = {
 	},
 	input: {
 		backgroundColor: "rgb(75, 75, 75)",
-		textColor: "white"
+		textColor: "rgb(200, 200, 200)"
 	},
 	comboBox: {
 		backgroundColor: "rgb(50, 50, 50)",
