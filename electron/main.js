@@ -6,6 +6,7 @@
 
 const { app, BrowserWindow, shell } = require('electron')
 const path = require('path')
+require('@electron/remote/main').initialize()
 
 function createWindow () {
 	const isDev = process.env["NODE_ENV"] === "development"

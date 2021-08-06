@@ -55,7 +55,7 @@ export default function Appearance()
 		{
 			selectFont({family: fontRef.current, size: fontSizeRef.current})
 		}
-	}, [selectFont])
+	}, [])
 
 	return (
 		<AppearanceSettingsLayout>

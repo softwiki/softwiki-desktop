@@ -1,11 +1,8 @@
-import { writeFile, readFile } from "softwiki-core"
+import { writeFile, readFile, getDefaultBasePath } from "softwiki-core"
 import Event from "softwiki-core/services/EventService"
 import React, { useEffect } from "react"
 import { useState } from "react"
 import * as themes from "themes"
-
-console.log("Themes")
-console.log(themes)
 
 export enum ConfigEvent {
 	SET = "ConfigEvent.Set"
@@ -34,14 +31,14 @@ class AppConfig
 
 	private async _save(): Promise<void>
 	{
-		await writeFile("cfg.json", JSON.stringify(this._cfg, null, 4))
+		await writeFile(getDefaultBasePath() + "/cfg.json", JSON.stringify(this._cfg, null, 4))
 	}
 
 	private async _load(): Promise<void>
 	{
 		try
 		{
-			const data = await readFile("cfg.json")
+			const data = await readFile(getDefaultBasePath() + "/cfg.json")
 			this._cfg = JSON.parse(data)
 		}
 		catch (e: any)
