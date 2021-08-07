@@ -1,8 +1,21 @@
-import DataApi, { DataApiClass, DataEvent } from "softwiki-core/data/DataApi";
+import { SoftWikiApi, JsonProvider, DataEvent } from "softwiki-core";
 import { Note, Tag } from "softwiki-core/models";
-import { Project } from "softwiki-core/models/Project";
+import { Project } from "softwiki-core/models";
 import React, { useContext, useEffect, useState } from "react";
-import Event from "softwiki-core/services/EventService";
+import { getDefaultBasePath, readFile, writeFile } from "files";
+
+const api = new SoftWikiApi({
+	provider: new JsonProvider(
+		async (content: string) =>
+		{
+			await writeFile(getDefaultBasePath() + "/db.json", content);
+		},
+		async () =>
+		{
+			return await readFile(getDefaultBasePath() + "/db.json");
+		}
+	)
+}); 
 
 interface DataContextProps
 {
@@ -10,7 +23,7 @@ interface DataContextProps
 	notes: Note[]
 	tags: Tag[]
 	projects: Project[]
-	api: DataApiClass
+	api: SoftWikiApi
 }
 
 export const DataContext = React.createContext<DataContextProps>({
@@ -18,7 +31,7 @@ export const DataContext = React.createContext<DataContextProps>({
 	notes: [],
 	tags: [],
 	projects: [],
-	api: DataApi
+	api: {} as SoftWikiApi // Is it dirty ?
 });
 
 interface FetchDataResult
@@ -30,9 +43,9 @@ interface FetchDataResult
 
 async function fetchData(): Promise<FetchDataResult>
 {
-	const notes = DataApi.getNotes();
-	const tags = DataApi.getTags();
-	const projects = DataApi.getProjects();
+	const notes = api.getNotes();
+	const tags = api.getTags();
+	const projects = api.getProjects();
 	return {notes, tags, projects};
 }
 
@@ -48,7 +61,7 @@ export function Data({children}: DataProps)
 
 	useEffect(() => 
 	{
-		DataApi.setup().then(() => 
+		api.setup().then(() => 
 		{
 			fetchData().then((data: FetchDataResult) => 
 			{				
@@ -58,7 +71,7 @@ export function Data({children}: DataProps)
 		});
 	}, []);
 
-	Event.subscribe(DataEvent.NotesUpdated, "Data.NotesUpdated", () => 
+	api.subscribe(DataEvent.NotesUpdated, "Data.NotesUpdated", () => 
 	{
 		fetchData().then((data: FetchDataResult) => 
 		{				
@@ -66,7 +79,7 @@ export function Data({children}: DataProps)
 		});
 	});
 
-	Event.subscribe(DataEvent.TagsUpdated, "Data.TagsUpdated", () => 
+	api.subscribe(DataEvent.TagsUpdated, "Data.TagsUpdated", () => 
 	{
 		fetchData().then((data: FetchDataResult) => 
 		{				
@@ -74,7 +87,7 @@ export function Data({children}: DataProps)
 		});
 	});
 
-	Event.subscribe(DataEvent.ProjectsUpdated, "Data.ProjectsUpdated", () => 
+	api.subscribe(DataEvent.ProjectsUpdated, "Data.ProjectsUpdated", () => 
 	{
 		fetchData().then((data: FetchDataResult) => 
 		{				
@@ -83,7 +96,7 @@ export function Data({children}: DataProps)
 	});
 
 	return (
-		<DataContext.Provider value={{...data, available: dataAvailable, api: DataApi}}>
+		<DataContext.Provider value={{...data, available: dataAvailable, api}}>
 			{children}
 		</DataContext.Provider>
 	);

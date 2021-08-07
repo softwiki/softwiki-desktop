@@ -2,13 +2,13 @@ import styled from "styled-components"
 import {useRef} from "react"
 
 import Button from "components/Button"
-import {AppUtilsController} from "AppUtils"
 
 import menuIconHorizontale from "images/menuButton_horizontale.png"
 import {useSelectedNote} from "./SelectedNote"
 import {ContextMenu, ContextMenuItem, ContextMenuSpacer} from "components/ContextMenu"
 import { useData } from "Data";
-import { Project } from "softwiki-core/models/Project";
+import { Project } from "softwiki-core/models";
+import { useNotification } from "notifications/confirmationMessage";
 
 const ActionBarLayout = styled.div`
 
@@ -72,6 +72,7 @@ export default function ActionBar()
 	const contextMenuTrigger = useRef(null)
 	const projectContextMenuTrighger = useRef(null)
 	const { projects } = useData()
+	const { popConfirmationMessage } = useNotification();
 
 	return (
 		<ActionBarLayout>
@@ -138,10 +139,13 @@ export default function ActionBar()
 					<ContextMenuSpacer/>
 					<ContextMenuItem value="Delete" textColor="rgb(200, 100, 100)" action={() => 
 					{
-						AppUtilsController.popConfirmationBox(`Do you really want to delete the note "${selectedNote.note?.getTitle()}" ?`, () => 
-						{
-							selectedNote.delete()
-						})
+						popConfirmationMessage(
+							`Do you really want to delete the note "${selectedNote.note?.getTitle()}" ?`,
+							() =>
+							{
+								selectedNote.delete()
+							}
+						)
 					}}/>
 				</ContextMenu>
 			</div>

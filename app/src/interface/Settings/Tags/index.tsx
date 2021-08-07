@@ -1,12 +1,11 @@
 import Button from "components/Button"
 import { Color, Tag } from "softwiki-core/models"
-import { useContext, useState } from "react"
+import { useState } from "react"
 import styled from "styled-components"
 
 import TagEditor from "./TagEditor"
-import { AppUtilsController } from "AppUtils"
-import { DataContext } from "Data"
-import DataApi from "softwiki-core/data/DataApi"
+import { useData } from "Data"
+import { useNotification } from "notifications/confirmationMessage";
 
 const TagsSettingsLayout = styled.div`
 
@@ -23,7 +22,8 @@ export default function TagsSettings()
 	const [newTagColor, setNewTagColor] = useState<Color>({r: 0, g: 0, b: 0, a: 1})
 	const [showNewTagField, setShowNewTagField] = useState<boolean>(false)
 
-	const { tags } = useContext(DataContext)
+	const { tags, api } = useData()
+	const { popConfirmationMessage } = useNotification();
 
 	return (
 		<TagsSettingsLayout>
@@ -40,7 +40,7 @@ export default function TagsSettings()
 						}}
 						onDelete={() => 
 						{
-							AppUtilsController.popConfirmationBox(`Do you really want to delete the tag "${tag.getName()}" ?`, () => 
+							popConfirmationMessage(`Do you really want to delete the tag "${tag.getName()}" ?`, () => 
 							{
 								tag.delete()
 							})
@@ -56,7 +56,7 @@ export default function TagsSettings()
 						initialColor={newTagColor}
 						onNameChange={async (name: string, color: Color) => 
 						{
-							DataApi.createTag({name, color})
+							api.createTag({name, color})
 							setNewTagColor({...newTagColor})
 							setShowNewTagField(false)
 						}}

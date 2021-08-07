@@ -2,12 +2,12 @@ import { useContext } from "react";
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components"
 import { Helmet } from "react-helmet"
 
-import SideBar from "./SideBar"
+import SideBar from "./interface/SideBar"
 import NotesModule from "./interface/Notes"
 
-import { AppUtils } from "AppUtils"
 import { Data } from "Data";
 import { ConfigContext } from "Config";
+import { Notifications } from "notifications/confirmationMessage";
 
 interface GlobalStyleProps {
 	font: string
@@ -76,11 +76,12 @@ function App()
 			</Helmet>
 			<ThemeProvider theme={theme.appearance}>
 				<Data>
-					<SideBar/>
-					<NotesModule/>
+					<Notifications>
+						<SideBar/>
+						<NotesModule/>
+					</Notifications>
 				</Data>
 				<GloabalStyle font={font.family} fontSize={font.size} />
-				<AppUtils />
 			</ThemeProvider>
 		</AppLayout>
 	);

@@ -1,9 +1,9 @@
-import DataApi from "softwiki-core/data/DataApi";
-import { Project } from "softwiki-core/models/Project";
+import { Project } from "softwiki-core/models";
 import { useState } from "react";
 import styled from "styled-components";
 import Button from "./Button";
 import Input from "./Input";
+import { useData } from "Data";
 
 const ProjectEditorLayout = styled.div`
 
@@ -22,6 +22,7 @@ interface ProjectEditorProps
 export default function ProjectEditor({project, onSave: onSave}: ProjectEditorProps)
 {
 	const [name, setName] = useState(project ? project.getName() : "Untitled")
+	const { api } = useData();
 
 	return (
 		<ProjectEditorLayout>
@@ -34,7 +35,7 @@ export default function ProjectEditor({project, onSave: onSave}: ProjectEditorPr
 				}
 				else
 				{
-					DataApi.createProject({name})
+					api.createProject({name})
 				}
 				onSave && onSave()
 			}}>Save & Close</Button>

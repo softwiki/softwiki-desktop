@@ -1,12 +1,11 @@
 import styled from "styled-components"
-import { useContext, useRef, useState } from "react"
-import { DataContext, useData } from "Data"
-import { Project } from "softwiki-core/models/Project"
-import DataApi from "softwiki-core/data/DataApi"
+import { useRef, useState } from "react"
+import { useData } from "Data"
+import { Project } from "softwiki-core/models"
 import Modal from "components/Modal"
 import ProjectEditor from "components/ProjectEditor"
 import { ContextMenu, ContextMenuItem, ContextMenuSpacer } from "components/ContextMenu"
-import { AppUtilsController } from "AppUtils"
+import { useNotification } from "notifications/confirmationMessage";
 
 const ProjectsLayout = styled.div`
 	display: flex;
@@ -54,6 +53,7 @@ interface ProjectsProps {
 export default function Projects(props: ProjectsProps)
 {
 	const {projects} = useData();
+	const { popConfirmationMessage } = useNotification();
 	const [showNewProjectModal, setShowNewProjectModal] = useState<boolean>(false)
 	const [currentProjectEdit, setCurrentProjectEdit] = useState<Project | undefined>(undefined)
 
@@ -89,7 +89,7 @@ export default function Projects(props: ProjectsProps)
 							}}
 							onDelete={() => 
 							{
-								AppUtilsController.popConfirmationBox(`Do you really want to delete the project "${project.getName()}" ?`, () => 
+								popConfirmationMessage(`Do you really want to delete the project "${project.getName()}" ?`, () => 
 								{
 									project.delete()
 								})
@@ -164,9 +164,10 @@ interface ProjectCardProps
 function ProjectCard({project, selected = false, onClick, onEdit, onDelete}: ProjectCardProps)
 {
 	const contextMenuTrigger = useRef(null)
+	const { api } = useData();
 
 	const name = project ? project.getName() : "All"
-	const count = project ? project.getNoteCount() : DataApi.getNotes().length
+	const count = project ? project.getNoteCount() : api.getNotes().length
 
 	return (
 		<ProjectCardWrapper>

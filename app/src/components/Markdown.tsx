@@ -5,7 +5,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { tomorrow } from "react-syntax-highlighter/dist/cjs/styles/prism"
 
 const components = {
-	code({node, inline, className, children, ...props}: any) 
+	code({/*node, */inline, className, children, ...props}: any) 
 	{
 		const match = /language-(\w+)/.exec(className || "") || ""
 		if (!inline)

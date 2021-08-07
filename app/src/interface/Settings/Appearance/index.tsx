@@ -4,7 +4,6 @@ import { ComboBox, ComboBoxItem } from "components/ComboBox"
 
 import * as themes from "themes"
 import Input from "components/Input"
-import Event from "softwiki-core/services/EventService"
 import { ConfigContext } from "Config"
 
 export enum AppearanceEvent
@@ -39,14 +38,12 @@ export default function Appearance()
 	const handleFontChange = (e: ChangeEvent<HTMLInputElement>) =>
 	{
 		setTemporaryFont(e.target.value)
-		Event.run(AppearanceEvent.FontChanged, {font: e.target.value})
 	}
 
 	const handleFontSizeChange = (e: ChangeEvent<HTMLInputElement>) =>
 	{
 		const fontSize: number = parseInt(e.target.value)
 		setTemporaryFontSize(fontSize)
-		Event.run(AppearanceEvent.FontSizeChanged, {fontSize})
 	}
 
 	useEffect(() => 

@@ -1,6 +1,6 @@
-import { handleWindowEvent } from "utils"
 import { useEffect, useRef } from "react"
 import styled from "styled-components"
+import { handleWindowEvent } from "utils";
 
 const ModalLayout = styled.div`
 

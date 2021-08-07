@@ -3,10 +3,10 @@ import {useState} from "react"
 
 import NoteList from "./NoteList"
 import NoteViewer from "./NoteViewer"
-import DataApi from "softwiki-core/data/DataApi"
 import Projects from "./ProjectList"
-import { Project } from "softwiki-core/models/Project"
+import { Project } from "softwiki-core/models"
 import { SelectedNote, useSelectedNote } from "./SelectedNote"
+import { useData } from "Data";
 
 const NotesLayout = styled.div`
 	display: flex;
@@ -48,12 +48,13 @@ export default function NotesPage()
 function NotePageWrapper()
 {
 	const selectedNote = useSelectedNote()
+	const { api } = useData();
 
 	const [selectedProject, setSelectedProject] = useState<Project | undefined>()
 	
 	const createNote = async () => 
 	{
-		await DataApi.createNote({
+		await api.createNote({
 			title: "Untitled",
 			content: "Your amazing note content",
 			tags: [], project: selectedProject ? selectedProject.getId() : undefined

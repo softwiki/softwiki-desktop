@@ -1,5 +1,4 @@
-import { writeFile, readFile, getDefaultBasePath } from "softwiki-core"
-import Event from "softwiki-core/services/EventService"
+import { writeFile, readFile, getDefaultBasePath } from "files"
 import React, { useEffect } from "react"
 import { useState } from "react"
 import * as themes from "themes"
@@ -19,9 +18,8 @@ class AppConfig
 
 	public set(key: string, value: any): void
 	{
-		this._cfg[key] = value
-		this._save()
-		Event.run(ConfigEvent.SET, {key, value})
+		this._cfg[key] = value;
+		this._save();
 	}
 
 	public async loadConfig(): Promise<void>

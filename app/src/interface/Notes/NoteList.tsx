@@ -6,7 +6,7 @@ import TagsFilter from "./TagsFilter"
 import { ChangeEvent, useState } from "react"
 import HorizontalLineSpacer from "components/HorizontalLineSpacer"
 import SortOrderWidget, { SortOrder } from "./SortOrder"
-import { Project } from "softwiki-core/models/Project"
+import { Project } from "softwiki-core/models"
 import { useData } from "Data"
 import { useSelectedNote } from "./SelectedNote"
 
