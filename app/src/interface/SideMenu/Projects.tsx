@@ -5,57 +5,27 @@ import { Project } from "softwiki-core/models"
 import Modal from "components/Modal"
 import ProjectEditor from "components/ProjectEditor"
 import { ContextMenu, ContextMenuItem, ContextMenuSpacer } from "components/ContextMenu"
-import { useNotification } from "notifications/confirmationMessage";
+import { useNotification } from "notifications";
+import { Header } from "./common";
+import { useGlobalState } from "GlobalState";
+import AddButton from "components/AddButton";
 
 const ProjectsLayout = styled.div`
-	display: flex;
-	flex-direction: column;
-
-	background-color: ${({theme}) => theme.projects.list.backgroundColor};
-`
-
-const Header = styled.div`
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-
-	background-color: ${({theme}) => theme.projects.list.headerColor};
-	padding: 8px;
-`
-
-const ProjectsWrapper = styled.div`
-	padding: 8px;
-`
-
-const AddButton = styled.button`
-	background: none;
-	color: ${({theme}) => theme.notes.list.cardColor};
-	border: 2px solid ${({theme}) => theme.notes.list.cardColor};
-	border-radius: 4px;
-
-	font-weight: bold;
-
 	cursor: pointer;
-	margin-left: 16px;
-
-	&:hover
-	{
-		color: ${({theme}) => theme.notes.list.cardColorHover};
-		border: 2px solid ${({theme}) => theme.notes.list.cardColorHover};
-	}
 `
 
-interface ProjectsProps {
-	onProjectChanged: (project: Project | undefined) => void
-	selectedProject?: Project | undefined
-}
+const ProjectsCard = styled.div`
+	padding: 8px;
+`
 
-export default function Projects(props: ProjectsProps)
+export default function Projects()
 {
 	const {projects} = useData();
-	const { popConfirmationMessage } = useNotification();
+	const {popConfirmationMessage} = useNotification();
 	const [showNewProjectModal, setShowNewProjectModal] = useState<boolean>(false)
 	const [currentProjectEdit, setCurrentProjectEdit] = useState<Project | undefined>(undefined)
+
+	const {selectedProject, selectProject} = useGlobalState();
 
 	projects.sort((a: Project, b: Project) =>
 	{
@@ -69,21 +39,21 @@ export default function Projects(props: ProjectsProps)
 					<ProjectEditor project={currentProjectEdit} onSave={() => { setShowNewProjectModal(false) }}/>
 				</Modal> : ""}
 			<Header>
-				Projects
-				<AddButton onClick={() => { setShowNewProjectModal(true) }}>+</AddButton>
+				<span>Projects</span>
+				<AddButton onClick={() => { setShowNewProjectModal(true) }}/>
 			</Header>
-			<ProjectsWrapper>
-				<ProjectCard selected={props.selectedProject === undefined} project={undefined} onClick={() => { props.onProjectChanged(undefined) }}/>
+			<ProjectsCard>
+				<ProjectCard selected={selectedProject === null} project={undefined} onClick={() => { selectProject(null) }}/>
 				{projects.map((project: Project) => 
 				{
 					return (
 						<ProjectCard
 							key={project.getId()}
 							project={project}
-							selected={props.selectedProject?.getId() === project.getId()}
-							onClick={() => { props.onProjectChanged(project) }}
+							selected={project.getId() === selectedProject?.getId()}
+							onClick={() => { selectProject(project) }}
 							onEdit={() => 
-							{ 
+							{
 								setCurrentProjectEdit(project)
 								setShowNewProjectModal(true)
 							}}
@@ -97,8 +67,7 @@ export default function Projects(props: ProjectsProps)
 						/>
 					)
 				})}
-			</ProjectsWrapper>
-			
+			</ProjectsCard>	
 		</ProjectsLayout>
 	)
 }
@@ -125,7 +94,7 @@ const ProjectCardLayout = styled.div<ProjectCardLayoutProps>`
 
 	cursor: pointer;
 
-	transition-duration: 0.25s;
+	//transition-duration: 0.10s;
 
 	:not(:last-child)
 	{
@@ -134,10 +103,10 @@ const ProjectCardLayout = styled.div<ProjectCardLayoutProps>`
 
 	&:hover
 	{
-		background-color: ${({theme}) => theme.projects.card.backgroundColorHover}
+		background-color: ${({theme}) => theme.projects.card.colorHover}
 	}
 
-	${({selected, theme}) => selected ? `background-color: ${theme.projects.card.backgroundColorSelected}` : ""};
+	${({selected, theme}) => selected ? `background-color: ${theme.projects.card.colorSelected}` : ""};
 `
 
 const ProjectName = styled.h3`

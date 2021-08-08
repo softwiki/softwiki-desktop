@@ -7,7 +7,9 @@ import NotesModule from "./interface/Notes"
 
 import { Data } from "Data";
 import { ConfigContext } from "Config";
-import { Notifications } from "notifications/confirmationMessage";
+import { Notifications } from "notifications";
+import SideMenu from "interface/SideMenu";
+import { GlobalState } from "GlobalState";
 
 interface GlobalStyleProps {
 	font: string
@@ -76,10 +78,13 @@ function App()
 			</Helmet>
 			<ThemeProvider theme={theme.appearance}>
 				<Data>
-					<Notifications>
-						<SideBar/>
-						<NotesModule/>
-					</Notifications>
+					<GlobalState>
+						<Notifications>
+							<SideBar/>
+							<SideMenu/>
+							<NotesModule/>
+						</Notifications>
+					</GlobalState>
 				</Data>
 				<GloabalStyle font={font.family} fontSize={font.size} />
 			</ThemeProvider>

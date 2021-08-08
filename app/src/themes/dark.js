@@ -1,52 +1,56 @@
 export const dark = {
 	name: "Dark",
 	sideBar: {
-		backgroundColor: "rgb(50, 50, 50)",
-		iconBackgroundColorHover: "rgb(200, 200, 200)"
+		color: "rgb(50, 50, 50)",
+		colorHover: "rgb(75, 75, 75)"
 	},
 	notes: {
 		list: {
-			backgroundColor: "rgb(60, 60, 60)",
-			cardColor: "rgb(95, 95, 95)",
+			color: "rgb(60, 60, 60)",
 			cardColorHover: "rgb(70, 70, 70)",
 			cardTextColor: "white",
-			colorBorderColor: "rgba(100, 100, 100, 1)"
+			cardDelimiterColor: "rgba(100, 100, 100, 1)"
 		},
 		content: {
-			backgroundColor: "rgb(50, 50, 50)",
+			color: "rgb(50, 50, 50)",
 			textColor: "rgb(200, 200, 200)",
 			textColorHint: "grey"
 		}
 	},
 	projects: {
 		list: {
-			backgroundColor: "rgb(55, 55, 55)",
+			color: "rgb(55, 55, 55)",
 			headerColor: "rgb(60, 60, 60)"
 		},
 		card: {
-			backgroundColorHover: "rgb(70, 70, 70)",
-			backgroundColorSelected: "rgb(75, 75, 75)"
+			colorHover: "rgb(70, 70, 70)",
+			colorSelected: "rgb(75, 75, 75)"
 		}
 	},
 	buttons: {
-		color: "rgb(50, 50, 50);",
-		colorHover: "rgb(75, 75, 75)",
+		color: "rgb(40, 40, 40)",
+		colorHover: "rgb(50, 50, 50)",
 		textColor: "white"
 	},
+	addButton: {
+		color: "rgb(100, 100, 100);",
+		colorHover: "rgb(100, 125, 100)"
+	},
 	input: {
-		backgroundColor: "rgb(75, 75, 75)",
+		color: "rgb(75, 75, 75)",
 		textColor: "rgb(200, 200, 200)"
 	},
 	comboBox: {
-		backgroundColor: "rgb(50, 50, 50)",
+		color: "rgb(40, 40, 40)",
 		textColor: "white"
 	},
 	contextMenu: {
-		backgroundColor: "rgb(25, 25, 25)",
-		backgroundColorHover: "rgb(50, 50, 50)",
+		color: "rgb(25, 25, 25)",
+		colorHover: "rgb(35, 35, 35)",
 		textColor: "rgb(255, 255, 255)"
 	},
-	settings: {
-		spacerColor: "rgb(125, 125, 125)"
+	modal: {
+		color: "rgb(60, 60, 60)",
+		spacerColor: "rgb(80, 80, 80)"
 	}
 }

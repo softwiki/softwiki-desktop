@@ -11,7 +11,7 @@ const NoteCardPreviewLayout = styled.div`
 	}
 
 	//background-color: ${({theme}) => theme.notes.list.cardColor};
-	border-bottom: 1px solid ${({theme}) => theme.notes.list.colorBorderColor};
+	border-bottom: 1px solid ${({theme}) => theme.notes.list.cardDelimiterColor};
 	color: ${({theme}) => theme.notes.list.cardTextColor};
 	cursor: pointer;
 	transition-duration: 0.25s;

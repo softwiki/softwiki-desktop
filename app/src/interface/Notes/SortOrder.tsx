@@ -27,7 +27,7 @@ const Line = styled.div`
 const SortIconWrapper = styled.div`
 	padding: 4px;
 	border-radius: 4px;
-	background-color: ${({theme}) => theme.input.backgroundColor};
+	background-color: ${({theme}) => theme.input.color};
 	cursor: pointer;
 `
 

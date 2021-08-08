@@ -8,7 +8,7 @@ import {useSelectedNote} from "./SelectedNote"
 import {ContextMenu, ContextMenuItem, ContextMenuSpacer} from "components/ContextMenu"
 import { useData } from "Data";
 import { Project } from "softwiki-core/models";
-import { useNotification } from "notifications/confirmationMessage";
+import { useNotification } from "notifications";
 
 const ActionBarLayout = styled.div`
 
@@ -47,8 +47,13 @@ const NoteMenuIcon = styled.img`
 `
 
 const SaveExitButton = styled(Button)`
-	background-color: rgb(100, 150, 100);
 	margin-right: 16px;
+	background-color: rgb(100, 150, 100);
+
+	&:hover
+	{
+		background-color: rgb(100, 175, 100);
+	}
 `
 
 const ProjectName = styled.div`

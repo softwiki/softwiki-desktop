@@ -22,7 +22,7 @@ const PopupWrapper = styled.div<PopupWrapperProps>`
 
 	border: 1px solid rgb(60, 60, 60);
 	border-radius: 4px;
-	background-color: ${({theme}) => theme.notes.content.backgroundColor};
+	background-color: ${({theme}) => theme.notes.content.color};
 	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
 	color: white;
 	cursor: pointer;

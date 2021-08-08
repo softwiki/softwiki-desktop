@@ -1,7 +1,6 @@
 import Button from "components/Button"
 import HorizontalLineSpacer from "components/HorizontalLineSpacer"
 import styled from "styled-components"
-import TagsSettings from "./Tags"
 
 import Appearance from "./Appearance"
 
@@ -11,8 +10,6 @@ const SettingsLayout = styled.div`
 
 	width: 25vw;
 	padding: 8px;
-
-	background-color: ${({theme}) => theme.SideBarColor};
 `
 
 const Title = styled.p`
@@ -38,14 +35,11 @@ export default function Settings({close}: SettingsProps)
 		<SettingsLayout>
 			<Bar>
 				<Title>Settings</Title>
-				<Button onClick={() => { close() }}>Close</Button>
+				<Button onClick={() => { close() }}>Save and close</Button>
 			</Bar>
 			<div>
 				<SettingCategory title="Appearance">
 					<Appearance/>
-				</SettingCategory>
-				<SettingCategory title="Tags">
-					<TagsSettings/>
 				</SettingCategory>
 			</div>
 		</SettingsLayout>

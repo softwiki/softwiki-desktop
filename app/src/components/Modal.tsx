@@ -22,7 +22,7 @@ const ModalContent = styled.div`
 
 	padding: 8px;
 
-	background-color: rgb(100, 100, 100);
+	background-color: ${({theme}) => theme.modal.color};;
 	border-radius: 4px;
 	box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 `

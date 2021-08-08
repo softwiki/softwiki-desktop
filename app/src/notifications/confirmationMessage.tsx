@@ -1,66 +1,20 @@
 import Button from "components/Button";
 import Modal from "components/Modal"
-import React, { useContext } from "react";
-import { useState } from "react"
 import styled from "styled-components";
 
-const NotificationContext = React.createContext<any>({});
-
-export function useNotification()
-{
-	return useContext(NotificationContext);
-}
-
-interface ConfirmationBoxProperties
+export interface ConfirmationMessageProperties
 {
 	message: string
 	yesFunction: () => void
 	noFunction: () => void
 }
 
-export function Notifications({children}: {children: JSX.Element | JSX.Element[]})
-{
-	const [confirmationMessage, setConfirmationMessage] = useState<ConfirmationBoxProperties>({
-		message: "",
-		yesFunction: () => {},
-		noFunction: () => {},
-	});
-
-	const popConfirmationMessage = (message: string, yesFunction?: () => void, noFunction?: () => void) =>
-	{
-		setConfirmationMessage({
-			message,
-			yesFunction: yesFunction ? yesFunction : () => {},
-			noFunction: noFunction ? noFunction : () => {}
-		});
-	}
-
-	return (
-		<NotificationContext.Provider value={{popConfirmationMessage}}>
-			{children}
-			<ConfirmationMessage
-				message={confirmationMessage.message}
-				yesFunction={confirmationMessage.yesFunction}
-				noFunction={confirmationMessage.noFunction}
-				close={() =>
-				{
-					setConfirmationMessage({
-						message: "",
-						yesFunction: () => {},
-						noFunction: () => {}
-					});
-				}}
-			/>
-		</NotificationContext.Provider>
-	)
-}
-
-interface ConfirmationBoxProps extends ConfirmationBoxProperties
+interface ConfirmationBoxProps extends ConfirmationMessageProperties
 {
 	close: () => void
 }
 
-function ConfirmationMessage({message, yesFunction, noFunction, close}: ConfirmationBoxProps)
+export function ConfirmationMessage({message, yesFunction, noFunction, close}: ConfirmationBoxProps)
 {
 	if (message === "")
 		return <></>
@@ -70,8 +24,8 @@ function ConfirmationMessage({message, yesFunction, noFunction, close}: Confirma
 			<>
 				<Text>{message}</Text>
 				<Buttons>
-					<NoButton onClick={() => { noFunction(); close(); }}>No</NoButton>
-					<YesButton onClick={() => { yesFunction(); close(); }}>Yes</YesButton>
+					<NoButton onClick={() => { noFunction(); close(); }}>NO</NoButton>
+					<YesButton onClick={() => { yesFunction(); close(); }}>YES</YesButton>
 				</Buttons>
 			</>
 		</Modal>
@@ -92,13 +46,14 @@ const Buttons = styled.div`
 `
 
 const YesButton = styled(Button)`
-	background-color: rgb(0, 200, 0);
-	font-weight: bold;
+	padding: 4px 8px 4px 8px;
+
+	background-color: rgb(200, 0, 0);
 	font-size: 1.25rem;
 `
 
 const NoButton = styled(Button)`
-	background-color: rgb(200, 0, 0);
-	font-weight: bold;
+	padding: 0 8px 0 8px;
+
 	font-size: 1.25rem;
 `

@@ -18,7 +18,7 @@ const NoteEditLayout = styled.div`
 
 	overflow-y: scroll;
 
-	background-color: ${({theme}) => theme.notes.content.backgroundColor};
+	background-color: ${({theme}) => theme.notes.content.color};
 	color: ${({theme}) => theme.notes.content.textColor};
 `
 

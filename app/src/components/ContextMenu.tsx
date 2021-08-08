@@ -14,7 +14,7 @@ const ContextMenuItems = styled.div`
 
 	border-radius: 4px;
 
-	background-color: ${({theme}) => theme.contextMenu.backgroundColor};	
+	background-color: ${({theme}) => theme.contextMenu.color};	
 	color: ${({theme}) => theme.contextMenu.textColor};
 `
 
@@ -85,7 +85,7 @@ export const ContextMenuItemLayout = styled.div`
 
 	&:hover
 	{
-		background-color: ${({theme}) => theme.contextMenu.backgroundColorHover};	
+		background-color: ${({theme}) => theme.contextMenu.colorHover};	
 	}
 `
 
@@ -114,6 +114,6 @@ export const ContextMenuValue = styled.div`
 `
 
 export const ContextMenuSpacer = styled.div`
-	border-top: 1px solid ${({theme}) => theme.settings.spacerColor};
+	border-top: 1px solid ${({theme}) => theme.modal.spacerColor};
 	margin: 0;
 `

@@ -7,7 +7,7 @@ const TextAreaLayout = styled.textarea`
 
 	border: none;
 	border-radius: 4px;
-	background-color: ${({theme}) => theme.input.backgroundColor};
+	background-color: ${({theme}) => theme.input.color};
 	color: ${({theme}) => theme.input.textColor};
 `
 

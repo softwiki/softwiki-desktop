@@ -1,12 +1,10 @@
 import styled from "styled-components"
-import {useState} from "react"
 
 import NoteList from "./NoteList"
 import NoteViewer from "./NoteViewer"
-import Projects from "./ProjectList"
-import { Project } from "softwiki-core/models"
 import { SelectedNote, useSelectedNote } from "./SelectedNote"
 import { useData } from "Data";
+import { useGlobalState } from "GlobalState";
 
 const NotesLayout = styled.div`
 	display: flex;
@@ -48,9 +46,8 @@ export default function NotesPage()
 function NotePageWrapper()
 {
 	const selectedNote = useSelectedNote()
+	const {selectedProject} = useGlobalState()
 	const { api } = useData();
-
-	const [selectedProject, setSelectedProject] = useState<Project | undefined>()
 	
 	const createNote = async () => 
 	{
@@ -63,15 +60,7 @@ function NotePageWrapper()
 
 	return (
 		<NotesLayout>
-			<Projects
-				selectedProject={selectedProject}
-				onProjectChanged={(project: Project | undefined) => 
-				{
-					setSelectedProject(project)
-				}}
-			/> 
 			<NoteList
-				project={selectedProject}
 				createNote={createNote}
 			/>
 			{selectedNote.note ? <NoteViewer/> : <DefaultStarter/>}
@@ -86,10 +75,10 @@ const DefaultStarterLayout = styled.div`
 	justify-content: center;
 	align-items: center;
 
-	background-color: ${({theme}) => theme.notes.content.backgroundColor};
+	background-color: ${({theme}) => theme.notes.content.color};
 	color: ${({theme}) => theme.notes.content.textColorHint};
 
-	font-size: 4rem;
+	font-size: 2.5vw;
 	font-style: italic;
 `
 

@@ -7,14 +7,30 @@ import settingsImage from "images/settings.png"
 import helpImage from "images/help.png"
 
 import { useState } from "react"
-import Settings from "interface/Settings/Settings"
+import Settings from "interface/Settings"
 import Help from "interface/Help"
 
 const SideBarLayout = styled.div`
 	display: flex;
 	flex-direction: column;
 
-	background-color: ${({theme}) => theme.sideBar.backgroundColor};
+	background-color: ${({theme}) => theme.sideBar.color};
+`
+const IconWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	justfify-content: center;
+
+	border-radius: 8px;
+	margin: 4px;
+
+	&:hover
+	{
+		background-color: ${({theme}) => theme.sideBar.colorHover};
+	}
+
+	cursor: pointer;
+	transition-duration: 0.25s;
 `
 
 const Icon = styled.img`
@@ -22,15 +38,8 @@ const Icon = styled.img`
 	height: auto;
 	padding: 8px;
 
-	cursor: pointer;
+	
 	filter: invert(66%) sepia(98%) saturate(13%) hue-rotate(55deg) brightness(87%) contrast(87%);
-
-	transition-duration: 0.25s;
-
-	:hover
-	{
-		background-color: ${({theme}) => theme.sideBar.iconBackgroundColorHover};
-	}
 `
 
 export default function SideBar()
@@ -40,15 +49,17 @@ export default function SideBar()
 
 	return (
 		<SideBarLayout>
-			<Icon src={notesImage} title="Notes" alt="notes"/>
-			<Icon src={helpImage}  title="Help" alt="help" style={{marginTop: "auto"}} onClick={() => 
+			<IconWrapper><Icon src={notesImage} title="Notes" alt="notes"/></IconWrapper>
+			<IconWrapper style={{marginTop: "auto"}} ><Icon src={helpImage}  title="Help" alt="help" onClick={() => 
 			{
 				setShowHelp(true)
-			}}/>
-			<Icon src={settingsImage} title="Settings" alt="settings" onClick={() => 
-			{
-				setShowSettings(true)
-			}}/>
+			}}/></IconWrapper>
+			<IconWrapper>
+				<Icon src={settingsImage} title="Settings" alt="settings" onClick={() => 
+				{
+					setShowSettings(true)
+				}}/>
+			</IconWrapper>
 			{
 				showSettings ?
 					<Modal>
