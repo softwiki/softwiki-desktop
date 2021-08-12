@@ -1,9 +1,8 @@
-**REWORK IN PROGRESS, THE CURRENT STATE OF THIS REPO IS NOT STABLE**.  
-**This application in under development, more information at the end.**
+**This application in under development.**
 
 SoftWiki is a wiki-like application, available on Linux and Windows.
 
-![presentation](images/v1.3.0-alpha_presentation.png)
+![presentation](images/v1.4.0-alpha_presentation.png)
 
 ## Features
 
@@ -17,7 +16,6 @@ SoftWiki is a wiki-like application, available on Linux and Windows.
 *As I'm doing this application mainly for my own needs, I might or not implement the following features, but in an ideal world, I probably would.*
 
 - Reference a note from another (internal note links).
-- Primary tags (Think of it more like projects/categories)
 
 *The following are just more ideas, so don't really expect them.*
 

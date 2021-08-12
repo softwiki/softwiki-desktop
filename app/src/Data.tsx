@@ -1,37 +1,29 @@
-import { SoftWikiApi, JsonProvider, DataEvent } from "softwiki-core";
+import { SoftWikiClient, DataEvent, PlainMarkdownProvider } from "softwiki-core";
 import { Note, Tag } from "softwiki-core/models";
 import { Project } from "softwiki-core/models";
 import React, { useContext, useEffect, useState } from "react";
-import { getDefaultBasePath, readFile, writeFile } from "files";
+import { getDefaultBasePath } from "files";
 
-const api = new SoftWikiApi({
-	provider: new JsonProvider(
-		async (content: string) =>
-		{
-			await writeFile(getDefaultBasePath() + "/db.json", content);
-		},
-		async () =>
-		{
-			return await readFile(getDefaultBasePath() + "/db.json");
-		}
-	)
-}); 
+const fs = window.require("fs").promises
+fs.mkdir(getDefaultBasePath() + "/notes");
+
+const api = new SoftWikiClient({
+	provider: new PlainMarkdownProvider(getDefaultBasePath() + "/notes", fs)
+});
 
 interface DataContextProps
 {
-	available: boolean
 	notes: Note[]
 	tags: Tag[]
 	projects: Project[]
-	api: SoftWikiApi
+	api: SoftWikiClient
 }
 
 export const DataContext = React.createContext<DataContextProps>({
-	available: false,
 	notes: [],
 	tags: [],
 	projects: [],
-	api: {} as SoftWikiApi // Is it dirty ?
+	api: {} as SoftWikiClient // Is it dirty ?
 });
 
 interface FetchDataResult
@@ -41,14 +33,6 @@ interface FetchDataResult
 	projects: Project[]
 }
 
-async function fetchData(): Promise<FetchDataResult>
-{
-	const notes = api.getNotes();
-	const tags = api.getTags();
-	const projects = api.getProjects();
-	return {notes, tags, projects};
-}
-
 interface DataProps
 {
 	children: JSX.Element | JSX.Element[]
@@ -56,47 +40,33 @@ interface DataProps
 
 export function Data({children}: DataProps)
 {
-	const [dataAvailable, setDataAvailable] = useState<boolean>(false);
 	const [data, setData] = useState<FetchDataResult>({notes: [], tags: [], projects: []});
 
 	useEffect(() => 
 	{
-		api.setup().then(() => 
+		api.init().then(() => 
 		{
-			fetchData().then((data: FetchDataResult) => 
-			{				
-				setData(data);
-				setDataAvailable(true);
-			});
+			setData({notes: api.notes, tags: api.tags, projects: api.projects});
 		});
 	}, []);
 
 	api.subscribe(DataEvent.NotesUpdated, "Data.NotesUpdated", () => 
 	{
-		fetchData().then((data: FetchDataResult) => 
-		{				
-			setData(data);
-		});
+		setData({notes: api.notes, tags: api.tags, projects: api.projects});
 	});
 
 	api.subscribe(DataEvent.TagsUpdated, "Data.TagsUpdated", () => 
 	{
-		fetchData().then((data: FetchDataResult) => 
-		{				
-			setData(data);
-		});
+		setData({notes: api.notes, tags: api.tags, projects: api.projects});
 	});
 
 	api.subscribe(DataEvent.ProjectsUpdated, "Data.ProjectsUpdated", () => 
 	{
-		fetchData().then((data: FetchDataResult) => 
-		{				
-			setData(data);
-		});
+		setData({notes: api.notes, tags: api.tags, projects: api.projects});
 	});
 
 	return (
-		<DataContext.Provider value={{...data, available: dataAvailable, api}}>
+		<DataContext.Provider value={{...data, api}}>
 			{children}
 		</DataContext.Provider>
 	);

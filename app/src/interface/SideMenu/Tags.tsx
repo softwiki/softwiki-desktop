@@ -22,6 +22,11 @@ export function Tags()
 	const {tags} = useData();
 	const {popModal, closeModal} = useNotification()
 
+	tags.sort((a: Tag, b: Tag) =>
+	{
+		return a.getName() > b.getName() ? 1 : -1;
+	})
+
 	return (
 		<TagsLayout>
 			<Header>

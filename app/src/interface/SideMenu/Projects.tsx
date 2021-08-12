@@ -133,10 +133,10 @@ interface ProjectCardProps
 function ProjectCard({project, selected = false, onClick, onEdit, onDelete}: ProjectCardProps)
 {
 	const contextMenuTrigger = useRef(null)
-	const { api } = useData();
+	const { notes } = useData();
 
 	const name = project ? project.getName() : "All"
-	const count = project ? project.getNoteCount() : api.getNotes().length
+	const count = project ? project.getNoteCount() : notes.length
 
 	return (
 		<ProjectCardWrapper>

@@ -40,15 +40,15 @@ export function SelectedNote({children}: {children: JSX.Element | JSX.Element[]}
 
 	const { api } = useData()
 
-	const save = () => 
+	const save = async () => 
 	{
 		if (!note)
 			return
 
-		if (unsavedChanges.title)
-			note.setTitle(unsavedChanges.title)
-		if (unsavedChanges.content)
-			note.setContent(unsavedChanges.content)
+		if (unsavedChanges.title !== note.getTitle())
+			await note.setTitle(unsavedChanges.title)
+		if (unsavedChanges.content !== note.getContent())
+			await note.setContent(unsavedChanges.content)
 	}
 
 	const deleteNote = () => 
@@ -92,7 +92,7 @@ export function SelectedNote({children}: {children: JSX.Element | JSX.Element[]}
 
 	api.subscribe(DataEvent.NotesUpdated, "NotesPage.NotesUpdated", () => 
 	{
-		const noteWithUpdate = api.getNotes().find((noteToCheck: Note) => note?.getId() === noteToCheck.getId())
+		const noteWithUpdate = api.notes.find((noteToCheck: Note) => note?.getId() === noteToCheck.getId())
 		if (noteWithUpdate)
 		{
 			setNote(noteWithUpdate);

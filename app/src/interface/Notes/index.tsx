@@ -4,7 +4,6 @@ import NoteList from "./NoteList"
 import NoteViewer from "./NoteViewer"
 import { SelectedNote, useSelectedNote } from "./SelectedNote"
 import { useData } from "Data";
-import { useGlobalState } from "GlobalState";
 
 const NotesLayout = styled.div`
 	display: flex;
@@ -46,7 +45,6 @@ export default function NotesPage()
 function NotePageWrapper()
 {
 	const selectedNote = useSelectedNote()
-	const {selectedProject} = useGlobalState()
 	const { api } = useData();
 	
 	const createNote = async () => 
@@ -54,7 +52,8 @@ function NotePageWrapper()
 		await api.createNote({
 			title: "Untitled",
 			content: "Your amazing note content",
-			tags: [], project: selectedProject ? selectedProject.getId() : undefined
+			tags: [],
+			project: undefined
 		})
 	}
 

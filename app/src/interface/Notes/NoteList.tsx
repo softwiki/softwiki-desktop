@@ -75,7 +75,7 @@ export default function NoteList(props: NoteListArguments)
 		if (note.getTitle().match(new RegExp(searchFilter, "i")) === null)
 			return false
 
-		if (selectedProject !== null && !note.hasProject(selectedProject))
+		if (selectedProject !== null && !note.belongToProject(selectedProject))
 			return false
 
 		return true 
