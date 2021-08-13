@@ -1,4 +1,4 @@
-import { SoftWikiClient, DataEvent, PlainMarkdownProvider } from "softwiki-core";
+import { SoftWikiClient, DataEvent, FileSystemApiProvider } from "softwiki-core";
 import { Note, Tag } from "softwiki-core/models";
 import { Project } from "softwiki-core/models";
 import React, { useContext, useEffect, useState } from "react";
@@ -6,9 +6,10 @@ import { getDefaultBasePath } from "files";
 
 const fs = window.require("fs").promises
 fs.mkdir(getDefaultBasePath() + "/notes");
+fs.mkdir(getDefaultBasePath() + "/config");
 
 const api = new SoftWikiClient({
-	provider: new PlainMarkdownProvider(getDefaultBasePath() + "/notes", fs)
+	provider: new FileSystemApiProvider(getDefaultBasePath(), fs)
 });
 
 interface DataContextProps
@@ -50,8 +51,10 @@ export function Data({children}: DataProps)
 		});
 	}, []);
 
-	api.subscribe(DataEvent.NotesUpdated, "Data.NotesUpdated", () => 
+	api.subscribe(DataEvent.NotesUpdated, "Data.NotesUpdated", ({note}: any) => 
 	{
+		console.log("A")
+		console.log(note)
 		setData({notes: api.notes, tags: api.tags, projects: api.projects});
 	});
 

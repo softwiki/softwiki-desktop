@@ -75,9 +75,9 @@ export function SelectedNote({children}: {children: JSX.Element | JSX.Element[]}
 		note.removeTag(tag)
 	}
 
-	const selectNote = (noteToSelect: Note) =>
+	const selectNote = async (noteToSelect: Note) =>
 	{
-		save()
+		await save()
 
 		setNote(noteToSelect)
 		setUnsavedChanges({title: noteToSelect.getTitle(), content: noteToSelect.getContent()})
