@@ -7,9 +7,10 @@ SoftWiki is a wiki-like application, available on Linux and Windows.
 ## Features
 
 - Mardown syntax.
-- Store your notes locally (only a single *db.json* is currently supported, but plain text markdown files will probably also be supported).
-- Tags.
-- Themes (You can also create your own theme).
+- Store your notes locally (in markdown files).
+- Manage your notes with projects.
+- Put tags on your notes.
+- Select the theme you want (but honestly why would you chose something else than the dark theme).
 
 ## Roadmap & ideas
 

@@ -103,31 +103,33 @@ export function TagCard({tag}: TagCardProps)
 	const {tagFilters, addTagToFilters, removeTagFromFilters, resetTagFilters, isTagFiltered} = useGlobalState();
 
 	return (
-		<TagCardLayout
-			ref={contextMenuTrigger}
-			selected={isTagFiltered(tag)}
-			onClick={(e: React.MouseEvent) =>
-			{
-				if (e.ctrlKey && !isTagFiltered(tag))
+		<>
+			<TagCardLayout
+				ref={contextMenuTrigger}
+				selected={isTagFiltered(tag)}
+				onClick={(e: React.MouseEvent) =>
 				{
-					addTagToFilters(tag);
-					return ;
-				}
-				else if (e.ctrlKey && isTagFiltered(tag))
-				{
-					removeTagFromFilters(tag);
-					return ;
-				}
-				else if (isTagFiltered(tag) && tagFilters.length === 1)
-				{
-					resetTagFilters();
-					return ;
-				}
-				resetTagFilters([tag]);
-			}}
-		>
-			<TagColor c={tag.getColor()}/>
-			<span>{tag.getName()}</span>
+					if (e.ctrlKey && !isTagFiltered(tag))
+					{
+						addTagToFilters(tag);
+						return ;
+					}
+					else if (e.ctrlKey && isTagFiltered(tag))
+					{
+						removeTagFromFilters(tag);
+						return ;
+					}
+					else if (isTagFiltered(tag) && tagFilters.length === 1)
+					{
+						resetTagFilters();
+						return ;
+					}
+					resetTagFilters([tag]);
+				}}
+			>
+				<TagColor c={tag.getColor()}/>
+				<span>{tag.getName()}</span>
+			</TagCardLayout>
 			<ContextMenu trigger={contextMenuTrigger}>
 				<ContextMenuItem value="Edit" action={() =>
 				{
@@ -147,6 +149,6 @@ export function TagCard({tag}: TagCardProps)
 					}}
 				/>
 			</ContextMenu>
-		</TagCardLayout>
+		</>
 	)
 }

@@ -99,7 +99,7 @@ export function Config({children}: ConfigProps)
 			setTheme({name: themeName, appearance: appearance})
 			const fontFamily = appConfig.get("font") as string
 			const fontSize = appConfig.get("fontSize") as number
-			setFont({family: fontFamily, size: fontSize})	
+			setFont({family: fontFamily ?? "Arial", size: fontSize ?? 16})	
 		})
 	}, [])
 
