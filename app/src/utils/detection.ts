@@ -13,12 +13,12 @@ export function isBrowser(): boolean
 
 export function isLinux(): boolean
 {
-	return getPlatform() == "linux";
+	return getPlatform() === "linux";
 }
 
 export function isWindows(): boolean
 {
-	return getPlatform() == "win32";
+	return getPlatform() === "win32";
 }
 
 export function getPlatform(): string

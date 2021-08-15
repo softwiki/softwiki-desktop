@@ -26,9 +26,11 @@ export default function Appearance()
 
 	const fontRef = useRef(temporaryFont)
 	const fontSizeRef = useRef(temporaryFontSize)
+	const applyFont = useRef(selectFont)
 
 	fontRef.current = temporaryFont
 	fontSizeRef.current = temporaryFontSize
+	applyFont.current = selectFont
 	
 	const handleThemeChange = (e: ChangeEvent<HTMLSelectElement>) =>
 	{
@@ -50,7 +52,7 @@ export default function Appearance()
 	{
 		return () => 
 		{
-			selectFont({family: fontRef.current, size: fontSizeRef.current})
+			applyFont.current(fontRef.current, fontSizeRef.current)
 		}
 	}, [])
 

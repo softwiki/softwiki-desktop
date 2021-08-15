@@ -10,6 +10,7 @@ import { ConfigContext } from "Config";
 import { Notifications } from "notifications";
 import SideMenu from "interface/SideMenu";
 import { GlobalState } from "GlobalState";
+import * as themes from "./themes"
 
 interface GlobalStyleProps {
 	font: string
@@ -70,13 +71,14 @@ const AppLayout = styled.div`
 function App() 
 {
 	const { theme, font } = useContext(ConfigContext)
+	const appearance = {...themes.dark, ...themes[theme.name as keyof typeof themes]}
 
 	return (
 		<AppLayout>
 			<Helmet>
 				<title>{process.env.REACT_APP_NAME} [{process.env.REACT_APP_VERSION}]</title>
 			</Helmet>
-			<ThemeProvider theme={theme.appearance}>
+			<ThemeProvider theme={appearance}>
 				<Data>
 					<GlobalState>
 						<Notifications>

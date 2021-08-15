@@ -3,79 +3,37 @@ import React, { useEffect } from "react"
 import { useState } from "react"
 import * as themes from "themes"
 
-export enum ConfigEvent {
-	SET = "ConfigEvent.Set"
-}
-
-class AppConfig
+export interface ConfigFields
 {
-	private _cfg: any = {}
-
-	public get<T>(key: string): T
-	{
-		return this._cfg[key]
-	}
-
-	public set(key: string, value: any): void
-	{
-		this._cfg[key] = value;
-		this._save();
-	}
-
-	public async loadConfig(): Promise<void>
-	{
-		await this._load()
-	}
-
-	private async _save(): Promise<void>
-	{
-		await writeFile(getDefaultBasePath() + "/cfg.json", JSON.stringify(this._cfg, null, 4))
-	}
-
-	private async _load(): Promise<void>
-	{
-		try
-		{
-			const data = await readFile(getDefaultBasePath() + "/cfg.json")
-			this._cfg = JSON.parse(data)
-		}
-		catch (e: any)
-		{
-			console.log(e)
-		}
+	font: {
+		family: string,
+		size: number
+	},
+	theme: {
+		name: string
+	},
+	provider: {
+		type: string,
+		config: Record<string, unknown>
 	}
 }
 
-const appConfig = new AppConfig()
-
-interface Font
+interface ConfigContextProps extends ConfigFields
 {
-	family: string
-	size: number
-}
-
-interface Theme
-{
-	name: string
-	appearance: any
-}
-
-interface ConfigContextProps
-{
-	theme: Theme
 	selectTheme: (name: string) => void,
-	font: Font
-	selectFont: (font: Font) => void
+	selectFont: (family: string, size: number) => void
 }
 
-const defaultConfigContext = {
+const defaultConfig = {
 	theme: {name: themes.dark.name, appearance: themes.dark},
-	selectTheme: () => {},
 	font: {family: "Arial", size: 16},
-	selectFont: () => {},
+	provider: {type: "fs", config: {}},
+	
+	selectTheme: () => {},
+	selectFont: () => {}
 }
 
-export const ConfigContext = React.createContext<ConfigContextProps>(defaultConfigContext)
+export const ConfigContext = React.createContext<ConfigContextProps>(defaultConfig)
 
 interface ConfigProps
 {
@@ -84,53 +42,41 @@ interface ConfigProps
 
 export function Config({children}: ConfigProps)
 {
-	const [theme, setTheme] = useState<Theme>(defaultConfigContext.theme)
-	const [font, setFont] = useState<Font>(defaultConfigContext.font)
+	const [configLoaded, setConfigLoaded] = useState<boolean>(false);
+	const [config, setConfig] = useState<ConfigFields>(defaultConfig);
 
 	useEffect(() => 
 	{
-		appConfig.loadConfig().then(() => 
+		readFile(getDefaultBasePath() + "/cfg.json").then((content: string) =>
 		{
-			const themeName = appConfig.get("theme") as keyof unknown
-			let theme: any = themes[themeName]
-			if (!theme) theme = themes.dark
-			let appearance = JSON.parse(JSON.stringify(theme));
-			appearance = fillMissingThemeFields(appearance)
-			setTheme({name: themeName, appearance: appearance})
-			const fontFamily = appConfig.get("font") as string
-			const fontSize = appConfig.get("fontSize") as number
-			setFont({family: fontFamily ?? "Arial", size: fontSize ?? 16})	
+			const configJson = JSON.parse(content) as ConfigFields;
+			setConfig({...defaultConfig, ...configJson});
+			setConfigLoaded(true);
 		})
-	}, [])
+	},
+	[])
 
+	const saveConfig = async (newConfig: ConfigFields) =>
+	{
+		await writeFile(getDefaultBasePath() + "/cfg.json", JSON.stringify(newConfig, null, 4))
+	}
+	
 	return (
-		<ConfigContext.Provider value={{
-			theme,
-			selectTheme: (nameAsString: string) => 
+		<ConfigContext.Provider value={{...config,
+			selectTheme: (name: string) => 
 			{
-				const name = nameAsString as keyof unknown
-				let appearance = JSON.parse(JSON.stringify(themes[name]))
-				appearance = fillMissingThemeFields(appearance)
-		
-				appConfig.set("theme", name)
-				setTheme({name, appearance})
+				const newConfig = {...config, theme: {...config.theme, name}};
+				setConfig(newConfig)
+				saveConfig(newConfig);
 			},
-			font,
-			selectFont: (font: Font) =>
+			selectFont: (family: string, size: number) =>
 			{
-				appConfig.set("font", font.family)
-				appConfig.set("fontSize", font.size)
-				setFont(font)
+				const newConfig = {...config, font: {family, size}};
+				setConfig(newConfig)
+				saveConfig(newConfig);
 			}
 		}}>
-			{children}
+			{configLoaded ? children : <></>}
 		</ConfigContext.Provider>
 	)
-}
-
-function fillMissingThemeFields(theme: any): any
-{
-	const defaultTheme = JSON.parse(JSON.stringify(themes.dark))
-	Object.assign(defaultTheme, theme)
-	return defaultTheme
 }
