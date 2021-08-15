@@ -2,12 +2,16 @@ import { SoftWikiClient, DataEvent, FileSystemApiProvider, JsonApiProvider, Api 
 import { Note, Tag } from "softwiki-core/models";
 import { Category } from "softwiki-core/models";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { getDefaultBasePath } from "files";
+import { getDefaultBasePath, readFile, writeFile } from "files";
 import { ConfigContext, ConfigFields } from "Config";
+import { isBrowser, isLinux, isWindows } from "utils";
 
-const fs = window.require("fs").promises
-fs.mkdir(getDefaultBasePath() + "/notes");
-fs.mkdir(getDefaultBasePath() + "/config");
+if (isLinux() || isWindows())
+{
+	const fs = window.require("fs").promises
+	fs.mkdir(getDefaultBasePath() + "/notes");
+	fs.mkdir(getDefaultBasePath() + "/config");
+}
 
 /*const softWikiClient = new SoftWikiClient({
 	provider: new FileSystemApiProvider(getDefaultBasePath(), fs)
@@ -25,7 +29,26 @@ fs.mkdir(getDefaultBasePath() + "/config");
 
 function getProviderFromConfig(provider: ConfigFields): Api
 {
+	if (isBrowser())
+	{
+		return new JsonApiProvider(async (content: string) =>
+		{
+			await writeFile(getDefaultBasePath() + "/notes/db.json", content);
+		}, async () =>
+		{
+			return await readFile(getDefaultBasePath() + "/notes/db.json");
+		})
+	}
+
+	const fs = window.require("fs").promises
 	return new FileSystemApiProvider(getDefaultBasePath(), fs);
+	/*return new JsonApiProvider(async (content: string) =>
+	{
+		await writeFile(getDefaultBasePath() + "/notes/db.json", content);
+	}, async () =>
+	{
+		return await readFile(getDefaultBasePath() + "/notes/db.json");
+	})*/
 }
 
 interface DataContextProps

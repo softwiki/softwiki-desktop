@@ -6,17 +6,10 @@ import * as themes from "themes"
 import Input from "components/Input"
 import { ConfigContext } from "Config"
 
-export enum AppearanceEvent
-{
-	FontChanged = "SettingsEvent.FontChanged",
-	FontSizeChanged = "SettingsEvent.FontSizeChanged"
-}
-
-const themesName = Object.keys(themes)
-
 const AppearanceSettingsLayout = styled.div`
 
 `
+
 export default function Appearance()
 {
 	const {theme, selectTheme, font, selectFont} = useContext(ConfigContext)
@@ -56,6 +49,8 @@ export default function Appearance()
 		}
 	}, [])
 
+	const themesName = Object.keys(themes)
+
 	return (
 		<AppearanceSettingsLayout>
 			<Line>
@@ -64,7 +59,7 @@ export default function Appearance()
 			</Line>
 			<Line>
 				<LineTitle>Font Size</LineTitle>
-				<Input type="number" value={temporaryFontSize} onChange={handleFontSizeChange}/>
+				<Input style={{appearance: "textfield"}} type="number" value={temporaryFontSize} onChange={handleFontSizeChange}/>
 			</Line>
 			<Line>
 				<LineTitle>Theme</LineTitle>

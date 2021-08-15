@@ -1,11 +1,14 @@
 import { isBrowser, isLinux, isWindows } from "./utils";
-const { app } = window.require("@electron/remote");
-const fs = window.require("fs");
 
 export async function readFile(path: string): Promise<string>
 {
 	if (isBrowser())
-		return "";
+	{
+		const content = localStorage.getItem(path);
+		if (!content)
+			throw "No item found in localStorage for path: " + path;
+		return content;
+	}
 	const fs =  window.require("fs").promises;
 	try
 	{
@@ -23,7 +26,11 @@ export async function readFile(path: string): Promise<string>
 export async function writeFile(path: string, content: string): Promise<void>
 {
 	if (isBrowser())
+	{
+		localStorage.setItem(path, content);
 		return ;
+	}
+
 	const fs = window.require("fs").promises;
 	try
 	{
@@ -43,17 +50,17 @@ export function getDefaultBasePath(): string
 
 	if (isLinux())
 	{
-		defaultPath = app.getPath("home") + "/.softwiki";
+		defaultPath = getApp().getPath("home") + "/.softwiki";
 	}
 	else if (isWindows())
 	{
-		return app.getPath("userData");
+		return getApp().getPath("userData");
 	}
-
-	if (!fs.existsSync(defaultPath))
-	{
-		fs.mkdirSync(defaultPath, {recursive: true});
-	}
-
 	return defaultPath;
+}
+
+function getApp(): any
+{
+	const { app } = window.require("@electron/remote");
+	return app;
 }

@@ -11,6 +11,7 @@ import { Notifications } from "notifications";
 import SideMenu from "interface/SideMenu";
 import { GlobalState } from "GlobalState";
 import * as themes from "./themes"
+import { handleWindowEvent } from "utils";
 
 interface GlobalStyleProps {
 	font: string
@@ -72,6 +73,8 @@ function App()
 {
 	const { theme, font } = useContext(ConfigContext)
 	const appearance = {...themes.dark, ...themes[theme.name as keyof typeof themes]}
+	
+	handleWindowEvent("contextmenu", (e: any) => { e.preventDefault(); })
 
 	return (
 		<AppLayout>

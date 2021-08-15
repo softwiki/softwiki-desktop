@@ -23,5 +23,7 @@ export function isWindows(): boolean
 
 export function getPlatform(): string
 {
+	if (isBrowser())
+		return "browser";
 	return window.process.platform;
 }

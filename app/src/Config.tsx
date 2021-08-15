@@ -52,6 +52,10 @@ export function Config({children}: ConfigProps)
 			const configJson = JSON.parse(content) as ConfigFields;
 			setConfig({...defaultConfig, ...configJson});
 			setConfigLoaded(true);
+		}).catch(() =>
+		{
+			setConfig({...defaultConfig});
+			setConfigLoaded(true);
 		})
 	},
 	[])

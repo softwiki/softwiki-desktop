@@ -109,7 +109,7 @@ export default function ActionBar()
 				<ContextMenuSpacer/>
 				<ContextMenuItem
 					value="Uncategorized"
-					textColor="rgb(200, 100, 100"
+					textColor="rgb(200, 200, 200)"
 					action={() => 
 					{
 						selectedNote.note?.setCategory(null);
