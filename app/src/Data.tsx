@@ -1,6 +1,6 @@
 import { SoftWikiClient, DataEvent, FileSystemApiProvider, JsonApiProvider, Api } from "softwiki-core";
 import { Note, Tag } from "softwiki-core/models";
-import { Project } from "softwiki-core/models";
+import { Category } from "softwiki-core/models";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { getDefaultBasePath } from "files";
 import { ConfigContext, ConfigFields } from "Config";
@@ -32,14 +32,14 @@ interface DataContextProps
 {
 	notes: Note[]
 	tags: Tag[]
-	projects: Project[]
+	categories: Category[]
 	api: SoftWikiClient
 }
 
 export const DataContext = React.createContext<DataContextProps>({
 	notes: [],
 	tags: [],
-	projects: [],
+	categories: [],
 	api: {} as SoftWikiClient // Is it dirty ?
 });
 
@@ -47,7 +47,7 @@ interface FetchDataResult
 {
 	notes: Note[]
 	tags: Tag[]
-	projects: Project[]
+	categories: Category[]
 }
 
 interface DataProps
@@ -59,7 +59,7 @@ export function Data({children}: DataProps)
 {
 	const config = useContext(ConfigContext);
 
-	const [data, setData] = useState<FetchDataResult>({notes: [], tags: [], projects: []});
+	const [data, setData] = useState<FetchDataResult>({notes: [], tags: [], categories: []});
 
 	const softWikiClient = useRef(
 		new SoftWikiClient({
@@ -71,23 +71,23 @@ export function Data({children}: DataProps)
 	{
 		softWikiClient.init().then(() => 
 		{
-			setData({notes: softWikiClient.notes, tags: softWikiClient.tags, projects: softWikiClient.projects});
+			setData({notes: softWikiClient.notes, tags: softWikiClient.tags, categories: softWikiClient.categories});
 		});
 	}, []);
 
 	softWikiClient.subscribe(DataEvent.NotesUpdated, "Data.NotesUpdated", ({note}: any) => 
 	{
-		setData({notes: softWikiClient.notes, tags: softWikiClient.tags, projects: softWikiClient.projects});
+		setData({notes: softWikiClient.notes, tags: softWikiClient.tags, categories: softWikiClient.categories});
 	});
 
 	softWikiClient.subscribe(DataEvent.TagsUpdated, "Data.TagsUpdated", () => 
 	{
-		setData({notes: softWikiClient.notes, tags: softWikiClient.tags, projects: softWikiClient.projects});
+		setData({notes: softWikiClient.notes, tags: softWikiClient.tags, categories: softWikiClient.categories});
 	});
 
-	softWikiClient.subscribe(DataEvent.ProjectsUpdated, "Data.ProjectsUpdated", () => 
+	softWikiClient.subscribe(DataEvent.CategoriesUpdated, "Data.CategoriesUpdated", () => 
 	{
-		setData({notes: softWikiClient.notes, tags: softWikiClient.tags, projects: softWikiClient.projects});
+		setData({notes: softWikiClient.notes, tags: softWikiClient.tags, categories: softWikiClient.categories});
 	});
 
 	return (

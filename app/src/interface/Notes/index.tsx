@@ -53,7 +53,7 @@ function NotePageWrapper()
 			title: "Untitled",
 			content: "Your amazing note content",
 			tags: [],
-			project: undefined
+			category: undefined
 		})
 	}
 

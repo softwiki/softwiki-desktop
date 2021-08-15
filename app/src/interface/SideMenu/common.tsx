@@ -5,6 +5,6 @@ export const Header = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 
-	background-color: ${({theme}) => theme.projects.list.headerColor};
+	background-color: ${({theme}) => theme.categories.list.headerColor};
 	padding: 8px;
 `

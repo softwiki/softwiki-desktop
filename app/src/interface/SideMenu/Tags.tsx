@@ -73,12 +73,12 @@ const TagCardLayout = styled.div<{selected?: boolean}>`
 
 	&:hover
 	{
-		background-color: ${({theme}) => theme.projects.card.colorHover}
+		background-color: ${({theme}) => theme.categories.card.colorHover}
 	}
 
-	${({selected, theme}) => selected ? `background-color: ${theme.projects.card.colorSelected}` : ""};
+	${({selected, theme}) => selected ? `background-color: ${theme.categories.card.colorSelected}` : ""};
 	${/*({selected, theme}) => selected ?
-		`background: linear-gradient(90deg, ${theme.projects.card.colorSelected} 0%, ${theme.projects.card.colorSelected} 50%, rgba(0, 200, 100, 0.5) 100%)`
+		`background: linear-gradient(90deg, ${theme.categories.card.colorSelected} 0%, ${theme.categories.card.colorSelected} 50%, rgba(0, 200, 100, 0.5) 100%)`
 		:*/ ""};
 `
 

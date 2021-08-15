@@ -17,7 +17,7 @@ export const dark = {
 			textColorHint: "grey"
 		}
 	},
-	projects: {
+	categories: {
 		list: {
 			color: "rgb(55, 55, 55)",
 			headerColor: "rgb(60, 60, 60)"

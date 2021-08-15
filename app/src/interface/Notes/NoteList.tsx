@@ -59,7 +59,7 @@ export default function NoteList(props: NoteListArguments)
 {
 	const {notes} = useData()
 	const selectedNote = useSelectedNote()
-	const {selectedProject, tagFilters} = useGlobalState()
+	const {selectedCategory, tagFilters} = useGlobalState()
 
 	const [tpmSearchFilter, setTpmSearchFilter] = useState<string>("")
 	const [searchFilter, setSearchFilter] = useState<string>("")
@@ -75,7 +75,7 @@ export default function NoteList(props: NoteListArguments)
 		if (note.getTitle().match(new RegExp(searchFilter, "i")) === null)
 			return false
 
-		if (selectedProject !== null && !note.belongToProject(selectedProject))
+		if (selectedCategory !== null && !note.belongToCategory(selectedCategory))
 			return false
 
 		return true 

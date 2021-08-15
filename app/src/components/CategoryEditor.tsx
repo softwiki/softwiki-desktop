@@ -1,11 +1,11 @@
-import { Project } from "softwiki-core/models";
+import { Category } from "softwiki-core/models";
 import { useState } from "react";
 import styled from "styled-components";
 import Button from "./Button";
 import Input from "./Input";
 import { useData } from "Data";
 
-const ProjectEditorLayout = styled.div`
+const CategoryEditorLayout = styled.div`
 
 `
 
@@ -13,32 +13,32 @@ const Name = styled(Input)`
 	margin-right: 4px; 
 `
 
-interface ProjectEditorProps
+interface CategoryEditorProps
 {
-	project: Project | undefined
+	category: Category | undefined
 	onSave?: () => void
 }
 
-export default function ProjectEditor({project, onSave: onSave}: ProjectEditorProps)
+export default function CategoryEditor({category, onSave: onSave}: CategoryEditorProps)
 {
-	const [name, setName] = useState(project ? project.getName() : "Untitled")
+	const [name, setName] = useState(category ? category.getName() : "Untitled")
 	const { api } = useData();
 
 	return (
-		<ProjectEditorLayout>
+		<CategoryEditorLayout>
 			<Name value={name} onChange={(e: any) => { setName(e.target.value) }}></Name>
 			<Button onClick={() => 
 			{
-				if (project)
+				if (category)
 				{
-					project.setName(name)
+					category.setName(name)
 				}
 				else
 				{
-					api.createProject({name})
+					api.createCategory({name})
 				}
 				onSave && onSave()
 			}}>Save & Close</Button>
-		</ProjectEditorLayout>
+		</CategoryEditorLayout>
 	)
 }

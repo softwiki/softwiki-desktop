@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
-import { Project, Tag } from "softwiki-core/models";
+import { Category, Tag } from "softwiki-core/models";
 
 interface GlobalStateContextProps
 {
-	selectedProject: Project | null
-	selectProject: (project: Project | null) => void
+	selectedCategory: Category | null
+	selectCategory: (category: Category | null) => void
 	tagFilters: Tag[]
 	addTagToFilters: (tag: Tag) => void
 	removeTagFromFilters: (tag: Tag) => void
@@ -24,7 +24,7 @@ export function useGlobalState(): GlobalStateContextProps
 
 export function GlobalState({children}: {children: JSX.Element | JSX.Element[]})
 {
-	const [selectedProject, selectProject] = useState<Project | null>(null);
+	const [selectedCategory, selectCategory] = useState<Category | null>(null);
 	const [tagFilters, setTagFilters] = useState<Tag[]>([]);
 
 	const addTagToFilters = (tag: Tag) =>
@@ -56,8 +56,8 @@ export function GlobalState({children}: {children: JSX.Element | JSX.Element[]})
 
 	return (
 		<GlobalStateContext.Provider value={{
-			selectedProject,
-			selectProject,
+			selectedCategory,
+			selectCategory,
 			tagFilters,
 			addTagToFilters,
 			removeTagFromFilters,

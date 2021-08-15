@@ -7,7 +7,7 @@ import menuIconHorizontale from "images/menuButton_horizontale.png"
 import {useSelectedNote} from "./SelectedNote"
 import {ContextMenu, ContextMenuItem, ContextMenuSpacer} from "components/ContextMenu"
 import { useData } from "Data";
-import { Project } from "softwiki-core/models";
+import { Category } from "softwiki-core/models";
 import { useNotification } from "notifications";
 
 const ActionBarLayout = styled.div`
@@ -56,7 +56,7 @@ const SaveExitButton = styled(Button)`
 	}
 `
 
-const ProjectName = styled.div`
+const CategoryName = styled.div`
 	margin-right: auto;
 	
 	opacity: 0.5;
@@ -75,31 +75,31 @@ export default function ActionBar()
 {
 	const selectedNote = useSelectedNote()
 	const contextMenuTrigger = useRef(null)
-	const projectContextMenuTrighger = useRef(null)
-	const { projects } = useData()
+	const categoryContextMenuTrighger = useRef(null)
+	const { categories } = useData()
 	const { popConfirmationMessage } = useNotification();
 
 	return (
 		<ActionBarLayout>
-			<ProjectName ref={projectContextMenuTrighger}>
-				{selectedNote.note?.getProject()?.getName() || "Uncategorized"}
-			</ProjectName>
+			<CategoryName ref={categoryContextMenuTrighger}>
+				{selectedNote.note?.getCategory()?.getName() || "Uncategorized"}
+			</CategoryName>
 			<ContextMenu
-				trigger={projectContextMenuTrighger}
+				trigger={categoryContextMenuTrighger}
 				absolutePosition={{top: "125%", left: "0"}}
 				useLeftClick
 			>
 				<>
 					{
-						projects.map((project: Project) =>
+						categories.map((category: Category) =>
 						{
 							return (
 								<ContextMenuItem
-									key={project.getId()}
-									value={project.getName()}
+									key={category.getId()}
+									value={category.getName()}
 									action={() => 
 									{
-										selectedNote.note?.setProject(project);
+										selectedNote.note?.setCategory(category);
 									}}
 								/>
 							);
@@ -112,7 +112,7 @@ export default function ActionBar()
 					textColor="rgb(200, 100, 100"
 					action={() => 
 					{
-						selectedNote.note?.setProject(null);
+						selectedNote.note?.setCategory(null);
 					}}
 				/>
 			</ContextMenu>
