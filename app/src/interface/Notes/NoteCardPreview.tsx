@@ -25,8 +25,6 @@ const NoteCardPreviewLayout = styled.div`
 const NoteCardPreviewTags = styled.div`
 	display: flex;
 	flex-direction: row;
-
-	margin-top: 8px;
 `
 
 export default function NoteCardPreview(props: {note: Note, onClick: () => void})
@@ -39,7 +37,7 @@ export default function NoteCardPreview(props: {note: Note, onClick: () => void}
 				{
 					props.note.getTags().map((tag: Tag) => 
 					{
-						return <TagCard key={tag.getId()} tag={tag} style={{marginRight: "4px"}}/>
+						return <TagCard key={tag.getId()} tag={tag} style={{marginRight: "4px", marginTop: "8px"}}/>
 					})
 				}
 			</NoteCardPreviewTags>
