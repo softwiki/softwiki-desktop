@@ -1,16 +1,16 @@
 import { Note, Tag } from "softwiki-core/models";
 import { createContext, useContext, useState } from "react";
-import { DataEvent } from "softwiki-core";
+import { DataEvent, SoftWikiClient } from "softwiki-core";
 import { useData } from "Data";
 
 interface SelectedNoteContextProps
 {
 	note: Note | null
-	selectNote: (note: Note) => void
-	save: () => void
-	delete: () => void
-	addTag: (tag: Tag) => void
-	removeTag: (tag: Tag) => void
+	selectNote: (note: Note) => Promise<void>
+	save: () => Promise<void>
+	delete: () => Promise<void>
+	addTag: (tag: Tag) => Promise<void>
+	removeTag: (tag: Tag) => Promise<void>
 	setUnsavedChanges: ({title, content}: {title: string, content: string}) => void
 	unsavedChanges: {title: string, content: string}
 	editModeEnabled: boolean
@@ -19,11 +19,11 @@ interface SelectedNoteContextProps
 
 const defaultValue: SelectedNoteContextProps = {
 	note: null,
-	selectNote: () => {},
-	save: () => {},
-	delete: () => {},
-	addTag: () => {},
-	removeTag: () => {},
+	selectNote: async () => {},
+	save: async () => {},
+	delete: async () => {},
+	addTag: async () => {},
+	removeTag: async () => {},
 	setUnsavedChanges: () => {},
 	unsavedChanges: {title: "", content: ""},
 	editModeEnabled: false,
@@ -51,28 +51,28 @@ export function SelectedNote({children}: {children: JSX.Element | JSX.Element[]}
 			await note.setContent(unsavedChanges.content)
 	}
 
-	const deleteNote = () => 
+	const deleteNote = async () => 
 	{
 		setNote(null)
 
 		if (!note)
 			return
 
-		note.delete()
+		await note.delete()
 	}
 
-	const addTag = (tag: Tag) => 
+	const addTag = async (tag: Tag) => 
 	{
 		if (!note)
 			return
-		note.addTag(tag)
+		await note.addTag(tag)
 	}
 
-	const removeTag = (tag: Tag) => 
+	const removeTag = async (tag: Tag) => 
 	{
 		if (!note)
 			return
-		note.removeTag(tag)
+		await note.removeTag(tag)
 	}
 
 	const selectNote = async (noteToSelect: Note) =>

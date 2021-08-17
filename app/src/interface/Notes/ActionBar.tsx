@@ -77,7 +77,7 @@ export default function ActionBar()
 	const contextMenuTrigger = useRef(null)
 	const categoryContextMenuTrighger = useRef(null)
 	const { categories } = useData()
-	const { popConfirmationMessage } = useNotification();
+	const { popConfirmationMessage, pushErrorIfFails } = useNotification();
 
 	return (
 		<ActionBarLayout>
@@ -119,10 +119,13 @@ export default function ActionBar()
 			{
 				selectedNote.editModeEnabled
 					? 
-					<SaveExitButton onClick={() => 
+					<SaveExitButton onClick={async () => 
 					{
-						selectedNote.save()
-						selectedNote.setEditModeEnabled(false)
+						pushErrorIfFails(async () =>
+						{
+							await selectedNote.save()
+							selectedNote.setEditModeEnabled(false)
+						});
 					}}>Save & Exit</SaveExitButton>
 					: ""
 			}

@@ -35,12 +35,25 @@ export function Notifications({children}: {children: JSX.Element | JSX.Element[]
 	const popModal = (content: () => JSX.Element) => { setModal(content); }
 	const closeModal = () => { setModal(null); }
 
+	// Error
+
+	const [error, setError] = useState<JSX.Element | null>(null);
+
+	const pushError = (error: Error) => { setError(<span style={{color: "rgb(255, 150, 150)"}}>{error.toString()}</span>); }
+	const closeError = () => { setError(null); }
+	const pushErrorIfFails = (f: () => Promise<void>) =>
+	{
+		f().catch((e: unknown) => { pushError(e as Error); });
+	}
+
 	return (
 		<NotificationContext.Provider
 			value={{
 				popConfirmationMessage,
 				popModal,
-				closeModal
+				closeModal,
+				pushError,
+				pushErrorIfFails
 			}}
 		>
 			{children}
@@ -58,6 +71,7 @@ export function Notifications({children}: {children: JSX.Element | JSX.Element[]
 				}}
 			/>
 			<ModalNotification content={modal} />
+			<ModalNotification content={error} onClickOutside={() => { closeError() }}/>
 		</NotificationContext.Provider>
 	)
 }

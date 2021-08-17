@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Button from "./Button";
 import Input from "./Input";
 import { useData } from "Data";
+import { useNotification } from "notifications";
 
 const CategoryEditorLayout = styled.div`
 
@@ -23,21 +24,21 @@ export default function CategoryEditor({category, onSave: onSave}: CategoryEdito
 {
 	const [name, setName] = useState(category ? category.getName() : "Untitled")
 	const { api } = useData();
+	const { pushErrorIfFails } = useNotification();
 
 	return (
 		<CategoryEditorLayout>
 			<Name value={name} onChange={(e: any) => { setName(e.target.value) }}></Name>
 			<Button onClick={() => 
 			{
-				if (category)
+				pushErrorIfFails(async () =>
 				{
-					category.setName(name)
-				}
-				else
-				{
-					api.createCategory({name})
-				}
-				onSave && onSave()
+					if (category)
+						await category.setName(name)
+					else
+						await api.createCategory({name})
+					onSave && onSave()
+				})
 			}}>Save & Close</Button>
 		</CategoryEditorLayout>
 	)

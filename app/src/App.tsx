@@ -12,6 +12,7 @@ import SideMenu from "interface/SideMenu";
 import { GlobalState } from "GlobalState";
 import * as themes from "./themes"
 import { handleWindowEvent } from "utils";
+import React from "react";
 
 interface GlobalStyleProps {
 	font: string
@@ -96,5 +97,22 @@ function App()
 		</AppLayout>
 	);
 }
+
+/*class ErrorBoundary extends React.Component
+{
+	constructor(props: any)
+	{
+		super(props);
+		this.state = { hasError: false };
+	}
+  
+	static getDerivedStateFromError(error: any) { return { hasError: true };  }
+	componentDidCatch(error: any, errorInfo: any) { console.log("CATCH")  }
+	render() 
+	{
+		if (this.state.hasError) { return <h1>Something went wrong.</h1>;    }
+		return this.props.children;
+	}
+}*/
 
 export default App;
