@@ -58,4 +58,4 @@ I plan to let the application free and open source, no paid plan or whatever to 
 
 ## License
 
-Probably GPL, but nothing decided yet.
+GPLv3, See the [LICENSE](LICENSE.md).
