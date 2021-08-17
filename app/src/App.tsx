@@ -7,7 +7,7 @@ import NotesModule from "./interface/Notes"
 
 import { Data } from "Data";
 import { ConfigContext } from "Config";
-import { Notifications } from "notifications";
+import { Messages } from "messages";
 import SideMenu from "interface/SideMenu";
 import { GlobalState } from "GlobalState";
 import * as themes from "./themes"
@@ -85,11 +85,11 @@ function App()
 			<ThemeProvider theme={appearance}>
 				<Data>
 					<GlobalState>
-						<Notifications>
+						<Messages>
 							<SideBar/>
 							<SideMenu/>
 							<NotesModule/>
-						</Notifications>
+						</Messages>
 					</GlobalState>
 				</Data>
 				<GloabalStyle font={font.family} fontSize={font.size} />

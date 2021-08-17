@@ -1,6 +1,6 @@
 import { SoftWikiClient, DataEvent, FileSystemApiProvider, JsonApiProvider, Api } from "softwiki-core";
-import { Note, Tag } from "softwiki-core/models";
-import { Category } from "softwiki-core/models";
+import { Note, Tag } from "softwiki-core/objects";
+import { Category } from "softwiki-core/objects";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { getDefaultBasePath, readFile, writeFile } from "files";
 import { ConfigContext, ConfigFields } from "Config";
@@ -27,7 +27,7 @@ if (isLinux() || isWindows())
 	})
 });*/
 
-function getProviderFromConfig(provider: ConfigFields): Api
+function getProviderFromConfig(config: ConfigFields): Api
 {
 	if (isBrowser())
 	{
@@ -40,8 +40,12 @@ function getProviderFromConfig(provider: ConfigFields): Api
 		})
 	}
 
-	const fs = window.require("fs").promises
-	return new FileSystemApiProvider(getDefaultBasePath(), fs);
+	if (config.provider.type === "fs")
+	{
+		const fs = window.require("fs").promises
+		return new FileSystemApiProvider(getDefaultBasePath(), fs);
+	}
+	throw new Error(`No provider found for configuation type "${config.provider.type}"`)
 	/*return new JsonApiProvider(async (content: string) =>
 	{
 		await writeFile(getDefaultBasePath() + "/notes/db.json", content);
@@ -98,7 +102,7 @@ export function Data({children}: DataProps)
 		});
 	}, []);
 
-	softWikiClient.subscribe(DataEvent.NotesUpdated, "Data.NotesUpdated", ({note}: any) => 
+	softWikiClient.subscribe(DataEvent.NotesUpdated, "Data.NotesUpdated", () => 
 	{
 		setData({notes: softWikiClient.notes, tags: softWikiClient.tags, categories: softWikiClient.categories});
 	});

@@ -1,10 +1,10 @@
-import { Category } from "softwiki-core/models";
+import { Category } from "softwiki-core/objects";
 import { useState } from "react";
 import styled from "styled-components";
 import Button from "./Button";
 import Input from "./Input";
 import { useData } from "Data";
-import { useNotification } from "notifications";
+import { useMessage } from "messages";
 
 const CategoryEditorLayout = styled.div`
 
@@ -24,7 +24,7 @@ export default function CategoryEditor({category, onSave: onSave}: CategoryEdito
 {
 	const [name, setName] = useState(category ? category.getName() : "Untitled")
 	const { api } = useData();
-	const { pushErrorIfFails } = useNotification();
+	const { pushErrorIfFails } = useMessage();
 
 	return (
 		<CategoryEditorLayout>

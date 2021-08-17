@@ -1,4 +1,4 @@
-import { Tag } from "softwiki-core/models";
+import { Tag } from "softwiki-core/objects";
 import { useState } from "react";
 import styled from "styled-components";
 import Button from "./Button";

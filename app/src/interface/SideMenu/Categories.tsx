@@ -1,11 +1,11 @@
 import styled from "styled-components"
 import { useRef, useState } from "react"
 import { useData } from "Data"
-import { Category } from "softwiki-core/models"
+import { Category } from "softwiki-core/objects"
 import Modal from "components/Modal"
 import CategoryEditor from "components/CategoryEditor"
 import { ContextMenu, ContextMenuItem, ContextMenuSpacer } from "components/ContextMenu"
-import { useNotification } from "notifications";
+import { useMessage } from "messages";
 import { Header } from "./common";
 import { useGlobalState } from "GlobalState";
 import AddButton from "components/AddButton";
@@ -21,7 +21,7 @@ const CategoriesCard = styled.div`
 export default function Categories()
 {
 	const {categories} = useData();
-	const {popConfirmationMessage} = useNotification();
+	const {pushConfirmationMessage} = useMessage();
 	const [showNewCategoryModal, setShowNewCategoryModal] = useState<boolean>(false)
 	const [currentCategoryEdit, setCurrentCategoryEdit] = useState<Category | undefined>(undefined)
 
@@ -59,7 +59,7 @@ export default function Categories()
 							}}
 							onDelete={() => 
 							{
-								popConfirmationMessage(`Do you really want to delete the category "${category.getName()}" ?`, () => 
+								pushConfirmationMessage(`Do you really want to delete the category "${category.getName()}" ?`, () => 
 								{
 									category.delete()
 								})

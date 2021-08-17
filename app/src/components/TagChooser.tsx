@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { Tag } from "softwiki-core/models"
+import { Tag } from "softwiki-core/objects"
 import TagCard from "./TagCard"
 import { useContext } from "react"
 import { DataContext } from "Data"

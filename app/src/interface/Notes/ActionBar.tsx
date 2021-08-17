@@ -7,8 +7,8 @@ import menuIconHorizontale from "images/menuButton_horizontale.png"
 import {useSelectedNote} from "./SelectedNote"
 import {ContextMenu, ContextMenuItem, ContextMenuSpacer} from "components/ContextMenu"
 import { useData } from "Data";
-import { Category } from "softwiki-core/models";
-import { useNotification } from "notifications";
+import { Category } from "softwiki-core/objects";
+import { useMessage } from "messages";
 
 const ActionBarLayout = styled.div`
 
@@ -77,7 +77,7 @@ export default function ActionBar()
 	const contextMenuTrigger = useRef(null)
 	const categoryContextMenuTrighger = useRef(null)
 	const { categories } = useData()
-	const { popConfirmationMessage, pushErrorIfFails } = useNotification();
+	const { pushConfirmationMessage, pushErrorIfFails } = useMessage();
 
 	return (
 		<ActionBarLayout>
@@ -147,7 +147,7 @@ export default function ActionBar()
 					<ContextMenuSpacer/>
 					<ContextMenuItem value="Delete" textColor="rgb(200, 100, 100)" action={() => 
 					{
-						popConfirmationMessage(
+						pushConfirmationMessage(
 							`Do you really want to delete the note "${selectedNote.note?.getTitle()}" ?`,
 							() =>
 							{

@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { Note } from "softwiki-core/models"
+import { Note } from "softwiki-core/objects"
 import NoteCardPreview from "./NoteCardPreview"
 import Input from "components/Input"
 import { ChangeEvent, useState } from "react"

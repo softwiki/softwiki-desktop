@@ -1,6 +1,6 @@
-import { Note, Tag } from "softwiki-core/models";
+import { Note, Tag } from "softwiki-core/objects";
 import { createContext, useContext, useState } from "react";
-import { DataEvent, SoftWikiClient } from "softwiki-core";
+import { DataEvent } from "softwiki-core";
 import { useData } from "Data";
 
 interface SelectedNoteContextProps

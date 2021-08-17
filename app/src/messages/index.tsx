@@ -1,15 +1,15 @@
 import React, { useContext, useState } from "react";
 import { ConfirmationMessage, ConfirmationMessageProperties } from "./confirmationMessage";
-import { ModalNotification } from "./modal";
+import { ModalMessage } from "./modal";
 
-const NotificationContext = React.createContext<any>({});
+const MessageContext = React.createContext<any>({});
 
-export function useNotification()
+export function useMessage()
 {
-	return useContext(NotificationContext);
+	return useContext(MessageContext);
 }
 
-export function Notifications({children}: {children: JSX.Element | JSX.Element[]})
+export function Messages({children}: {children: JSX.Element | JSX.Element[]})
 {
 	// Confirmation messsage box
 
@@ -19,7 +19,7 @@ export function Notifications({children}: {children: JSX.Element | JSX.Element[]
 		noFunction: () => {},
 	});
 
-	const popConfirmationMessage = (message: string, yesFunction?: () => void, noFunction?: () => void) =>
+	const pushConfirmationMessage = (message: string, yesFunction?: () => void, noFunction?: () => void) =>
 	{
 		setConfirmationMessage({
 			message,
@@ -32,7 +32,7 @@ export function Notifications({children}: {children: JSX.Element | JSX.Element[]
 
 	const [modal, setModal] = useState<JSX.Element | null>(null);
 
-	const popModal = (content: () => JSX.Element) => { setModal(content); }
+	const pushModal = (content: () => JSX.Element) => { setModal(content); }
 	const closeModal = () => { setModal(null); }
 
 	// Error
@@ -47,10 +47,10 @@ export function Notifications({children}: {children: JSX.Element | JSX.Element[]
 	}
 
 	return (
-		<NotificationContext.Provider
+		<MessageContext.Provider
 			value={{
-				popConfirmationMessage,
-				popModal,
+				pushConfirmationMessage,
+				pushModal,
 				closeModal,
 				pushError,
 				pushErrorIfFails
@@ -70,8 +70,8 @@ export function Notifications({children}: {children: JSX.Element | JSX.Element[]
 					});
 				}}
 			/>
-			<ModalNotification content={modal} />
-			<ModalNotification content={error} onClickOutside={() => { closeError() }}/>
-		</NotificationContext.Provider>
+			<ModalMessage content={modal} />
+			<ModalMessage content={error} onClickOutside={() => { closeError() }}/>
+		</MessageContext.Provider>
 	)
 }

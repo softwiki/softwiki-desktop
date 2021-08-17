@@ -1,13 +1,12 @@
 import Modal from "components/Modal";
-import { useNotification } from "notifications";
 
-interface ModalNotificationProps
+interface ModalMessageProps
 {
 	content: JSX.Element | null
 	onClickOutside?: () => void
 }
 
-export function ModalNotification({content, onClickOutside}: ModalNotificationProps)
+export function ModalMessage({content, onClickOutside}: ModalMessageProps)
 {
 	if (!content)
 		return <></>	

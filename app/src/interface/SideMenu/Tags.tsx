@@ -3,9 +3,9 @@ import { ContextMenu, ContextMenuItem, ContextMenuSpacer } from "components/Cont
 import TagEditor from "components/TagEditor";
 import { useData } from "Data";
 import { useGlobalState } from "GlobalState";
-import { useNotification } from "notifications";
+import { useMessage } from "messages";
 import React, { useRef } from "react";
-import { Tag } from "softwiki-core/models";
+import { Tag } from "softwiki-core/objects";
 import styled from "styled-components";
 import { Header } from "./common";
 
@@ -20,7 +20,7 @@ const TagsCard = styled.div`
 export function Tags()
 {
 	const {tags} = useData();
-	const {popModal, closeModal} = useNotification()
+	const {pushModal, closeModal} = useMessage()
 
 	tags.sort((a: Tag, b: Tag) =>
 	{
@@ -33,7 +33,7 @@ export function Tags()
 				<span>Tags</span>
 				<AddButton onClick={() =>
 				{
-					popModal(
+					pushModal(
 						<TagEditor tag={null} onSave={() => { closeModal() }}/>
 					)
 				}}/>
@@ -99,7 +99,7 @@ interface TagCardProps
 export function TagCard({tag}: TagCardProps)
 {
 	const contextMenuTrigger = useRef(null);
-	const {popModal, closeModal, popConfirmationMessage} = useNotification();
+	const {pushModal, closeModal, pushConfirmationMessage} = useMessage();
 	const {tagFilters, addTagToFilters, removeTagFromFilters, resetTagFilters, isTagFiltered} = useGlobalState();
 
 	return (
@@ -133,7 +133,7 @@ export function TagCard({tag}: TagCardProps)
 			<ContextMenu trigger={contextMenuTrigger}>
 				<ContextMenuItem value="Edit" action={() =>
 				{
-					popModal(
+					pushModal(
 						<TagEditor tag={tag} onSave={() => { closeModal() }}/>
 					)
 				}}/>
@@ -142,7 +142,7 @@ export function TagCard({tag}: TagCardProps)
 					value="Delete" textColor="rgb(200, 100, 100)"
 					action={() =>
 					{
-						popConfirmationMessage(`Do you really want to delete the tag "${tag.getName()}" ?`, () => 
+						pushConfirmationMessage(`Do you really want to delete the tag "${tag.getName()}" ?`, () => 
 						{
 							tag.delete()
 						})

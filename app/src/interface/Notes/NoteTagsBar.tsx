@@ -2,7 +2,7 @@ import Button from "components/Button";
 import Popup from "components/Popup";
 import TagCard from "components/TagCard";
 import TagChooser from "components/TagChooser";
-import { Tag } from "softwiki-core/models";
+import { Tag } from "softwiki-core/objects";
 import { useState } from "react";
 import styled from "styled-components";
 import { useSelectedNote } from "./SelectedNote";
