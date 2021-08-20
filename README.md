@@ -10,15 +10,11 @@ SoftWiki is a wiki-like application, available on Linux and Windows.
 - Store your notes locally (in markdown files).
 - Manage your notes with projects.
 - Put tags on your notes.
-- Select the theme you want (but honestly why would you chose something else than the dark theme).
+- Select the theme you want (but honestly why would you chose something else than the dark theme) <= Not finished yet.
 
 ## Roadmap & ideas
 
 *As I'm doing this application mainly for my own needs, I might or not implement the following features, but in an ideal world, I probably would.*
-
-- Reference a note from another (internal note links).
-
-*The following are just more ideas, so don't really expect them.*
 
 - Data encryption.
 - Database, remote database/server for storing data.
@@ -29,7 +25,7 @@ SoftWiki is a wiki-like application, available on Linux and Windows.
 
 [Download links here](https://public-downloads.vyndev.com)
 
-*Windows will probably prevent you to run it the first time, so it's trust it or build it yourself*
+*Windows will probably prevent you to run it the first time, so it's trust it or build it yourself from source*.
 
 ## Build from source
 
