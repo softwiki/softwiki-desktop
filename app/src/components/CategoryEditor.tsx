@@ -1,45 +1,57 @@
-import { Category } from "softwiki-core/objects";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import styled from "styled-components";
 import Button from "./Button";
 import Input from "./Input";
-import { useData } from "Data";
-import { useMessage } from "messages";
 
 const CategoryEditorLayout = styled.div`
 
 `
 
-const Name = styled(Input)`
-	margin-right: 4px; 
+export const Name = styled(Input)`
+	margin: 0 0 8px 0; 
 `
+
+export const ButtonsBar = styled.div`
+	margin-top: 8px;
+
+	display: flex;
+	flex-direction: row;
+
+	& > *:last-child
+	{
+		flex: 1;
+		margin-left: 4px;
+	}
+`
+
+export const SaveButton = styled(Button)`
+	background-color: ${({theme}) => theme.greenButton.color};
+
+	&:hover
+	{
+		background-color: ${({theme}) => theme.greenButton.colorHover};
+	}
+`
+
+export const CancelButton = styled(Button)``
 
 interface CategoryEditorProps
 {
-	category: Category | undefined
-	onSave?: () => void
+	name: string
+	onChange: (name: string) => any
 }
 
-export default function CategoryEditor({category, onSave: onSave}: CategoryEditorProps)
+export default function CategoryEditor({name, onChange}: CategoryEditorProps)
 {
-	const [name, setName] = useState(category ? category.getName() : "Untitled")
-	const { api } = useData();
-	const { pushErrorIfFails } = useMessage();
+	const [modifiedName, setModifiedName] = useState(name);
 
 	return (
 		<CategoryEditorLayout>
-			<Name value={name} onChange={(e: any) => { setName(e.target.value) }}></Name>
-			<Button onClick={() => 
-			{
-				pushErrorIfFails(async () =>
-				{
-					if (category)
-						await category.setName(name)
-					else
-						await api.createCategory({name})
-					onSave && onSave()
-				})
-			}}>Save & Close</Button>
+			<Name value={modifiedName} onChange={(e: ChangeEvent<HTMLInputElement>) => { setModifiedName(e.target.value) }}></Name>
+			<ButtonsBar>
+				<CancelButton onClick={() =>  { onChange(name); }}>Cancel</CancelButton>
+				<SaveButton onClick={() =>  { onChange(modifiedName); }}>Save & Close</SaveButton>
+			</ButtonsBar>
 		</CategoryEditorLayout>
 	)
 }

@@ -1,9 +1,8 @@
 import { SketchPicker } from "react-color";
 import TagEditor, {Name, SaveButton, CancelButton, Color} from "./TagEditor";
 import {shallow, ShallowWrapper} from "enzyme";
-import Button from "./Button";
 
-describe("TagChooser component", () =>
+describe("TagEditor component", () =>
 {
 	let tagEditor: ShallowWrapper;
 	const name = "name-test";

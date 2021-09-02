@@ -1,8 +1,7 @@
 import styled from "styled-components"
-import { useRef, useState } from "react"
+import { useRef } from "react"
 import { useData } from "Data"
 import { Category } from "softwiki-core/objects"
-import Modal from "components/Modal"
 import CategoryEditor from "components/CategoryEditor"
 import { ContextMenu, ContextMenuItem, ContextMenuSpacer } from "components/ContextMenu"
 import { useMessage } from "messages";
@@ -20,10 +19,8 @@ const CategoriesCard = styled.div`
 
 export default function Categories()
 {
-	const {categories} = useData();
-	const {pushConfirmationMessage} = useMessage();
-	const [showNewCategoryModal, setShowNewCategoryModal] = useState<boolean>(false)
-	const [currentCategoryEdit, setCurrentCategoryEdit] = useState<Category | undefined>(undefined)
+	const {categories, api} = useData();
+	const {pushConfirmationMessage, pushModal, closeModal, pushErrorIfFails} = useMessage();
 
 	const {selectedCategory, selectCategory} = useGlobalState();
 
@@ -34,13 +31,26 @@ export default function Categories()
 
 	return (
 		<CategoriesLayout>
-			{showNewCategoryModal ?
-				<Modal onClickOutside={() => { setShowNewCategoryModal(false) }}>
-					<CategoryEditor category={currentCategoryEdit} onSave={() => { setShowNewCategoryModal(false) }}/>
-				</Modal> : ""}
 			<Header>
 				<span>Categories</span>
-				<AddButton onClick={() => { setShowNewCategoryModal(true) }}/>
+				<AddButton
+					onClick={() =>
+					{
+						pushModal(
+							<CategoryEditor
+								name="Untitled"
+								onChange={(name: string) =>
+								{
+									pushErrorIfFails(async () =>
+									{
+										await api.createCategory({name})
+										closeModal();
+									})
+								}}
+							/>
+						)
+					}}
+				/>
 			</Header>
 			<CategoriesCard>
 				<CategoryCard selected={selectedCategory === null} category={undefined} onClick={() => { selectCategory(null) }}/>
@@ -54,8 +64,20 @@ export default function Categories()
 							onClick={() => { selectCategory(category) }}
 							onEdit={() => 
 							{
-								setCurrentCategoryEdit(category)
-								setShowNewCategoryModal(true)
+								pushModal(
+									<CategoryEditor
+										name={category.getName()}
+										onChange={(name: string) =>
+										{
+											pushErrorIfFails(async () =>
+											{
+												if (name !== category.getName())
+													await category.setName(name)
+												closeModal();
+											})
+										}}
+									/>
+								)
 							}}
 							onDelete={() => 
 							{

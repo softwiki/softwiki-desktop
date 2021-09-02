@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import styled, { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 import Button from "./Button";
 import Input from "./Input";
 //import { useData } from "Data";
