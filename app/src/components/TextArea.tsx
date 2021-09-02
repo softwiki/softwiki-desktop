@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-const TextAreaLayout = styled.textarea`
+export default styled.textarea`
 	padding: 4px;
 	padding-left: 8px;
 	padding-right: 8px;
@@ -9,9 +9,6 @@ const TextAreaLayout = styled.textarea`
 	border-radius: 4px;
 	background-color: ${({theme}) => theme.input.color};
 	color: ${({theme}) => theme.input.textColor};
+	
+	resize: none;
 `
-
-export default function Input(props: any)
-{
-	return <TextAreaLayout {...props} />
-}

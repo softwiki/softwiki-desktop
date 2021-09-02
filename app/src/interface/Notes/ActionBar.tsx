@@ -15,11 +15,9 @@ const ActionBarLayout = styled.div`
 	position: relative;
 
 	display: flex;
-	flex-direction: row;
-	justify-content: flex-end;
-	align-items: center;
-
-	margin: 8px;
+	flex-direction: column;
+	
+	margin-bottom: 16px;
 `
 
 const NoteMenuIconWrapper = styled.div`
@@ -54,11 +52,16 @@ const SaveExitButton = styled(Button)`
 	{
 		background-color: rgb(100, 175, 100);
 	}
+	white-space: nowrap;
+`
+
+const Title = styled.h1`
+	margin: 0;
 `
 
 const CategoryName = styled.div`
-	margin-right: auto;
 	
+	margin-bottom: 8px;
 	opacity: 0.5;
 	cursor: pointer;
 
@@ -69,6 +72,14 @@ const CategoryName = styled.div`
 		opacity: 1;
 	}
 
+	margin-right: auto;
+`
+
+const UpperBar = styled.div`
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	align-items: center;
 `
 
 export default function ActionBar()
@@ -81,82 +92,85 @@ export default function ActionBar()
 
 	return (
 		<ActionBarLayout>
-			<CategoryName ref={categoryContextMenuTrighger}>
-				{selectedNote.note?.getCategory()?.getName() || "Uncategorized"}
-			</CategoryName>
-			<ContextMenu
-				trigger={categoryContextMenuTrighger}
-				absolutePosition={{top: "125%", left: "0"}}
-				useLeftClick
-			>
-				<>
-					{
-						categories.map((category: Category) =>
+			<UpperBar>
+				<CategoryName ref={categoryContextMenuTrighger}>
+					{selectedNote.note?.getCategory()?.getName() || "Uncategorized"}
+				</CategoryName>
+				<ContextMenu
+					trigger={categoryContextMenuTrighger}
+					absolutePosition={{top: "1.5em", left: "0"}}
+					useLeftClick
+				>
+					<>
 						{
-							return (
-								<ContextMenuItem
-									key={category.getId()}
-									value={category.getName()}
-									action={() => 
-									{
-										selectedNote.note?.setCategory(category);
-									}}
-								/>
-							);
-						})
-					}
-				</>
-				<ContextMenuSpacer/>
-				<ContextMenuItem
-					value="Uncategorized"
-					textColor="rgb(200, 200, 200)"
-					action={() => 
-					{
-						selectedNote.note?.setCategory(null);
-					}}
-				/>
-			</ContextMenu>
-			{
-				selectedNote.editModeEnabled
-					? 
-					<SaveExitButton onClick={async () => 
-					{
-						pushErrorIfFails(async () =>
-						{
-							await selectedNote.save()
-							selectedNote.setEditModeEnabled(false)
-						});
-					}}>Save & Exit</SaveExitButton>
-					: ""
-			}
-			<div style={{position: "relative", cursor: "pointer"}}>
-				<NoteMenuIconWrapper ref={contextMenuTrigger}>
-					<NoteMenuIcon src={menuIconHorizontale}/>
-				</NoteMenuIconWrapper>
-				<ContextMenu trigger={contextMenuTrigger} absolutePosition={{top: "125%", right: "0"}} useLeftClick>
-					<ContextMenuItem value="Edit" action={() => 
-					{
-						if (selectedNote.editModeEnabled)
-							selectedNote.save()
-						selectedNote.setEditModeEnabled(!selectedNote.editModeEnabled)
-					}}/>
-					<ContextMenuItem value="Save" action={() => 
-					{
-						selectedNote.save()
-					}}/>
-					<ContextMenuSpacer/>
-					<ContextMenuItem value="Delete" textColor="rgb(200, 100, 100)" action={() => 
-					{
-						pushConfirmationMessage(
-							`Do you really want to delete the note "${selectedNote.note?.getTitle()}" ?`,
-							() =>
+							categories.map((category: Category) =>
 							{
-								selectedNote.delete()
-							}
-						)
-					}}/>
+								return (
+									<ContextMenuItem
+										key={category.getId()}
+										value={category.getName()}
+										action={() => 
+										{
+											selectedNote.note?.setCategory(category);
+										}}
+									/>
+								);
+							})
+						}
+					</>
+					<ContextMenuSpacer/>
+					<ContextMenuItem
+						value="Uncategorized"
+						textColor="rgb(200, 200, 200)"
+						action={() => 
+						{
+							selectedNote.note?.setCategory(null);
+						}}
+					/>
 				</ContextMenu>
-			</div>
+				{
+					selectedNote.editModeEnabled
+						? 
+						<SaveExitButton onClick={async () => 
+						{
+							pushErrorIfFails(async () =>
+							{
+								await selectedNote.save()
+								selectedNote.setEditModeEnabled(false)
+							});
+						}}>Save & Exit</SaveExitButton>
+						: ""
+				}
+				<div style={{position: "relative", cursor: "pointer"}}>
+					<NoteMenuIconWrapper ref={contextMenuTrigger}>
+						<NoteMenuIcon src={menuIconHorizontale}/>
+					</NoteMenuIconWrapper>
+					<ContextMenu trigger={contextMenuTrigger} absolutePosition={{top: "125%", right: "0"}} useLeftClick>
+						<ContextMenuItem value="Edit" action={() => 
+						{
+							if (selectedNote.editModeEnabled)
+								selectedNote.save()
+							selectedNote.setEditModeEnabled(!selectedNote.editModeEnabled)
+						}}/>
+						<ContextMenuItem value="Save" action={() => 
+						{
+							selectedNote.save()
+						}}/>
+						<ContextMenuSpacer/>
+						<ContextMenuItem value="Delete" textColor="rgb(200, 100, 100)" action={() => 
+						{
+							pushConfirmationMessage(
+								`Do you really want to delete the note "${selectedNote.note?.getTitle()}" ?`,
+								() =>
+								{
+									selectedNote.delete()
+								}
+							)
+						}}/>
+					</ContextMenu>
+				</div>
+			</UpperBar>
+			<Title>{selectedNote.unsavedChanges.title}</Title>
 		</ActionBarLayout>
 	)
 }

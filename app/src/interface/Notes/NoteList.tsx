@@ -35,7 +35,7 @@ const Filters = styled.div`
 		}
 	}
 `
-const ActionBar = styled.div`
+const Buttons = styled.div`
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -78,6 +78,9 @@ export default function NoteList(props: NoteListArguments)
 		if (selectedCategory !== null && !note.belongToCategory(selectedCategory))
 			return false
 
+		if (selectedCategory === null && note.getCategory())
+			return false
+
 		return true 
 	})
 
@@ -109,10 +112,10 @@ export default function NoteList(props: NoteListArguments)
 				/>
 				<SortOrderWidget sortOrder={sortOrder} onChange={(newSortOrder: SortOrder) => { setSortOrder(newSortOrder) }} />
 			</Filters>
-			<ActionBar>
+			<Buttons>
 				<div>Notes</div>
 				<AddButton onClick={() => { props.createNote() }}/>
-			</ActionBar>
+			</Buttons>
 			<HorizontalLineSpacer marginBottom="0"/>	
 			<Notes>
 				{

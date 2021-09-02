@@ -62,6 +62,7 @@ export default function NoteTagsBar()
 							if (note.hasTag(tag))
 								return ;
 							note.addTag(tag)
+							setAddTagWidget(false);
 						}}
 					/>
 				</Popup>

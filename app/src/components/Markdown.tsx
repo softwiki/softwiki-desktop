@@ -41,8 +41,10 @@ function attacher(): any
 export default function Markdown(props: any)
 {
 	return (
-		<ReactMarkdown components={components} remarkPlugins={[gfm]} rehypePlugins={[attacher]}>
-			{props.children}
-		</ReactMarkdown>
+		<div style={{...props.style, display: "block"}}>
+			<ReactMarkdown components={components} remarkPlugins={[gfm]} rehypePlugins={[attacher]}>
+				{props.children}
+			</ReactMarkdown>
+		</div>
 	)
 }

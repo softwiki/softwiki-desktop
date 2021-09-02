@@ -19,7 +19,7 @@ const CategoriesCard = styled.div`
 
 export default function Categories()
 {
-	const {categories, api} = useData();
+	const {categories, notes, api} = useData();
 	const {pushConfirmationMessage, pushModal, closeModal, pushErrorIfFails} = useMessage();
 
 	const {selectedCategory, selectCategory} = useGlobalState();
@@ -28,6 +28,9 @@ export default function Categories()
 	{
 		return a.getName() > b.getName() ? 1 : -1;
 	});
+
+	let uncategorizedNotesCount = notes.length;
+	categories.forEach((category: Category) => uncategorizedNotesCount -= category.getNoteCount());
 
 	return (
 		<CategoriesLayout>
@@ -53,13 +56,14 @@ export default function Categories()
 				/>
 			</Header>
 			<CategoriesCard>
-				<CategoryCard selected={selectedCategory === null} category={undefined} onClick={() => { selectCategory(null) }}/>
+				<CategoryCard name="Uncategorized" count={uncategorizedNotesCount} contextMenuDisabled onClick={() => { selectCategory(null) }}/>
 				{categories.map((category: Category) => 
 				{
 					return (
 						<CategoryCard
 							key={category.getId()}
-							category={category}
+							name={category.getName()}
+							count={category.getNoteCount()}
 							selected={category.getId() === selectedCategory?.getId()}
 							onClick={() => { selectCategory(category) }}
 							onEdit={() => 
@@ -145,20 +149,18 @@ const NoteCount = styled.p`
 
 interface CategoryCardProps
 {
-	category: Category | undefined
+	name: string
+	count: number
+	contextMenuDisabled?: boolean
 	onClick: () => void
 	selected?: boolean
 	onEdit?: () => void
 	onDelete?: () => void
 }
 
-function CategoryCard({category, selected = false, onClick, onEdit, onDelete}: CategoryCardProps)
+function CategoryCard({name, count, contextMenuDisabled, selected = false, onClick, onEdit, onDelete}: CategoryCardProps)
 {
 	const contextMenuTrigger = useRef(null)
-	const { notes } = useData();
-
-	const name = category ? category.getName() : "All"
-	const count = category ? category.getNoteCount() : notes.length
 
 	return (
 		<CategoryCardWrapper>
@@ -167,7 +169,7 @@ function CategoryCard({category, selected = false, onClick, onEdit, onDelete}: C
 				<NoteCount>{count}</NoteCount>
 			</CategoryCardLayout>
 
-			<ContextMenu trigger={category ? contextMenuTrigger : undefined}>
+			<ContextMenu trigger={contextMenuDisabled ? undefined : contextMenuTrigger}>
 				<ContextMenuItem value="Edit" action={() => { onEdit && onEdit() }}/>
 				<ContextMenuSpacer/>
 				<ContextMenuItem value="Delete" textColor="rgb(200, 100, 100)" action={() => { onDelete && onDelete() }}/>
