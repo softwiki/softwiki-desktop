@@ -1,6 +1,6 @@
 import AddButton from "components/AddButton";
 import { ContextMenu, ContextMenuItem, ContextMenuSpacer } from "components/ContextMenu";
-import TagEditor from "components/TagEditor";
+import TagEditor, { Color } from "components/TagEditor";
 import { useData } from "Data";
 import { useGlobalState } from "GlobalState";
 import { useMessage } from "messages";
@@ -19,7 +19,7 @@ const TagsCard = styled.div`
 
 export function Tags()
 {
-	const {tags} = useData();
+	const {tags, api} = useData();
 	const {pushModal, closeModal} = useMessage()
 
 	tags.sort((a: Tag, b: Tag) =>
@@ -34,7 +34,15 @@ export function Tags()
 				<AddButton onClick={() =>
 				{
 					pushModal(
-						<TagEditor tag={null} onSave={() => { closeModal() }}/>
+						<TagEditor
+							name="Untitled"
+							color={{r: 200, g: 100, b: 100, a: 1}}
+							onChange={async (name: string, color: Color) =>
+							{
+								await api.createTag({name, color});
+								closeModal()
+							}}
+						/>
 					)
 				}}/>
 			</Header>
@@ -134,7 +142,15 @@ export function TagCard({tag}: TagCardProps)
 				<ContextMenuItem value="Edit" action={() =>
 				{
 					pushModal(
-						<TagEditor tag={tag} onSave={() => { closeModal() }}/>
+						<TagEditor
+							name={tag.getName()}
+							color={tag.getColor()}
+							onChange={async (name: string, color: Color) =>
+							{
+								await tag.setAll({name, color});
+								closeModal()
+							}}
+						/>
 					)
 				}}/>
 				<ContextMenuSpacer/>

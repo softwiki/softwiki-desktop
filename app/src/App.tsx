@@ -63,6 +63,27 @@ const GloabalStyle = createGlobalStyle<GlobalStyleProps>`
 	}
 `
 
+const ColorPickerCssOverride = createGlobalStyle`
+	.sketch-picker
+	{
+		background: none !important;
+		box-shadow: none !important;
+		color: white !important;
+	}
+
+	.flexbox-fix *
+	{
+		color: white !important;
+	}
+
+	.flexbox-fix input
+	{
+		border: none !important;
+		box-shadow: none !important;
+		background-color: ${({theme}) => (theme as any).input ? (theme as any).input.color : "none"};
+	}
+`
+
 const AppLayout = styled.div`
   display: flex;
   flex-direction: row;
@@ -93,6 +114,7 @@ function App()
 					</GlobalState>
 				</Data>
 				<GloabalStyle font={font.family} fontSize={font.size} />
+				<ColorPickerCssOverride/>
 			</ThemeProvider>
 		</AppLayout>
 	);

@@ -16,10 +16,32 @@ const components = {
 	}
 }
 
+function attacher(): any
+{
+	return (tree: any) =>
+	{
+		console.log(tree)
+		for (const child of tree.children)
+		{
+			if (child.type === "paragraph")
+			{
+				for (const child2 of child.children)
+				{
+					if (child2.type === "link")
+					{
+						console.log(child2);
+						child2.url += " LOL"
+					}
+				}
+			}
+		}
+	}
+}
+
 export default function Markdown(props: any)
 {
 	return (
-		<ReactMarkdown components={components} remarkPlugins={[gfm]}>
+		<ReactMarkdown components={components} remarkPlugins={[gfm]} rehypePlugins={[attacher]}>
 			{props.children}
 		</ReactMarkdown>
 	)

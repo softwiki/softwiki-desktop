@@ -52,5 +52,9 @@ export const dark = {
 	modal: {
 		color: "rgb(60, 60, 60)",
 		spacerColor: "rgb(80, 80, 80)"
+	},
+	greenButton: {
+		color: "rgb(100, 150, 100)",
+		colorHover: "rgb(100, 175, 100)"
 	}
 }
