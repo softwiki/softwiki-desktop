@@ -3,6 +3,7 @@ import gfm from "remark-gfm"
 
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { tomorrow } from "react-syntax-highlighter/dist/cjs/styles/prism"
+import styled, { createGlobalStyle } from "styled-components";
 
 const components = {
 	code({/*node, */inline, className, children, ...props}: any) 
@@ -38,13 +39,42 @@ function attacher(): any
 	}
 }
 
+const MarkdownCustomStyle = styled.div`
+	& table
+	{
+		border-collapse: collapse;
+		border-radius: 4px;
+	}
+
+	& tr
+	{
+		border: 1px solid ${({theme}) => theme.notes.content.textColor};
+	}
+
+	& td:not(:first-child), & th:not(:first-child)
+	{
+		border-left: 1px solid ${({theme}) => theme.notes.content.textColor};
+	}
+
+	& td, & th
+	{
+		padding: 4px;
+		text-align: left;
+	}
+
+	& th
+	{
+		background-color: rgb(255, 255, 255, 0.05)
+	}
+`
+
 export default function Markdown(props: any)
 {
 	return (
-		<div style={{...props.style, display: "block"}}>
+		<MarkdownCustomStyle style={{...props.style, display: "block"}} className="react-markdown">
 			<ReactMarkdown components={components} remarkPlugins={[gfm]} rehypePlugins={[attacher]}>
 				{props.children}
 			</ReactMarkdown>
-		</div>
+		</MarkdownCustomStyle>
 	)
 }
