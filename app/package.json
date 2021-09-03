@@ -19,11 +19,12 @@
     "name": "Xavier Esnault",
     "email": "contact@xesnault.dev"
   },
-  "license": "MIT",
+  "license": "GPLv3",
   "config": {
     "forge": {
       "packagerConfig": {
-        "ignore": ["^/src"]
+        "ignore": ["^/src"],
+        "icon": "public/softwiki.png"
       },
       "makers": [
         {

@@ -16,12 +16,11 @@ function createWindow ()
 	const win = new BrowserWindow({
 		width: 1080,
 		height: 600,
-		icon: __dirname + "/public/softwiki.png",
+		icon: "./public/logo192.png",
 		webPreferences: {
 			nodeIntegration: true,
 			enableRemoteModule: true,
-    		contextIsolation: false,//,
-			//preload: path.join(__dirname, 'preload.js')
+			contextIsolation: false
 		}
 	})
 
@@ -34,7 +33,7 @@ function createWindow ()
 	else
 	{
 		win.loadFile("./build/index.html")
-		//win.removeMenu()
+		win.removeMenu()
 	}
 
 	win.webContents.on("will-navigate", (event, url) => 
