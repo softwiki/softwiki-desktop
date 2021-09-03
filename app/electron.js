@@ -4,17 +4,19 @@
  * Modified: 2020-06-10 05:25
  */
 
-const { app, BrowserWindow, shell } = require('electron')
-const path = require('path')
-require('@electron/remote/main').initialize()
+const { app, BrowserWindow, shell } = require("electron")
+const path = require("path")
+require("@electron/remote/main").initialize()
 
-function createWindow () {
+function createWindow () 
+{
 	const isDev = process.env["NODE_ENV"] === "development"
 	// Create the browser window.
+
 	const win = new BrowserWindow({
 		width: 1080,
 		height: 600,
-		icon: __dirname + "/resources/softwiki.png",
+		icon: __dirname + "/public/softwiki.png",
 		webPreferences: {
 			nodeIntegration: true,
 			enableRemoteModule: true,
@@ -31,15 +33,15 @@ function createWindow () {
 	}
 	else
 	{
-		win.loadFile('./resources/app/index.html')
-		win.removeMenu()
+		win.loadFile("./build/index.html")
+		//win.removeMenu()
 	}
 
-	win.webContents.on('will-navigate', (event, url) => {
+	win.webContents.on("will-navigate", (event, url) => 
+	{
 		event.preventDefault()
 		shell.openExternal(url)
 	});
-	
 
 	// Open the DevTools.
 	// win.webContents.openDevTools()
@@ -51,18 +53,22 @@ function createWindow () {
 app.whenReady().then(createWindow)
 
 // Quit when all windows are closed.
-app.on('window-all-closed', () => {
+app.on("window-all-closed", () => 
+{
 	// On macOS it is common for applications and their menu bar
 	// to stay active until the user quits explicitly with Cmd + Q
-	if (process.platform !== 'darwin') {
+	if (process.platform !== "darwin") 
+	{
 		app.quit()
 	}
 })
 
-app.on('activate', () => {
+app.on("activate", () => 
+{
 	// On macOS it's common to re-create a window in the app when the
 	// dock icon is clicked and there are no other windows open.
-	if (BrowserWindow.getAllWindows().length === 0) {
+	if (BrowserWindow.getAllWindows().length === 0) 
+	{
 		createWindow()
 	}
 })
