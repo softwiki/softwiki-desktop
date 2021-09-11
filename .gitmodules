@@ -4,3 +4,6 @@
 [submodule "app/app/src/libs/softwiki-core"]
 	path = app/app/src/libs/softwiki-core
 	url = https://github.com/softwiki/softwiki-core.git
+[submodule "app/src/libs/softwiki-core"]
+	path = app/src/libs/softwiki-core
+	url = git@github.com:softwiki/softwiki-core.git
