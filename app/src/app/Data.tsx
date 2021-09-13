@@ -5,6 +5,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { getDefaultBasePath, readFile, writeFile } from "app/files";
 import { ConfigContext, ConfigFields } from "app/Config";
 import { isBrowser, isLinux, isWindows } from "app/utils";
+import RemoveProvider from "libs/softwiki-core/src/api-providers/RemoteProvider";
 
 if (isLinux() || isWindows())
 {
@@ -39,6 +40,8 @@ function getProviderFromConfig(config: ConfigFields): Api
 			return await readFile(getDefaultBasePath() + "/notes/db.json");
 		})
 	}
+	
+	return new RemoveProvider("http://127.0.0.1:8081");
 
 	if (config.provider.type === "fs")
 	{

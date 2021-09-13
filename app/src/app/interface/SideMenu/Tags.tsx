@@ -20,7 +20,7 @@ const TagsCard = styled.div`
 export function Tags()
 {
 	const {tags, api} = useData();
-	const {pushModal, closeModal} = useMessage()
+	const {pushModal, closeModal, pushErrorIfFails} = useMessage()
 
 	tags.sort((a: Tag, b: Tag) =>
 	{
@@ -39,8 +39,14 @@ export function Tags()
 							color={{r: 200, g: 100, b: 100, a: 1}}
 							onChange={async (name: string, color: Color) =>
 							{
-								await api.createTag({name, color});
-								closeModal()
+								pushErrorIfFails(async () =>
+								{
+									await api.createTag({name, color});
+									closeModal()
+								}, () =>
+								{
+									closeModal();
+								});
 							}}
 						/>
 					)

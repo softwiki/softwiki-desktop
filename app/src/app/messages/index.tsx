@@ -39,11 +39,15 @@ export function Messages({children}: {children: JSX.Element | JSX.Element[]})
 
 	const [error, setError] = useState<JSX.Element | null>(null);
 
-	const pushError = (error: Error) => { setError(<span style={{color: "rgb(255, 150, 150)"}}>{error.toString()}</span>); }
+	const pushError = (error: Error) => { setError(<span style={{color: "rgb(255, 150, 150)"}}>{error.message}</span>); }
 	const closeError = () => { setError(null); }
-	const pushErrorIfFails = (f: () => Promise<void>) =>
+	const pushErrorIfFails = (func: () => Promise<void>, failFunc?: () => void) =>
 	{
-		f().catch((e: unknown) => { pushError(e as Error); });
+		func().catch((e: unknown) =>
+		{
+			pushError(e as Error);
+			failFunc && failFunc();
+		});
 	}
 
 	return (
