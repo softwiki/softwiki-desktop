@@ -46,8 +46,7 @@ interface TagCardProps
 	onCrossClick?: (tag: Tag) => void
 }
 
-export default function TagCard({tag, style = {}, onClick, onCrossClick}: TagCardProps)
-{
+export default function TagCard({tag, style = {}, onClick, onCrossClick}: TagCardProps) {
 	//style = {...style, backgroundColor: tag.GetColorAsCss()}
 	style = {...style, border: "1px solid " + tag.getColorAsCss()}
 	return (

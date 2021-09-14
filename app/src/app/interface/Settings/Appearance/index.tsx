@@ -10,8 +10,7 @@ const AppearanceSettingsLayout = styled.div`
 
 `
 
-export default function Appearance()
-{
+export default function Appearance() {
 	const {theme, selectTheme, font, selectFont} = useContext(ConfigContext)
 
 	const [temporaryFont, setTemporaryFont] = useState(font.family)
@@ -25,26 +24,21 @@ export default function Appearance()
 	fontSizeRef.current = temporaryFontSize
 	applyFont.current = selectFont
 	
-	const handleThemeChange = (e: ChangeEvent<HTMLSelectElement>) =>
-	{
+	const handleThemeChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		selectTheme(e.target.value)
 	}
 
-	const handleFontChange = (e: ChangeEvent<HTMLInputElement>) =>
-	{
+	const handleFontChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setTemporaryFont(e.target.value)
 	}
 
-	const handleFontSizeChange = (e: ChangeEvent<HTMLInputElement>) =>
-	{
+	const handleFontSizeChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const fontSize: number = parseInt(e.target.value)
 		setTemporaryFontSize(fontSize)
 	}
 
-	useEffect(() => 
-	{
-		return () => 
-		{
+	useEffect(() => {
+		return () => {
 			applyFont.current(fontRef.current, fontSizeRef.current)
 		}
 	}, [])
@@ -65,8 +59,7 @@ export default function Appearance()
 				<LineTitle>Theme</LineTitle>
 				<ComboBox onChange={handleThemeChange}>
 					{
-						themesName.map((themeName: string) => 
-						{
+						themesName.map((themeName: string) => {
 							return (
 								<ComboBoxItem
 									key={themeName}

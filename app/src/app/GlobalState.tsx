@@ -14,29 +14,25 @@ interface GlobalStateContextProps
 
 const GlobalStateContext = React.createContext<GlobalStateContextProps | null>(null);
 
-export function useGlobalState(): GlobalStateContextProps
-{
+export function useGlobalState(): GlobalStateContextProps {
 	const context = useContext(GlobalStateContext);
 	if (context === null)
 		throw Error("GlobalState is not initialized");
 	return context;
 }
 
-export function GlobalState({children}: {children: JSX.Element | JSX.Element[]})
-{
+export function GlobalState({children}: {children: JSX.Element | JSX.Element[]}) {
 	const [selectedCategory, selectCategory] = useState<Category | null>(null);
 	const [tagFilters, setTagFilters] = useState<Tag[]>([]);
 
-	const addTagToFilters = (tag: Tag) =>
-	{
+	const addTagToFilters = (tag: Tag) => {
 		if (tagFilters.find((checkTag: Tag) => { return tag.getId() === checkTag.getId() }))
 			return
 		tagFilters.push(tag);
 		setTagFilters([...tagFilters]);
 	}
 
-	const removeTagFromFilters = (tag: Tag) =>
-	{
+	const removeTagFromFilters = (tag: Tag) => {
 		const i = tagFilters.findIndex((checkTag: Tag) => { return tag.getId() === checkTag.getId() });
 		if (i === -1)
 			return
@@ -44,13 +40,11 @@ export function GlobalState({children}: {children: JSX.Element | JSX.Element[]})
 		setTagFilters([...tagFilters]);
 	}
 
-	const resetTagFilters = (tags?: Tag[] | undefined) =>
-	{
+	const resetTagFilters = (tags?: Tag[] | undefined) => {
 		setTagFilters(tags ? tags : []);
 	}
 
-	const isTagFiltered = (tag: Tag) =>
-	{
+	const isTagFiltered = (tag: Tag) => {
 		return tagFilters.find((checkTag: Tag) => { return tag.getId() === checkTag.getId() }) !== undefined;
 	}
 

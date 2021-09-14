@@ -18,7 +18,6 @@ const ButtonLayout = styled.button`
 	}
 `
 
-export default function Button(props: any)
-{
+export default function Button(props: any) {
 	return <ButtonLayout {...props}/>
 }

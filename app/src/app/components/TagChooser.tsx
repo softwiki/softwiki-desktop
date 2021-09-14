@@ -28,14 +28,12 @@ interface TagChooserArguments
 	onTagSelected: (tag: Tag) => void
 }
 
-export default function TagChooser(props: TagChooserArguments & any)
-{
+export default function TagChooser(props: TagChooserArguments & any) {
 	const {tags} = useContext(DataContext)
 	return (
 		<TagChooserLayout {...props}>
 			{
-				tags.map((tag: Tag) => 
-				{
+				tags.map((tag: Tag) => {
 					return (
 						<TagCardWrapper key={tag.getId()}>
 							<TagCard

@@ -6,30 +6,22 @@ import { tomorrow } from "react-syntax-highlighter/dist/cjs/styles/prism"
 import styled, { createGlobalStyle } from "styled-components";
 
 const components = {
-	code({/*node, */inline, className, children, ...props}: any) 
-	{
+	code({/*node, */inline, className, children, ...props}: any) {
 		const match = /language-(\w+)/.exec(className || "") || ""
-		if (!inline)
-		{
+		if (!inline) {
 			return <SyntaxHighlighter wrapLongLines style={tomorrow} language={match[1]} PreTag="div" children={String(children).replace(/\n$/, "")} {...props} />
 		}
 		return <SyntaxHighlighter customStyle={{padding: "4px", borderRadius: "6px"}} wrapLongLines style={tomorrow} PreTag="span" children={String(children).replace(/\n$/, "")} {...props} />
 	}
 }
 
-function attacher(): any
-{
-	return (tree: any) =>
-	{
+function attacher(): any {
+	return (tree: any) => {
 		console.log(tree)
-		for (const child of tree.children)
-		{
-			if (child.type === "paragraph")
-			{
-				for (const child2 of child.children)
-				{
-					if (child2.type === "link")
-					{
+		for (const child of tree.children) {
+			if (child.type === "paragraph") {
+				for (const child2 of child.children) {
+					if (child2.type === "link") {
 						console.log(child2);
 						child2.url += " LOL"
 					}
@@ -68,8 +60,7 @@ const MarkdownCustomStyle = styled.div`
 	}
 `
 
-export default function Markdown(props: any)
-{
+export default function Markdown(props: any) {
 	return (
 		<MarkdownCustomStyle style={{...props.style, display: "block"}} className="react-markdown">
 			<ReactMarkdown components={components} remarkPlugins={[gfm]} rehypePlugins={[attacher]}>

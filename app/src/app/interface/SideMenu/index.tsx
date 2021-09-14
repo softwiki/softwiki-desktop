@@ -9,8 +9,7 @@ const SideMenuLayout = styled.div`
 	background-color: ${({theme}) => theme.categories.list.color};
 `
 
-export default function SideMenu()
-{
+export default function SideMenu() {
 	return (
 		<SideMenuLayout>
 			<Categories/>

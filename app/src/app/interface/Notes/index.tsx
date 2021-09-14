@@ -13,8 +13,7 @@ const NotesLayout = styled.div`
 	flex: 1;
 `
 
-export default function NotesPage()
-{
+export default function NotesPage() {
 	/*useEffect(() => {
 		let beforeunloadEvent = HandleWindowEvent("beforeunload", (ev: any) => // temporary workaround
 		{  
@@ -43,14 +42,12 @@ export default function NotesPage()
 	)
 }
 
-function NotePageWrapper()
-{
+function NotePageWrapper() {
 	const selectedNote = useSelectedNote()
 	const {selectedCategory, selectCategory} = useGlobalState();
 	const { api } = useData();
 	
-	const createNote = async () => 
-	{
+	const createNote = async () => {
 		await api.createNote({
 			title: "Untitled",
 			content: "Your amazing note content",
@@ -83,8 +80,7 @@ const DefaultStarterLayout = styled.div`
 	font-style: italic;
 `
 
-function DefaultStarter()
-{
+function DefaultStarter() {
 	return (
 		<DefaultStarterLayout>
 			Select or create a note to start.

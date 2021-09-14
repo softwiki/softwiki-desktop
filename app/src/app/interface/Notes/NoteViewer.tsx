@@ -53,17 +53,14 @@ const Header = styled.div`
 	padding: 8px;
 `
 
-export default function NoteViewer()
-{
+export default function NoteViewer() {
 	const selectedNote = useSelectedNote()
 
-	const handleTitleChanges = (e: ChangeEvent<HTMLInputElement>) => 
-	{
+	const handleTitleChanges = (e: ChangeEvent<HTMLInputElement>) => {
 		selectedNote.setUnsavedChanges({title: e.target.value, content: selectedNote.unsavedChanges.content})
 	}
 
-	const handleContentChanges = (e: ChangeEvent<HTMLTextAreaElement>) =>
-	{
+	const handleContentChanges = (e: ChangeEvent<HTMLTextAreaElement>) => {
 		selectedNote.setUnsavedChanges({title: selectedNote.unsavedChanges.title, content: e.target.value})
 	}
 
@@ -71,8 +68,7 @@ export default function NoteViewer()
 	const editorDivRef = useRef<HTMLTextAreaElement>(null)
 	const preventScroll = useRef(false)
 
-	const syncDivScrolls = (source: any, target: any) =>
-	{
+	const syncDivScrolls = (source: any, target: any) => {
 		const topPositionPertentage = source.scrollTop / (source.scrollHeight - source.offsetHeight)
 		target.scrollTo(0, (target.scrollHeight - target.offsetHeight) * topPositionPertentage);
 	}
@@ -96,10 +92,8 @@ export default function NoteViewer()
 									marginTop: "4px"
 								}}
 								ref={editorDivRef}
-								onScroll={() =>
-								{
-									if (preventScroll.current)
-									{
+								onScroll={() => {
+									if (preventScroll.current) {
 										preventScroll.current = false;
 										return
 									}
@@ -118,10 +112,8 @@ export default function NoteViewer()
 				}
 				<MarkdownWrapper
 					ref={markdownDivRef}
-					onScroll={() =>
-					{
-						if (preventScroll.current)
-						{
+					onScroll={() => {
+						if (preventScroll.current) {
 							preventScroll.current = false;
 							return
 						}

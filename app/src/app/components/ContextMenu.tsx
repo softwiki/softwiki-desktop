@@ -26,40 +26,33 @@ interface ContextMenuProps
 	absolutePosition?: any 
 }
 
-export function ContextMenu({children, trigger, useLeftClick = false, absolutePosition}: ContextMenuProps)
-{
+export function ContextMenu({children, trigger, useLeftClick = false, absolutePosition}: ContextMenuProps) {
 	const [show, setShow] = useState(false);
 	const [position, setPosition] = useState({x: 0, y: 0});
 
 	const contextMenuRef = useRef<HTMLDivElement>(null);
 
-	useEffect(() => 
-	{
+	useEffect(() => {
 		if (!trigger)
 			return
-		const handleMouseEvent = (e: any) => 
-		{
-			if (e.type === "contextmenu" && trigger.current.contains(e.target))
-			{
+		const handleMouseEvent = (e: any) => {
+			if (e.type === "contextmenu" && trigger.current.contains(e.target)) {
 				setPosition({x: e.clientX + 1, y: e.clientY + 1})
 				setShow(true)
 			}
 
-			if (useLeftClick && e.type === "mousedown" && !show && trigger.current.contains(e.target))
-			{
+			if (useLeftClick && e.type === "mousedown" && !show && trigger.current.contains(e.target)) {
 				setPosition({x: e.clientX + 1, y: e.clientY + 1})
 				setShow(true)
 			}
 
-			if (e.type === "mousedown" && show && contextMenuRef.current && !contextMenuRef.current.contains(e.target))
-			{
+			if (e.type === "mousedown" && show && contextMenuRef.current && !contextMenuRef.current.contains(e.target)) {
 				setShow(false)
 			}
 		}
 		const contextMenuEvent = handleWindowEvent("contextmenu", handleMouseEvent)
 		const clickOutsideEvent = handleWindowEvent("mousedown", handleMouseEvent)
-		return (() => 
-		{
+		return (() => {
 			contextMenuEvent.delete()
 			clickOutsideEvent.delete()
 		})
@@ -95,8 +88,7 @@ interface ContextMenuItemProps {
 	textColor?: string
 }
 
-export function ContextMenuItem({action, value, textColor}: ContextMenuItemProps)
-{
+export function ContextMenuItem({action, value, textColor}: ContextMenuItemProps) {
 	const style: React.CSSProperties = {}
 	if (textColor)
 		style.color = textColor

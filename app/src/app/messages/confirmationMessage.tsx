@@ -14,8 +14,7 @@ interface ConfirmationBoxProps extends ConfirmationMessageProperties
 	close: () => void
 }
 
-export function ConfirmationMessage({message, yesFunction, noFunction, close}: ConfirmationBoxProps)
-{
+export function ConfirmationMessage({message, yesFunction, noFunction, close}: ConfirmationBoxProps) {
 	if (message === "")
 		return <></>
 

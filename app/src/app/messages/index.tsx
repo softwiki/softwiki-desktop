@@ -4,13 +4,11 @@ import { ModalMessage } from "./modal";
 
 const MessageContext = React.createContext<any>({});
 
-export function useMessage()
-{
+export function useMessage() {
 	return useContext(MessageContext);
 }
 
-export function Messages({children}: {children: JSX.Element | JSX.Element[]})
-{
+export function Messages({children}: {children: JSX.Element | JSX.Element[]}) {
 	// Confirmation messsage box
 
 	const [confirmationMessage, setConfirmationMessage] = useState<ConfirmationMessageProperties>({
@@ -19,8 +17,7 @@ export function Messages({children}: {children: JSX.Element | JSX.Element[]})
 		noFunction: () => {},
 	});
 
-	const pushConfirmationMessage = (message: string, yesFunction?: () => void, noFunction?: () => void) =>
-	{
+	const pushConfirmationMessage = (message: string, yesFunction?: () => void, noFunction?: () => void) => {
 		setConfirmationMessage({
 			message,
 			yesFunction: yesFunction ? yesFunction : () => {},
@@ -41,10 +38,8 @@ export function Messages({children}: {children: JSX.Element | JSX.Element[]})
 
 	const pushError = (error: Error) => { setError(<span style={{color: "rgb(255, 150, 150)"}}>{error.message}</span>); }
 	const closeError = () => { setError(null); }
-	const pushErrorIfFails = (func: () => Promise<void>, failFunc?: () => void) =>
-	{
-		func().catch((e: unknown) =>
-		{
+	const pushErrorIfFails = (func: () => Promise<void>, failFunc?: () => void) => {
+		func().catch((e: unknown) => {
 			pushError(e as Error);
 			failFunc && failFunc();
 		});
@@ -65,8 +60,7 @@ export function Messages({children}: {children: JSX.Element | JSX.Element[]})
 				message={confirmationMessage.message}
 				yesFunction={confirmationMessage.yesFunction}
 				noFunction={confirmationMessage.noFunction}
-				close={() =>
-				{
+				close={() => {
 					setConfirmationMessage({
 						message: "",
 						yesFunction: () => {},

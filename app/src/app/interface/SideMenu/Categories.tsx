@@ -17,15 +17,13 @@ const CategoriesCard = styled.div`
 	padding: 8px;
 `
 
-export default function Categories()
-{
+export default function Categories() {
 	const {categories, notes, api} = useData();
 	const {pushConfirmationMessage, pushModal, closeModal, pushErrorIfFails} = useMessage();
 
 	const {selectedCategory, selectCategory} = useGlobalState();
 
-	categories.sort((a: Category, b: Category) =>
-	{
+	categories.sort((a: Category, b: Category) => {
 		return a.getName() > b.getName() ? 1 : -1;
 	});
 
@@ -37,15 +35,12 @@ export default function Categories()
 			<Header>
 				<span>Categories</span>
 				<AddButton
-					onClick={() =>
-					{
+					onClick={() => {
 						pushModal(
 							<CategoryEditor
 								name="Untitled"
-								onChange={(name: string) =>
-								{
-									pushErrorIfFails(async () =>
-									{
+								onChange={(name: string) => {
+									pushErrorIfFails(async () => {
 										await api.createCategory({name})
 										closeModal();
 									})
@@ -57,8 +52,7 @@ export default function Categories()
 			</Header>
 			<CategoriesCard>
 				<CategoryCard name="Uncategorized" count={uncategorizedNotesCount} contextMenuDisabled onClick={() => { selectCategory(null) }}/>
-				{categories.map((category: Category) => 
-				{
+				{categories.map((category: Category) => {
 					return (
 						<CategoryCard
 							key={category.getId()}
@@ -66,15 +60,12 @@ export default function Categories()
 							count={category.getNoteCount()}
 							selected={category.getId() === selectedCategory?.getId()}
 							onClick={() => { selectCategory(category) }}
-							onEdit={() => 
-							{
+							onEdit={() => {
 								pushModal(
 									<CategoryEditor
 										name={category.getName()}
-										onChange={(name: string) =>
-										{
-											pushErrorIfFails(async () =>
-											{
+										onChange={(name: string) => {
+											pushErrorIfFails(async () => {
 												if (name !== category.getName())
 													await category.setName(name)
 												closeModal();
@@ -83,10 +74,8 @@ export default function Categories()
 									/>
 								)
 							}}
-							onDelete={() => 
-							{
-								pushConfirmationMessage(`Do you really want to delete the category "${category.getName()}" ?`, () => 
-								{
+							onDelete={() => {
+								pushConfirmationMessage(`Do you really want to delete the category "${category.getName()}" ?`, () => {
 									category.delete()
 								})
 							}}
@@ -158,8 +147,7 @@ interface CategoryCardProps
 	onDelete?: () => void
 }
 
-function CategoryCard({name, count, contextMenuDisabled, selected = false, onClick, onEdit, onDelete}: CategoryCardProps)
-{
+function CategoryCard({name, count, contextMenuDisabled, selected = false, onClick, onEdit, onDelete}: CategoryCardProps) {
 	const contextMenuTrigger = useRef(null)
 
 	return (

@@ -22,8 +22,7 @@ const AddTagButton = styled(Button)`
 	height: 100%;
 `
 
-export default function NoteTagsBar()
-{
+export default function NoteTagsBar() {
 	const selectedNote = useSelectedNote()
 	const note = selectedNote.note
 	const [addTagWidget, setAddTagWidget] = useState<boolean>(false)
@@ -33,8 +32,7 @@ export default function NoteTagsBar()
 	return (
 		<TagsBarLayout>
 			{
-				note.getTags().map((tag: Tag) => 
-				{
+				note.getTags().map((tag: Tag) => {
 					return <TagCard
 						key={tag.getId()}
 						tag={tag}
@@ -47,8 +45,7 @@ export default function NoteTagsBar()
 			<AddTagButtonWrapper>
 				<AddTagButton
 					style={{backgroundColor: "rgba(0, 0, 0, 0)", "border": "1px solid rgb(75, 75, 75)"}}
-					onClick={() => 
-					{
+					onClick={() => {
 						if (!addTagWidget)
 							setAddTagWidget(true)
 					}
@@ -57,8 +54,7 @@ export default function NoteTagsBar()
 				</AddTagButton>
 				<Popup show={addTagWidget} onClickOutside={() => { setTimeout(() => {setAddTagWidget(false)}) }}>
 					<TagChooser
-						OnTagSelected={(tag: Tag) => 
-						{
+						OnTagSelected={(tag: Tag) => {
 							if (note.hasTag(tag))
 								return ;
 							note.addTag(tag)

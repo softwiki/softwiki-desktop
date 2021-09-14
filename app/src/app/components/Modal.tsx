@@ -33,23 +33,18 @@ interface ModalProps
 	children?: JSX.Element
 }
 
-export default function Modal({onClickOutside, children}: ModalProps)
-{
+export default function Modal({onClickOutside, children}: ModalProps) {
 	const modalRef = useRef<HTMLDivElement>(null)
 
-	useEffect(() => 
-	{
-		const handleMouseEvent = (e: any) => 
-		{
-			if (modalRef.current && !modalRef.current.contains(e.target))
-			{
+	useEffect(() => {
+		const handleMouseEvent = (e: any) => {
+			if (modalRef.current && !modalRef.current.contains(e.target)) {
 				onClickOutside && onClickOutside()
 			}
 		}
 
 		const mouseEvent = handleWindowEvent("mousedown", handleMouseEvent)
-		return (() => 
-		{
+		return (() => {
 			mouseEvent.delete()
 		})
 	}, [onClickOutside])

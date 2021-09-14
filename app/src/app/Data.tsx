@@ -5,35 +5,28 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { getDefaultBasePath, readFile, writeFile } from "app/files";
 import { ConfigContext, ConfigFields } from "app/Config";
 import { isBrowser, isLinux, isWindows } from "app/utils";
-import RemoveProvider from "libs/softwiki-core/src/api-providers/RemoteProvider";
+import RemoteProvider from "libs/softwiki-core/src/api-providers/RemoteProvider";
 import { useMessage } from "./messages";
 
-if (isLinux() || isWindows())
-{
+if (isLinux() || isWindows()) {
 	const fs = window.require("fs").promises
 	fs.mkdir(getDefaultBasePath() + "/notes");
 	fs.mkdir(getDefaultBasePath() + "/config");
 }
 
-function getProviderFromConfig(config: ConfigFields): Api
-{
-	if (isBrowser())
-	{
-		return new JsonApiProvider(async (content: string) =>
-		{
+function getProviderFromConfig(config: ConfigFields): Api {
+	if (isBrowser()) {
+		return new JsonApiProvider(async (content: string) => {
 			await writeFile(getDefaultBasePath() + "/notes/db.json", content);
-		}, async () =>
-		{
+		}, async () => {
 			return await readFile(getDefaultBasePath() + "/notes/db.json");
 		})
 	}
 	
-	if (config.provider.type === "remote")
-	{
-		return new RemoveProvider((config.provider.config as any).host);
+	if (config.provider.type === "remote") {
+		return new RemoteProvider((config.provider.config as any).host);
 	}
-	else if (config.provider.type === "fs")
-	{
+	else if (config.provider.type === "fs") {
 		const fs = window.require("fs").promises
 		return new FileSystemApiProvider(getDefaultBasePath(), fs);
 	}
@@ -68,8 +61,7 @@ interface DataProps
 	children: JSX.Element | JSX.Element[]
 }
 
-export function Data({children}: DataProps)
-{
+export function Data({children}: DataProps) {
 	const config = useContext(ConfigContext);
 
 	const [data, setData] = useState<FetchDataResult>({notes: [], tags: [], categories: []});
@@ -82,30 +74,24 @@ export function Data({children}: DataProps)
 		})
 	).current
 
-	useEffect(() => 
-	{
-		softWikiClient.init().then(() => 
-		{
+	useEffect(() => {
+		softWikiClient.init().then(() =>  {
 			setData({notes: softWikiClient.notes, tags: softWikiClient.tags, categories: softWikiClient.categories});
-		}).catch((err) =>
-		{
+		}).catch((err) => {
 			console.log(err)
 			pushModal(`Unexpected error during data initialization, please restart the application (${err})`)
 		});
 	}, []);
 
-	softWikiClient.subscribe(DataEvent.NotesUpdated, "Data.NotesUpdated", () => 
-	{
+	softWikiClient.subscribe(DataEvent.NotesUpdated, "Data.NotesUpdated", () => {
 		setData({notes: softWikiClient.notes, tags: softWikiClient.tags, categories: softWikiClient.categories});
 	});
 
-	softWikiClient.subscribe(DataEvent.TagsUpdated, "Data.TagsUpdated", () => 
-	{
+	softWikiClient.subscribe(DataEvent.TagsUpdated, "Data.TagsUpdated", () => {
 		setData({notes: softWikiClient.notes, tags: softWikiClient.tags, categories: softWikiClient.categories});
 	});
 
-	softWikiClient.subscribe(DataEvent.CategoriesUpdated, "Data.CategoriesUpdated", () => 
-	{
+	softWikiClient.subscribe(DataEvent.CategoriesUpdated, "Data.CategoriesUpdated", () => {
 		setData({notes: softWikiClient.notes, tags: softWikiClient.tags, categories: softWikiClient.categories});
 	});
 
@@ -116,7 +102,6 @@ export function Data({children}: DataProps)
 	);
 }
 
-export function useData()
-{
+export function useData() {
 	return useContext(DataContext);
 } 

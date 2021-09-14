@@ -82,8 +82,7 @@ const UpperBar = styled.div`
 	align-items: center;
 `
 
-export default function ActionBar()
-{
+export default function ActionBar() {
 	const selectedNote = useSelectedNote()
 	const contextMenuTrigger = useRef(null)
 	const categoryContextMenuTrighger = useRef(null)
@@ -103,14 +102,12 @@ export default function ActionBar()
 				>
 					<>
 						{
-							categories.map((category: Category) =>
-							{
+							categories.map((category: Category) => {
 								return (
 									<ContextMenuItem
 										key={category.getId()}
 										value={category.getName()}
-										action={() => 
-										{
+										action={() => {
 											selectedNote.note?.setCategory(category);
 										}}
 									/>
@@ -122,8 +119,7 @@ export default function ActionBar()
 					<ContextMenuItem
 						value="Uncategorized"
 						textColor="rgb(200, 200, 200)"
-						action={() => 
-						{
+						action={() => {
 							selectedNote.note?.setCategory(null);
 						}}
 					/>
@@ -131,10 +127,8 @@ export default function ActionBar()
 				{
 					selectedNote.editModeEnabled
 						? 
-						<SaveExitButton onClick={async () => 
-						{
-							pushErrorIfFails(async () =>
-							{
+						<SaveExitButton onClick={async () => {
+							pushErrorIfFails(async () => {
 								await selectedNote.save()
 								selectedNote.setEditModeEnabled(false)
 							});
@@ -146,23 +140,19 @@ export default function ActionBar()
 						<NoteMenuIcon src={menuIconHorizontale}/>
 					</NoteMenuIconWrapper>
 					<ContextMenu trigger={contextMenuTrigger} absolutePosition={{top: "125%", right: "0"}} useLeftClick>
-						<ContextMenuItem value="Edit" action={() => 
-						{
+						<ContextMenuItem value="Edit" action={() => {
 							if (selectedNote.editModeEnabled)
 								selectedNote.save()
 							selectedNote.setEditModeEnabled(!selectedNote.editModeEnabled)
 						}}/>
-						<ContextMenuItem value="Save" action={() => 
-						{
+						<ContextMenuItem value="Save" action={() => {
 							selectedNote.save()
 						}}/>
 						<ContextMenuSpacer/>
-						<ContextMenuItem value="Delete" textColor="rgb(200, 100, 100)" action={() => 
-						{
+						<ContextMenuItem value="Delete" textColor="rgb(200, 100, 100)" action={() => {
 							pushConfirmationMessage(
 								`Do you really want to delete the note "${selectedNote.note?.getTitle()}" ?`,
-								() =>
-								{
+								() => {
 									selectedNote.delete()
 								}
 							)

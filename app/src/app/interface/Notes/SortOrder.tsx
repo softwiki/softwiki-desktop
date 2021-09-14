@@ -42,8 +42,7 @@ interface SortOrderWidgetProps
 	onChange: (newSortOrder: SortOrder) => void
 }
 
-export default function SortOrderWidget({sortOrder, onChange}: SortOrderWidgetProps)
-{
+export default function SortOrderWidget({sortOrder, onChange}: SortOrderWidgetProps) {
 	const [show, setShow] = useState<boolean>(false)
 
 	return (

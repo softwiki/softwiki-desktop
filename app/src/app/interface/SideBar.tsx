@@ -42,21 +42,18 @@ const Icon = styled.img`
 	filter: invert(66%) sepia(98%) saturate(13%) hue-rotate(55deg) brightness(87%) contrast(87%);
 `
 
-export default function SideBar()
-{
+export default function SideBar() {
 	const [showSettings, setShowSettings] = useState<boolean>(false)
 	const [showHelp, setShowHelp] = useState<boolean>(false)
 
 	return (
 		<SideBarLayout>
 			<IconWrapper><Icon src={notesImage} title="Notes" alt="notes"/></IconWrapper>
-			<IconWrapper style={{marginTop: "auto"}} ><Icon src={helpImage}  title="Help" alt="help" onClick={() => 
-			{
+			<IconWrapper style={{marginTop: "auto"}} ><Icon src={helpImage}  title="Help" alt="help" onClick={() => {
 				setShowHelp(true)
 			}}/></IconWrapper>
 			<IconWrapper>
-				<Icon src={settingsImage} title="Settings" alt="settings" onClick={() => 
-				{
+				<Icon src={settingsImage} title="Settings" alt="settings" onClick={() => {
 					setShowSettings(true)
 				}}/>
 			</IconWrapper>

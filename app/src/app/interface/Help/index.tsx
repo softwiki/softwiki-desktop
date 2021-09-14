@@ -11,8 +11,7 @@ const HelpLayout = styled.div`
 	font-size: 1rem;
 `
 
-export default function Settings()
-{
+export default function Settings() {
 	return (
 		<HelpLayout>
 			<Markdown>

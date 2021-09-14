@@ -41,8 +41,7 @@ interface CategoryEditorProps
 	onChange: (name: string) => any
 }
 
-export default function CategoryEditor({name, onChange}: CategoryEditorProps)
-{
+export default function CategoryEditor({name, onChange}: CategoryEditorProps) {
 	const [modifiedName, setModifiedName] = useState(name);
 
 	return (

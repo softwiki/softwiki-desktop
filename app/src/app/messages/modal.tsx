@@ -6,8 +6,7 @@ interface ModalMessageProps
 	onClickOutside?: () => void
 }
 
-export function ModalMessage({content, onClickOutside}: ModalMessageProps)
-{
+export function ModalMessage({content, onClickOutside}: ModalMessageProps) {
 	if (!content)
 		return <></>	
 	return (

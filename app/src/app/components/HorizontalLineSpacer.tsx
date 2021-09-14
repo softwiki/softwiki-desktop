@@ -11,8 +11,7 @@ interface HorizontalLineSpacerProps
 	marginBottom?: string
 }
 
-export default function HorizontalLineSpacer({marginTop, marginBottom}: HorizontalLineSpacerProps)
-{
+export default function HorizontalLineSpacer({marginTop, marginBottom}: HorizontalLineSpacerProps) {
 	return (
 		<HorizontalLineSpacerLayout
 			marginTop={marginTop ? marginTop : "8px"}

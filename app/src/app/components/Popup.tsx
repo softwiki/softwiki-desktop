@@ -44,27 +44,21 @@ interface PopupProps
 	position?: {top?: string, left?: string, bottom?: string, right?: string}
 }
 
-export default function Popup({show, children, hideDefaultBackground = false, onClickOutside, position}: PopupProps)
-{
-	if (position === undefined)
-	{
+export default function Popup({show, children, hideDefaultBackground = false, onClickOutside, position}: PopupProps) {
+	if (position === undefined) {
 		position = {top: "125%", left: "0"}
 	}
 	const modalRef = useRef<HTMLDivElement>(null)
 
-	useEffect(() => 
-	{
-		const handleMouseEvent = (e: any) => 
-		{
-			if (modalRef.current && !modalRef.current.contains(e.target))
-			{
+	useEffect(() => {
+		const handleMouseEvent = (e: any) => {
+			if (modalRef.current && !modalRef.current.contains(e.target)) {
 				onClickOutside && onClickOutside()
 			}
 		}
 
 		const mouseEvent = handleWindowEvent("mouseup", handleMouseEvent)
-		return (() => 
-		{
+		return (() => {
 			mouseEvent.delete()
 		})
 	}, [onClickOutside])

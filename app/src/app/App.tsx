@@ -91,8 +91,7 @@ const AppLayout = styled.div`
   height: 100vh;
 `
 
-function App() 
-{
+function App() {
 	const { theme, font } = useContext(ConfigContext)
 	const appearance = {...themes.dark, ...themes[theme.name as keyof typeof themes]}
 	

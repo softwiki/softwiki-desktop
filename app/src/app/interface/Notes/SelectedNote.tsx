@@ -32,16 +32,14 @@ const defaultValue: SelectedNoteContextProps = {
 
 export const SelectedNoteContext = createContext<SelectedNoteContextProps>(defaultValue)
 
-export function SelectedNote({children}: {children: JSX.Element | JSX.Element[]})
-{
+export function SelectedNote({children}: {children: JSX.Element | JSX.Element[]}) {
 	const [note, setNote] = useState<Note | null>(null)
 	const [unsavedChanges, setUnsavedChanges] = useState<{title: string, content: string}>({title: "", content: ""})
 	const [editModeEnabled, setEditModeEnabled] = useState<boolean>(false)
 
 	const { api } = useData()
 
-	const save = async () => 
-	{
+	const save = async () => {
 		if (!note)
 			return
 
@@ -51,8 +49,7 @@ export function SelectedNote({children}: {children: JSX.Element | JSX.Element[]}
 			await note.setContent(unsavedChanges.content)
 	}
 
-	const deleteNote = async () => 
-	{
+	const deleteNote = async () => {
 		setNote(null)
 
 		if (!note)
@@ -61,40 +58,34 @@ export function SelectedNote({children}: {children: JSX.Element | JSX.Element[]}
 		await note.delete()
 	}
 
-	const addTag = async (tag: Tag) => 
-	{
+	const addTag = async (tag: Tag) => {
 		if (!note)
 			return
 		await note.addTag(tag)
 	}
 
-	const removeTag = async (tag: Tag) => 
-	{
+	const removeTag = async (tag: Tag) => {
 		if (!note)
 			return
 		await note.removeTag(tag)
 	}
 
-	const selectNote = async (noteToSelect: Note) =>
-	{
+	const selectNote = async (noteToSelect: Note) => {
 		await save()
 
 		setNote(noteToSelect)
 		setUnsavedChanges({title: noteToSelect.getTitle(), content: noteToSelect.getContent()})
 	}
 
-	api.subscribe(DataEvent.NoteCreated, "NotesPage.NoteCreated", (args: unknown) => 
-	{
+	api.subscribe(DataEvent.NoteCreated, "NotesPage.NoteCreated", (args: unknown) => {
 		const {note} = args as {note: Note}
 		selectNote(note)
 		setEditModeEnabled(true)
 	})
 
-	api.subscribe(DataEvent.NotesUpdated, "NotesPage.NotesUpdated", () => 
-	{
+	api.subscribe(DataEvent.NotesUpdated, "NotesPage.NotesUpdated", () => {
 		const noteWithUpdate = api.notes.find((noteToCheck: Note) => note?.getId() === noteToCheck.getId())
-		if (noteWithUpdate)
-		{
+		if (noteWithUpdate) {
 			setNote(noteWithUpdate);
 		}
 	})

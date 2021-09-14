@@ -29,8 +29,7 @@ interface SettingsProps
 	close: () => void
 }
 
-export default function Settings({close}: SettingsProps)
-{
+export default function Settings({close}: SettingsProps) {
 	return (
 		<SettingsLayout>
 			<Bar>
@@ -62,8 +61,7 @@ interface SettingCategoryProps
 	children: JSX.Element
 }
 
-function SettingCategory({title, children}: SettingCategoryProps)
-{
+function SettingCategory({title, children}: SettingCategoryProps) {
 	return (
 		<SettingCategoryLayout>
 			<SettingCategoryTitle>{title}</SettingCategoryTitle>

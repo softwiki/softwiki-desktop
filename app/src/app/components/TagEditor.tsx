@@ -54,8 +54,7 @@ interface TagEditorProps
 	onChange: (name: string, color: Color) => any
 }
 
-export default function TagEditor({name, color, onChange}: TagEditorProps)
-{
+export default function TagEditor({name, color, onChange}: TagEditorProps) {
 	const [modifiedName, setModifiedName] = useState(name);
 	const [modifiedColor, setModifiedColor] = useState(color);
 

@@ -1,20 +1,17 @@
 import CategoryEditor, {Name, SaveButton, CancelButton} from "./CategoryEditor";
 import {shallow, ShallowWrapper} from "enzyme";
 
-describe("CategoryEditor component", () =>
-{
+describe("CategoryEditor component", () => {
 	let categoryEditor: ShallowWrapper;
 	const name = "name-test";
 
 	let modifiedName = name;
 	
-	const onChange = (newName: string) =>
-	{
+	const onChange = (newName: string) => {
 		modifiedName = newName;
 	}
 
-	beforeEach(() =>
-	{
+	beforeEach(() => {
 		modifiedName = name;
 
 		categoryEditor = shallow(
@@ -29,28 +26,24 @@ describe("CategoryEditor component", () =>
 		expect(categoryEditor.exists(CancelButton)).toBeTruthy();
 	})
 
-	test("Changing name without saving", () =>
-	{
+	test("Changing name without saving", () => {
 		categoryEditor.find(Name).simulate("change", {target: {value: "ez"}})
 		expect(modifiedName).toEqual(name);
 	});
 
-	test("Changing name and saving", () =>
-	{
+	test("Changing name and saving", () => {
 		const newName = "ez";
 		categoryEditor.find(Name).simulate("change", {target: {value: newName}})
 		categoryEditor.find(SaveButton).simulate("click");
 		expect(modifiedName).toEqual(newName);
 	});
 
-	test("Saving but without changing name", () =>
-	{
+	test("Saving but without changing name", () => {
 		categoryEditor.find(SaveButton).simulate("click");
 		expect(modifiedName).toEqual(name);
 	});
 
-	test("Changing name but cancel", () =>
-	{
+	test("Changing name but cancel", () => {
 		categoryEditor.find(Name).simulate("change", {target: {value: "ez"}})
 		categoryEditor.find(CancelButton).simulate("click");
 		expect(modifiedName).toEqual(name);

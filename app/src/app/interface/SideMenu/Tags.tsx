@@ -17,13 +17,11 @@ const TagsCard = styled.div`
 	padding: 8px;
 `
 
-export function Tags()
-{
+export function Tags() {
 	const {tags, api} = useData();
 	const {pushModal, closeModal, pushErrorIfFails} = useMessage()
 
-	tags.sort((a: Tag, b: Tag) =>
-	{
+	tags.sort((a: Tag, b: Tag) => {
 		return a.getName() > b.getName() ? 1 : -1;
 	})
 
@@ -31,20 +29,16 @@ export function Tags()
 		<TagsLayout>
 			<Header>
 				<span>Tags</span>
-				<AddButton onClick={() =>
-				{
+				<AddButton onClick={() => {
 					pushModal(
 						<TagEditor
 							name="Untitled"
 							color={{r: 200, g: 100, b: 100, a: 1}}
-							onChange={async (name: string, color: Color) =>
-							{
-								pushErrorIfFails(async () =>
-								{
+							onChange={async (name: string, color: Color) => {
+								pushErrorIfFails(async () => {
 									await api.createTag({name, color});
 									closeModal()
-								}, () =>
-								{
+								}, () => {
 									closeModal();
 								});
 							}}
@@ -54,8 +48,7 @@ export function Tags()
 			</Header>
 			<TagsCard>
 				{
-					tags.map((tag: Tag) =>
-					{
+					tags.map((tag: Tag) => {
 						return (
 							<TagCard key={tag.getId()}  tag={tag} />
 						)
@@ -110,8 +103,7 @@ interface TagCardProps
 	tag: Tag
 }
 
-export function TagCard({tag}: TagCardProps)
-{
+export function TagCard({tag}: TagCardProps) {
 	const contextMenuTrigger = useRef(null);
 	const {pushModal, closeModal, pushConfirmationMessage} = useMessage();
 	const {tagFilters, addTagToFilters, removeTagFromFilters, resetTagFilters, isTagFiltered} = useGlobalState();
@@ -121,20 +113,16 @@ export function TagCard({tag}: TagCardProps)
 			<TagCardLayout
 				ref={contextMenuTrigger}
 				selected={isTagFiltered(tag)}
-				onClick={(e: React.MouseEvent) =>
-				{
-					if (e.ctrlKey && !isTagFiltered(tag))
-					{
+				onClick={(e: React.MouseEvent) => {
+					if (e.ctrlKey && !isTagFiltered(tag)) {
 						addTagToFilters(tag);
 						return ;
 					}
-					else if (e.ctrlKey && isTagFiltered(tag))
-					{
+					else if (e.ctrlKey && isTagFiltered(tag)) {
 						removeTagFromFilters(tag);
 						return ;
 					}
-					else if (isTagFiltered(tag) && tagFilters.length === 1)
-					{
+					else if (isTagFiltered(tag) && tagFilters.length === 1) {
 						resetTagFilters();
 						return ;
 					}
@@ -145,14 +133,12 @@ export function TagCard({tag}: TagCardProps)
 				<span>{tag.getName()}</span>
 			</TagCardLayout>
 			<ContextMenu trigger={contextMenuTrigger}>
-				<ContextMenuItem value="Edit" action={() =>
-				{
+				<ContextMenuItem value="Edit" action={() => {
 					pushModal(
 						<TagEditor
 							name={tag.getName()}
 							color={tag.getColor()}
-							onChange={async (name: string, color: Color) =>
-							{
+							onChange={async (name: string, color: Color) => {
 								await tag.setAll({name, color});
 								closeModal()
 							}}
@@ -162,10 +148,8 @@ export function TagCard({tag}: TagCardProps)
 				<ContextMenuSpacer/>
 				<ContextMenuItem
 					value="Delete" textColor="rgb(200, 100, 100)"
-					action={() =>
-					{
-						pushConfirmationMessage(`Do you really want to delete the tag "${tag.getName()}" ?`, () => 
-						{
+					action={() => {
+						pushConfirmationMessage(`Do you really want to delete the tag "${tag.getName()}" ?`, () => {
 							tag.delete()
 						})
 					}}
