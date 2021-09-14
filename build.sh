@@ -4,7 +4,7 @@ git submodule update
 cd app
 rm -rf ./out
 rm -rf ./build
-yarn install
-yarn build
-yarn electron-make
+npm install
+npm run build
+npm run electron-make
 cd -

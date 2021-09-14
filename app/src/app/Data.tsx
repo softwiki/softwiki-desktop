@@ -6,6 +6,7 @@ import { getDefaultBasePath, readFile, writeFile } from "app/files";
 import { ConfigContext, ConfigFields } from "app/Config";
 import { isBrowser, isLinux, isWindows } from "app/utils";
 import RemoveProvider from "libs/softwiki-core/src/api-providers/RemoteProvider";
+import { useMessage } from "./messages";
 
 if (isLinux() || isWindows())
 {
@@ -13,20 +14,6 @@ if (isLinux() || isWindows())
 	fs.mkdir(getDefaultBasePath() + "/notes");
 	fs.mkdir(getDefaultBasePath() + "/config");
 }
-
-/*const softWikiClient = new SoftWikiClient({
-	provider: new FileSystemApiProvider(getDefaultBasePath(), fs)
-});*/
-
-/*const softWikiClient = new SoftWikiClient({
-	provider: new JsonApiProvider(async (content: string) =>
-	{
-		await fs.writeFile(getDefaultBasePath() + "/notes/db.json", content);
-	}, async () =>
-	{
-		return await fs.readFile(getDefaultBasePath() + "/notes/db.json", "utf8");
-	})
-});*/
 
 function getProviderFromConfig(config: ConfigFields): Api
 {
@@ -41,21 +28,17 @@ function getProviderFromConfig(config: ConfigFields): Api
 		})
 	}
 	
-	return new RemoveProvider("http://127.0.0.1:8081");
-
-	if (config.provider.type === "fs")
+	if (config.provider.type === "remote")
+	{
+		return new RemoveProvider((config.provider.config as any).host);
+	}
+	else if (config.provider.type === "fs")
 	{
 		const fs = window.require("fs").promises
 		return new FileSystemApiProvider(getDefaultBasePath(), fs);
 	}
+
 	throw new Error(`No provider found for configuation type "${config.provider.type}"`)
-	/*return new JsonApiProvider(async (content: string) =>
-	{
-		await writeFile(getDefaultBasePath() + "/notes/db.json", content);
-	}, async () =>
-	{
-		return await readFile(getDefaultBasePath() + "/notes/db.json");
-	})*/
 }
 
 interface DataContextProps
@@ -91,6 +74,8 @@ export function Data({children}: DataProps)
 
 	const [data, setData] = useState<FetchDataResult>({notes: [], tags: [], categories: []});
 
+	const {pushModal} = useMessage()
+
 	const softWikiClient = useRef(
 		new SoftWikiClient({
 			provider: getProviderFromConfig(config)
@@ -102,6 +87,10 @@ export function Data({children}: DataProps)
 		softWikiClient.init().then(() => 
 		{
 			setData({notes: softWikiClient.notes, tags: softWikiClient.tags, categories: softWikiClient.categories});
+		}).catch((err) =>
+		{
+			console.log(err)
+			pushModal(`Unexpected error during data initialization, please restart the application (${err})`)
 		});
 	}, []);
 

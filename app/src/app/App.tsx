@@ -104,17 +104,17 @@ function App()
 				<title>{process.env.REACT_APP_NAME} [{process.env.REACT_APP_VERSION}]</title>
 			</Helmet>
 			<ThemeProvider theme={appearance}>
-				<Data>
-					<GlobalState>
-						<Messages>
+				<Messages>
+					<Data>
+						<GlobalState>
 							<SideBar/>
 							<SideMenu/>
 							<NotesModule/>
-						</Messages>
-					</GlobalState>
-				</Data>
-				<GloabalStyle font={font.family} fontSize={font.size} />
-				<ColorPickerCssOverride/>
+						</GlobalState>
+					</Data>
+					<GloabalStyle font={font.family} fontSize={font.size} />
+					<ColorPickerCssOverride/>
+				</Messages>
 			</ThemeProvider>
 		</AppLayout>
 	);
