@@ -51,7 +51,12 @@ export default function Categories() {
 				/>
 			</Header>
 			<CategoriesCard>
-				<CategoryCard name="Uncategorized" count={uncategorizedNotesCount} contextMenuDisabled onClick={() => { selectCategory(null) }}/>
+				<CategoryCard
+					name="Uncategorized"
+					count={uncategorizedNotesCount}
+					contextMenuDisabled onClick={() => { selectCategory(null) }}
+					selected={selectedCategory === null}
+				/>
 				{categories.map((category: Category) => {
 					return (
 						<CategoryCard

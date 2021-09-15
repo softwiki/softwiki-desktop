@@ -34,8 +34,7 @@ function getProviderFromConfig(config: ConfigFields): Api {
 	throw new Error(`No provider found for configuation type "${config.provider.type}"`)
 }
 
-interface DataContextProps
-{
+interface DataContextProps {
 	notes: Note[]
 	tags: Tag[]
 	categories: Category[]
@@ -49,15 +48,13 @@ export const DataContext = React.createContext<DataContextProps>({
 	api: {} as SoftWikiClient // Is it dirty ?
 });
 
-interface FetchDataResult
-{
+interface FetchDataResult {
 	notes: Note[]
 	tags: Tag[]
 	categories: Category[]
 }
 
-interface DataProps
-{
+interface DataProps {
 	children: JSX.Element | JSX.Element[]
 }
 
@@ -79,7 +76,7 @@ export function Data({children}: DataProps) {
 			setData({notes: softWikiClient.notes, tags: softWikiClient.tags, categories: softWikiClient.categories});
 		}).catch((err) => {
 			console.log(err)
-			pushModal(`Unexpected error during data initialization, please restart the application (${err})`)
+			pushModal(`Unexpected error during data initialization, please restart the application (${err.message})`)
 		});
 	}, []);
 

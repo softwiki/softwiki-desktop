@@ -44,7 +44,7 @@ export default function NotesPage() {
 
 function NotePageWrapper() {
 	const selectedNote = useSelectedNote()
-	const {selectedCategory, selectCategory} = useGlobalState();
+	const {selectedCategory} = useGlobalState();
 	const { api } = useData();
 	
 	const createNote = async () => {

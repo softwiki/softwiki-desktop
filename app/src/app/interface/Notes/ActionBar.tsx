@@ -146,7 +146,10 @@ export default function ActionBar() {
 							selectedNote.setEditModeEnabled(!selectedNote.editModeEnabled)
 						}}/>
 						<ContextMenuItem value="Save" action={() => {
-							selectedNote.save()
+							pushErrorIfFails(async () => {
+								await selectedNote.save()
+								selectedNote.setEditModeEnabled(false)
+							});
 						}}/>
 						<ContextMenuSpacer/>
 						<ContextMenuItem value="Delete" textColor="rgb(200, 100, 100)" action={() => {

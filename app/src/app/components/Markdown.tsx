@@ -3,7 +3,7 @@ import gfm from "remark-gfm"
 
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { tomorrow } from "react-syntax-highlighter/dist/cjs/styles/prism"
-import styled, { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 
 const components = {
 	code({/*node, */inline, className, children, ...props}: any) {

@@ -6,6 +6,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   
 The changelog history starts with version 1.3.0-alpha, previous versions exist but were very early testing builds.
 
+## 1.5.0-alpha [2021-09-17]
+
+This version adds experimentals features such as remote data provider, with a
+[server](https://github.com/softwiki/softwiki-server), some UI changes, more error handling and tests.
+
+### Added
+
+- Note viewer now has a header with title, tags and buttons, so you no longer have to scroll to the top to see them.
+- Uncategorized category, for... notes with no category.
+- Cancel button on some editors (category, tag).
+
+#### Experimental
+
+- Remote data provider, allows you to connect to the [server](https://github.com/softwiki/softwiki-server) to store your
+data. Please note this is experimental and currently only useful if you want to access your data from multiple devices.
+
+### Changed
+
+- Creating a note directly set the category to the current selected category.
+- Markdown table now really looks like a table.
+
 ## 1.4.0-alpha [2021-08-20]
 
 This version provides new features, improved UI and bug fixes.

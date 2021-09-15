@@ -2,6 +2,7 @@ import { Note, Tag } from "libs/softwiki-core/src/objects";
 import { createContext, useContext, useState } from "react";
 import { DataEvent } from "libs/softwiki-core/src";
 import { useData } from "app/Data";
+import { useMessage } from "app/messages";
 
 interface SelectedNoteContextProps
 {
@@ -36,13 +37,14 @@ export function SelectedNote({children}: {children: JSX.Element | JSX.Element[]}
 	const [note, setNote] = useState<Note | null>(null)
 	const [unsavedChanges, setUnsavedChanges] = useState<{title: string, content: string}>({title: "", content: ""})
 	const [editModeEnabled, setEditModeEnabled] = useState<boolean>(false)
+	const {pushErrorIfFails} = useMessage();
 
 	const { api } = useData()
 
 	const save = async () => {
 		if (!note)
 			return
-
+		
 		if (unsavedChanges.title !== note.getTitle())
 			await note.setTitle(unsavedChanges.title)
 		if (unsavedChanges.content !== note.getContent())
@@ -71,10 +73,12 @@ export function SelectedNote({children}: {children: JSX.Element | JSX.Element[]}
 	}
 
 	const selectNote = async (noteToSelect: Note) => {
-		await save()
+		pushErrorIfFails(async () => {
+			await save()
 
-		setNote(noteToSelect)
-		setUnsavedChanges({title: noteToSelect.getTitle(), content: noteToSelect.getContent()})
+			setNote(noteToSelect)
+			setUnsavedChanges({title: noteToSelect.getTitle(), content: noteToSelect.getContent()})
+		});
 	}
 
 	api.subscribe(DataEvent.NoteCreated, "NotesPage.NoteCreated", (args: unknown) => {
