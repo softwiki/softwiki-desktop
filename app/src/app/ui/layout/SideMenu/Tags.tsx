@@ -1,13 +1,14 @@
 import AddButton from "app/ui/components/AddButton";
 import { ContextMenu, ContextMenuItem, ContextMenuSpacer } from "app/ui/components/ContextMenu";
 import TagEditor, { Color } from "app/ui/components/TagEditor";
-import { useData } from "app/Data";
+import { useData } from "app/services/data";
 import { useGlobalState } from "app/GlobalState";
 import { useMessage } from "app/messages";
 import React, { useRef } from "react";
 import { Tag } from "libs/softwiki-core/src/structures";
 import styled from "styled-components";
 import { Header } from "./common";
+import { Logger } from "app/utils/Logger";
 
 const TagsLayout = styled.div`
 	
@@ -18,6 +19,8 @@ const TagsCard = styled.div`
 `
 
 export function Tags() {
+	Logger.debug("Render tags on side menu");
+
 	const {tags, api} = useData();
 	const {pushModal, closeModal, pushErrorIfFails} = useMessage()
 

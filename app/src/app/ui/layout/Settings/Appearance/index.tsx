@@ -4,7 +4,7 @@ import { ComboBox, ComboBoxItem } from "app/ui/components/ComboBox"
 
 import * as themes from "app/ui/themes"
 import Input from "app/ui/components/Input"
-import { ConfigContext } from "app/Config"
+import { ConfigContext } from "app/services/config"
 
 const AppearanceSettingsLayout = styled.div`
 

@@ -1,7 +1,7 @@
 import { Note, Tag } from "libs/softwiki-core/src/structures";
 import { createContext, useContext, useState } from "react";
 import { DataEvent } from "libs/softwiki-core/src";
-import { useData } from "app/Data";
+import { useData } from "app/services/data";
 import { useMessage } from "app/messages";
 
 interface SelectedNoteContextProps

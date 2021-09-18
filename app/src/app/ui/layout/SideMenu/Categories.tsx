@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { useRef } from "react"
-import { useData } from "app/Data"
+import { useData } from "app/services/data"
 import { Category } from "libs/softwiki-core/src/structures"
 import CategoryEditor from "app/ui/components/CategoryEditor"
 import { ContextMenu, ContextMenuItem, ContextMenuSpacer } from "app/ui/components/ContextMenu"

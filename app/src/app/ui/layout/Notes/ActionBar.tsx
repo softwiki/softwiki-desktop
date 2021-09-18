@@ -6,7 +6,7 @@ import Button from "app/ui/components/Button"
 import menuIconHorizontale from "app/ui/images/menuButton_horizontale.png"
 import {useSelectedNote} from "./SelectedNote"
 import {ContextMenu, ContextMenuItem, ContextMenuSpacer} from "app/ui/components/ContextMenu"
-import { useData } from "app/Data";
+import { useData } from "app/services/data";
 import { Category } from "libs/softwiki-core/src/structures";
 import { useMessage } from "app/messages";
 

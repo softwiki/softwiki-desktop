@@ -50,13 +50,8 @@ export function GlobalState({children}: {children: JSX.Element | JSX.Element[]})
 
 	return (
 		<GlobalStateContext.Provider value={{
-			selectedCategory,
-			selectCategory,
-			tagFilters,
-			addTagToFilters,
-			removeTagFromFilters,
-			resetTagFilters,
-			isTagFiltered
+			selectedCategory, selectCategory,
+			tagFilters, addTagToFilters, removeTagFromFilters, resetTagFilters, isTagFiltered
 		}}>
 			{children}
 		</GlobalStateContext.Provider>

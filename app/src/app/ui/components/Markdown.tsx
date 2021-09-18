@@ -15,20 +15,29 @@ const components = {
 	}
 }
 
-function attacher(): any {
+/*function attacher(): any {
 	return (tree: any) => {
-		console.log(tree)
 		for (const child of tree.children) {
 			if (child.type === "paragraph") {
 				for (const child2 of child.children) {
 					if (child2.type === "link") {
 						console.log(child2);
-						child2.url += " LOL"
+						child2.url += "test"
 					}
 				}
 			}
 		}
 	}
+}*/
+
+export default function Markdown(props: any) {
+	return (
+		<MarkdownCustomStyle style={{...props.style, display: "block"}} className="react-markdown">
+			<ReactMarkdown components={components} remarkPlugins={[gfm]} /*rehypePlugins={[attacher]}*/>
+				{props.children}
+			</ReactMarkdown>
+		</MarkdownCustomStyle>
+	)
 }
 
 const MarkdownCustomStyle = styled.div`
@@ -59,13 +68,3 @@ const MarkdownCustomStyle = styled.div`
 		background-color: rgb(255, 255, 255, 0.05)
 	}
 `
-
-export default function Markdown(props: any) {
-	return (
-		<MarkdownCustomStyle style={{...props.style, display: "block"}} className="react-markdown">
-			<ReactMarkdown components={components} remarkPlugins={[gfm]} rehypePlugins={[attacher]}>
-				{props.children}
-			</ReactMarkdown>
-		</MarkdownCustomStyle>
-	)
-}

@@ -3,10 +3,11 @@ import { Note, Tag } from "libs/softwiki-core/src/structures";
 import { Category } from "libs/softwiki-core/src/structures";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { getDefaultBasePath, readFile, writeFile } from "app/utils/files";
-import { ConfigContext, ConfigFields } from "app/Config";
+import { ConfigContext, ConfigFields } from "app/services/config";
 import { isBrowser, isLinux, isWindows } from "app/utils";
 import RemoteDataProvider from "libs/softwiki-core/src/data-providers/RemoteDataProvider";
-import { useMessage } from "./messages";
+import { useMessage } from "../../messages";
+import { DataContext } from "./context";
 
 if (isLinux() || isWindows()) {
 	const fs = window.require("fs").promises
@@ -34,20 +35,6 @@ function getProviderFromConfig(config: ConfigFields): Api {
 	throw new Error(`No provider found for configuation type "${config.provider.type}"`)
 }
 
-interface DataContextProps {
-	notes: Note[]
-	tags: Tag[]
-	categories: Category[]
-	api: SoftWikiClient
-}
-
-export const DataContext = React.createContext<DataContextProps>({
-	notes: [],
-	tags: [],
-	categories: [],
-	api: {} as SoftWikiClient // Is it dirty ?
-});
-
 interface FetchDataResult {
 	notes: Note[]
 	tags: Tag[]
@@ -58,7 +45,7 @@ interface DataProps {
 	children: JSX.Element | JSX.Element[]
 }
 
-export function Data({children}: DataProps) {
+export function DataService({children}: DataProps) {
 	const config = useContext(ConfigContext);
 
 	const [data, setData] = useState<FetchDataResult>({notes: [], tags: [], categories: []});

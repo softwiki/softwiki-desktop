@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { Tag } from "libs/softwiki-core/src/structures"
 import TagCard from "./TagCard"
 import { useContext } from "react"
-import { DataContext } from "app/Data"
+import { DataContext } from "app/services/data"
 
 const TagChooserLayout = styled.div`
 	display: flex;

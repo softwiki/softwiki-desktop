@@ -1,18 +1,17 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components"
 import { Helmet } from "react-helmet"
 
 import SideBar from "./ui/layout/SideBar"
 import NotesModule from "./ui/layout/Notes"
 
-import { Data } from "app/Data";
-import { ConfigContext } from "app/Config";
+import { DataService } from "./services/data";
+import { ConfigContext } from "app/services/config";
 import { Messages } from "app/messages";
 import SideMenu from "app/ui/layout/SideMenu";
 import { GlobalState } from "app/GlobalState";
 import * as themes from "./ui/themes"
 import { handleWindowEvent } from "app/utils";
-import React from "react";
 
 function App() {
 	const { theme, font } = useContext(ConfigContext)
@@ -27,13 +26,13 @@ function App() {
 			</Helmet>
 			<ThemeProvider theme={appearance}>
 				<Messages>
-					<Data>
+					<DataService>
 						<GlobalState>
 							<SideBar/>
 							<SideMenu/>
 							<NotesModule/>
 						</GlobalState>
-					</Data>
+					</DataService>
 					<GloabalStyle font={font.family} fontSize={font.size} />
 					<ColorPickerCssOverride/>
 				</Messages>

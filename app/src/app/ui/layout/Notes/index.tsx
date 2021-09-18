@@ -3,7 +3,7 @@ import styled from "styled-components"
 import NoteList from "./NoteList"
 import NoteViewer from "./NoteViewer"
 import { SelectedNote, useSelectedNote } from "./SelectedNote"
-import { useData } from "app/Data";
+import { useData } from "app/services/data";
 import { useGlobalState } from "app/GlobalState";
 
 const NotesLayout = styled.div`

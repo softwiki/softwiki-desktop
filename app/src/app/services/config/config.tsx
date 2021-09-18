@@ -1,46 +1,14 @@
 import { writeFile, readFile, getDefaultBasePath } from "app/utils/files"
 import React, { useEffect } from "react"
 import { useState } from "react"
-import * as themes from "app/ui/themes"
-
-export interface ConfigFields
-{
-	font: {
-		family: string,
-		size: number
-	},
-	theme: {
-		name: string
-	},
-	provider: {
-		type: string,
-		config: Record<string, unknown>
-	}
-}
-
-interface ConfigContextProps extends ConfigFields
-{
-	selectTheme: (name: string) => void,
-	selectFont: (family: string, size: number) => void
-}
-
-const defaultConfig = {
-	theme: {name: themes.dark.name, appearance: themes.dark},
-	font: {family: "Arial", size: 16},
-	provider: {type: "fs", config: {}},
-	
-	selectTheme: () => {},
-	selectFont: () => {}
-}
-
-export const ConfigContext = React.createContext<ConfigContextProps>(defaultConfig)
+import { ConfigFields, defaultConfig, ConfigContext } from "./context";
 
 interface ConfigProps
 {
 	children: JSX.Element | JSX.Element[]
 }
 
-export function Config({children}: ConfigProps) {
+export function ConfigService({children}: ConfigProps) {
 	const [configLoaded, setConfigLoaded] = useState<boolean>(false);
 	const [config, setConfig] = useState<ConfigFields>(defaultConfig);
 
