@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Category, Tag } from "libs/softwiki-core/src/objects";
+import { Category, Tag } from "libs/softwiki-core/src/structures";
 
 interface GlobalStateContextProps
 {

@@ -1,14 +1,14 @@
 import styled from "styled-components"
-import { Note } from "libs/softwiki-core/src/objects"
+import { Note } from "libs/softwiki-core/src/structures"
 import NoteCardPreview from "./NoteCardPreview"
-import Input from "app/components/Input"
+import Input from "app/ui/components/Input"
 import { ChangeEvent, useState } from "react"
-import HorizontalLineSpacer from "app/components/HorizontalLineSpacer"
+import HorizontalLineSpacer from "app/ui/components/HorizontalLineSpacer"
 import SortOrderWidget, { SortOrder } from "./SortOrder"
 import { useData } from "app/Data"
 import { useSelectedNote } from "./SelectedNote"
 import { useGlobalState } from "app/GlobalState";
-import AddButton from "app/components/AddButton";
+import AddButton from "app/ui/components/AddButton";
 
 const NoteListLayout = styled.div`
 	display: flex;

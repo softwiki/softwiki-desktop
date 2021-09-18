@@ -1,11 +1,11 @@
-import AddButton from "app/components/AddButton";
-import { ContextMenu, ContextMenuItem, ContextMenuSpacer } from "app/components/ContextMenu";
-import TagEditor, { Color } from "app/components/TagEditor";
+import AddButton from "app/ui/components/AddButton";
+import { ContextMenu, ContextMenuItem, ContextMenuSpacer } from "app/ui/components/ContextMenu";
+import TagEditor, { Color } from "app/ui/components/TagEditor";
 import { useData } from "app/Data";
 import { useGlobalState } from "app/GlobalState";
 import { useMessage } from "app/messages";
 import React, { useRef } from "react";
-import { Tag } from "libs/softwiki-core/src/objects";
+import { Tag } from "libs/softwiki-core/src/structures";
 import styled from "styled-components";
 import { Header } from "./common";
 

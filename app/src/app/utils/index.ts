@@ -1,2 +1,2 @@
-export * from "./Events";
-export * from "./detection";
+export * from "./events";
+export * from "./platform";

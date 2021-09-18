@@ -1,4 +1,4 @@
-import Markdown from "app/components/Markdown"
+import Markdown from "app/ui/components/Markdown"
 import styled from "styled-components"
 
 const HelpLayout = styled.div`

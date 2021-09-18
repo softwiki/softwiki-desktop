@@ -1,9 +1,9 @@
 import { ChangeEvent, useContext, useEffect, useRef, useState } from "react"
 import styled from "styled-components"
-import { ComboBox, ComboBoxItem } from "app/components/ComboBox"
+import { ComboBox, ComboBoxItem } from "app/ui/components/ComboBox"
 
-import * as themes from "app/themes"
-import Input from "app/components/Input"
+import * as themes from "app/ui/themes"
+import Input from "app/ui/components/Input"
 import { ConfigContext } from "app/Config"
 
 const AppearanceSettingsLayout = styled.div`

@@ -1,4 +1,4 @@
-import { isBrowser, isLinux, isWindows } from "./utils";
+import { isBrowser, isLinux, isWindows } from ".";
 
 export async function readFile(path: string): Promise<string> {
 	if (isBrowser()) {

@@ -1,5 +1,5 @@
-import Button from "app/components/Button"
-import HorizontalLineSpacer from "app/components/HorizontalLineSpacer"
+import Button from "app/ui/components/Button"
+import HorizontalLineSpacer from "app/ui/components/HorizontalLineSpacer"
 import styled from "styled-components"
 
 import Appearance from "./Appearance"

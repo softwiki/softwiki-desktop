@@ -1,13 +1,13 @@
 import styled from "styled-components"
 import { useRef } from "react"
 import { useData } from "app/Data"
-import { Category } from "libs/softwiki-core/src/objects"
-import CategoryEditor from "app/components/CategoryEditor"
-import { ContextMenu, ContextMenuItem, ContextMenuSpacer } from "app/components/ContextMenu"
+import { Category } from "libs/softwiki-core/src/structures"
+import CategoryEditor from "app/ui/components/CategoryEditor"
+import { ContextMenu, ContextMenuItem, ContextMenuSpacer } from "app/ui/components/ContextMenu"
 import { useMessage } from "app/messages";
 import { Header } from "./common";
 import { useGlobalState } from "app/GlobalState";
-import AddButton from "app/components/AddButton";
+import AddButton from "app/ui/components/AddButton";
 
 const CategoriesLayout = styled.div`
 	cursor: pointer;

@@ -1,10 +1,10 @@
 import styled from "styled-components"
 import {ChangeEvent, useRef} from "react"
 
-import Input from "app/components/Input"
-import TextArea from "app/components/TextArea"
+import Input from "app/ui/components/Input"
+import TextArea from "app/ui/components/TextArea"
 
-import Markdown from "app/components/Markdown"
+import Markdown from "app/ui/components/Markdown"
 import NoteTagsBar from "./NoteTagsBar"
 
 import { useSelectedNote } from "./SelectedNote"

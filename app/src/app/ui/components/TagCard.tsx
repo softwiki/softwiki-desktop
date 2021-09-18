@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import {Tag} from "libs/softwiki-core/src/objects"
+import {Tag} from "libs/softwiki-core/src/structures"
 import React from "react"
 
 const Layout = styled.span`

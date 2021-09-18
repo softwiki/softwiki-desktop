@@ -1,13 +1,13 @@
 import styled from "styled-components"
 import {useRef} from "react"
 
-import Button from "app/components/Button"
+import Button from "app/ui/components/Button"
 
-import menuIconHorizontale from "app/images/menuButton_horizontale.png"
+import menuIconHorizontale from "app/ui/images/menuButton_horizontale.png"
 import {useSelectedNote} from "./SelectedNote"
-import {ContextMenu, ContextMenuItem, ContextMenuSpacer} from "app/components/ContextMenu"
+import {ContextMenu, ContextMenuItem, ContextMenuSpacer} from "app/ui/components/ContextMenu"
 import { useData } from "app/Data";
-import { Category } from "libs/softwiki-core/src/objects";
+import { Category } from "libs/softwiki-core/src/structures";
 import { useMessage } from "app/messages";
 
 const ActionBarLayout = styled.div`

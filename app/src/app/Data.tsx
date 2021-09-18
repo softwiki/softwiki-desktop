@@ -1,11 +1,11 @@
 import { SoftWikiClient, DataEvent, FileSystemApiProvider, JsonApiProvider, Api } from "libs/softwiki-core/src";
-import { Note, Tag } from "libs/softwiki-core/src/objects";
-import { Category } from "libs/softwiki-core/src/objects";
+import { Note, Tag } from "libs/softwiki-core/src/structures";
+import { Category } from "libs/softwiki-core/src/structures";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { getDefaultBasePath, readFile, writeFile } from "app/files";
+import { getDefaultBasePath, readFile, writeFile } from "app/utils/files";
 import { ConfigContext, ConfigFields } from "app/Config";
 import { isBrowser, isLinux, isWindows } from "app/utils";
-import RemoteProvider from "libs/softwiki-core/src/api-providers/RemoteProvider";
+import RemoteDataProvider from "libs/softwiki-core/src/data-providers/RemoteDataProvider";
 import { useMessage } from "./messages";
 
 if (isLinux() || isWindows()) {
@@ -24,7 +24,7 @@ function getProviderFromConfig(config: ConfigFields): Api {
 	}
 	
 	if (config.provider.type === "remote") {
-		return new RemoteProvider((config.provider.config as any).host);
+		return new RemoteDataProvider((config.provider.config as any).host);
 	}
 	else if (config.provider.type === "fs") {
 		const fs = window.require("fs").promises

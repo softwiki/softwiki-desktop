@@ -1,7 +1,7 @@
-import Popup from "app/components/Popup";
+import Popup from "app/ui/components/Popup";
 import { useState } from "react";
 import styled from "styled-components";
-import sortImage from "app/images/sort.png"
+import sortImage from "app/ui/images/sort.png"
 
 export enum SortOrder
 {

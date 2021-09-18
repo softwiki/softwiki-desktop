@@ -1,4 +1,4 @@
-import { Note, Tag } from "libs/softwiki-core/src/objects";
+import { Note, Tag } from "libs/softwiki-core/src/structures";
 import { createContext, useContext, useState } from "react";
 import { DataEvent } from "libs/softwiki-core/src";
 import { useData } from "app/Data";

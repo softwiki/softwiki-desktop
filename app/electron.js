@@ -16,7 +16,7 @@ function createWindow ()
 	const win = new BrowserWindow({
 		width: 1080,
 		height: 600,
-		icon: "./public/logo192.png",
+		icon: "./public/softwiki.png",
 		webPreferences: {
 			nodeIntegration: true,
 			enableRemoteModule: true,

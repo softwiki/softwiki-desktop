@@ -1,5 +1,5 @@
-import TagCard from "app/components/TagCard"
-import { Note, Tag } from "libs/softwiki-core/src/objects"
+import TagCard from "app/ui/components/TagCard"
+import { Note, Tag } from "libs/softwiki-core/src/structures"
 import { useRef } from "react"
 import styled from "styled-components"
 

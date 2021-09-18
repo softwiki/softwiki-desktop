@@ -1,4 +1,4 @@
-import Modal from "app/components/Modal";
+import Modal from "app/ui/components/Modal";
 
 interface ModalMessageProps
 {

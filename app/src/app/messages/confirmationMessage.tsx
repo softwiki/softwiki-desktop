@@ -1,5 +1,5 @@
-import Button from "app/components/Button";
-import Modal from "app/components/Modal"
+import Button from "app/ui/components/Button";
+import Modal from "app/ui/components/Modal"
 import styled from "styled-components";
 
 export interface ConfirmationMessageProperties

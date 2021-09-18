@@ -1,14 +1,14 @@
 import styled from "styled-components"
 
-import Modal from "app/components/Modal"
+import Modal from "app/ui/components/Modal"
 
-import notesImage from "app/images/notes.png"
-import settingsImage from "app/images/settings.png"
-import helpImage from "app/images/help.png"
+import notesImage from "app/ui/images/notes.png"
+import settingsImage from "app/ui/images/settings.png"
+import helpImage from "app/ui/images/help.png"
 
 import { useState } from "react"
-import Settings from "app/interface/Settings"
-import Help from "app/interface/Help"
+import Settings from "app/ui/layout/Settings"
+import Help from "app/ui/layout/Help"
 
 const SideBarLayout = styled.div`
 	display: flex;

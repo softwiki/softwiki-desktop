@@ -1,7 +1,7 @@
-import { writeFile, readFile, getDefaultBasePath } from "app/files"
+import { writeFile, readFile, getDefaultBasePath } from "app/utils/files"
 import React, { useEffect } from "react"
 import { useState } from "react"
-import * as themes from "app/themes"
+import * as themes from "app/ui/themes"
 
 export interface ConfigFields
 {

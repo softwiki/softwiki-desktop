@@ -2,17 +2,45 @@ import { useContext } from "react";
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components"
 import { Helmet } from "react-helmet"
 
-import SideBar from "./interface/SideBar"
-import NotesModule from "./interface/Notes"
+import SideBar from "./ui/layout/SideBar"
+import NotesModule from "./ui/layout/Notes"
 
 import { Data } from "app/Data";
 import { ConfigContext } from "app/Config";
 import { Messages } from "app/messages";
-import SideMenu from "app/interface/SideMenu";
+import SideMenu from "app/ui/layout/SideMenu";
 import { GlobalState } from "app/GlobalState";
-import * as themes from "./themes"
+import * as themes from "./ui/themes"
 import { handleWindowEvent } from "app/utils";
 import React from "react";
+
+function App() {
+	const { theme, font } = useContext(ConfigContext)
+	const appearance = {...themes.dark, ...themes[theme.name as keyof typeof themes]}
+	
+	handleWindowEvent("contextmenu", (e: any) => { e.preventDefault(); })
+
+	return (
+		<AppLayout>
+			<Helmet>
+				<title>{process.env.REACT_APP_NAME} [{process.env.REACT_APP_VERSION}]</title>
+			</Helmet>
+			<ThemeProvider theme={appearance}>
+				<Messages>
+					<Data>
+						<GlobalState>
+							<SideBar/>
+							<SideMenu/>
+							<NotesModule/>
+						</GlobalState>
+					</Data>
+					<GloabalStyle font={font.family} fontSize={font.size} />
+					<ColorPickerCssOverride/>
+				</Messages>
+			</ThemeProvider>
+		</AppLayout>
+	);
+}
 
 interface GlobalStyleProps {
 	font: string
@@ -90,50 +118,5 @@ const AppLayout = styled.div`
   
   height: 100vh;
 `
-
-function App() {
-	const { theme, font } = useContext(ConfigContext)
-	const appearance = {...themes.dark, ...themes[theme.name as keyof typeof themes]}
-	
-	handleWindowEvent("contextmenu", (e: any) => { e.preventDefault(); })
-
-	return (
-		<AppLayout>
-			<Helmet>
-				<title>{process.env.REACT_APP_NAME} [{process.env.REACT_APP_VERSION}]</title>
-			</Helmet>
-			<ThemeProvider theme={appearance}>
-				<Messages>
-					<Data>
-						<GlobalState>
-							<SideBar/>
-							<SideMenu/>
-							<NotesModule/>
-						</GlobalState>
-					</Data>
-					<GloabalStyle font={font.family} fontSize={font.size} />
-					<ColorPickerCssOverride/>
-				</Messages>
-			</ThemeProvider>
-		</AppLayout>
-	);
-}
-
-/*class ErrorBoundary extends React.Component
-{
-	constructor(props: any)
-	{
-		super(props);
-		this.state = { hasError: false };
-	}
-  
-	static getDerivedStateFromError(error: any) { return { hasError: true };  }
-	componentDidCatch(error: any, errorInfo: any) { console.log("CATCH")  }
-	render() 
-	{
-		if (this.state.hasError) { return <h1>Something went wrong.</h1>;    }
-		return this.props.children;
-	}
-}*/
 
 export default App;
